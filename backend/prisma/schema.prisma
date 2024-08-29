@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  user
+  admin
+}
+
+// Esquema de una colección de MongoDB
+model User {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId // Id default que usa MongoDB
+  username     String   @unique
+  email        String   @unique
+  password     String
+  age          Int
+  image        String?
+  status       Boolean  @default(true) // Cuenta eliminada o no
+  googleSignIn Boolean  @default(false) 
+
+  role         Role     @default(user)
+
+  seenMedia    Media    @relation(fields: [mediaId], references: [id]) @ignore
+
+  mediaId      String   @ignore @db.ObjectId
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  Group        Group?   @relation(fields: [groupId], references: [id])
+  groupId      String?  @db.ObjectId
+
+  @@map("users")
+}
+
+enum MediaType {
+  movie
+  series
+}
+
+model Media {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  producer String
+  type     MediaType
+  User     User[]
+  image    String?
+
+  @@map("media")
+}
+
+model Group {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  author String @ignore
+  minAge Int
+  maxAge Int
+  image  String?
+  likes  String[]
+  dislikes String[]
+  users  User[]
+
+  @@map("groups")
+}
