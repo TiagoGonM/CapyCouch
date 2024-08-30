@@ -26,7 +26,7 @@ export const generateJWT = (uid: string) => {
     });
   };
   
-export const checkJWT = async (token: string) => {
+export const checkJWT = async (token: any) => {
     try {
       if (token.length < 10) {
         return null;
@@ -45,6 +45,8 @@ export const checkJWT = async (token: string) => {
     //   }
       return null;
     } catch (err) {
+      console.log("Error");
+      
       return null;
     }
   };

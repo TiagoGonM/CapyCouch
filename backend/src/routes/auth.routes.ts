@@ -5,7 +5,7 @@ import { checkJWT, generateJWT } from "../helpers/jwt";
 const router = Router();
 
 router.get("/api/auth", async (req, res) => {
-    await generateJWT("66c7e700d675415dfd7ce87f");
+    const jwt = await generateJWT("66c7e700d675415dfd7ce87f");
     // checkJWT(jwt);
     res.json("hi");
 });

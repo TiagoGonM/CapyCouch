@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 // import prisma from "../db/prisma";
 import bcrypt from "bcryptjs";
+import { generateJWT } from "../helpers/jwt";
 
 export const signIn: RequestHandler = async (req, res) => {
   const { email, password } = req.body;
