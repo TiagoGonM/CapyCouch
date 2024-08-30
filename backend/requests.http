@@ -1,0 +1,12 @@
+GET http://localhost:3000/api/users
+
+###
+
+POST http://localhost:3000/api/suggestions
+content-type: application/json
+
+{
+    "genres": ["Acción", "Aventura", "Comedia", "Superheroes"],
+    "likes": ["Stranger Things", "El señor de los anillos", "Spiderman"],
+    "dislikes": ["Hulk", "La La Land", "Hamilton"]
+}
