@@ -4,13 +4,17 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node-dev src/index.ts --env-file .env"
+    "dev": "ts-node-dev src/index.ts"
   },
   "author": "Terma",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@ai-sdk/google": "^0.0.46",
+    "@ai-sdk/openai": "^0.0.54",
     "@prisma/client": "^5.19.0",
+    "ai": "^3.3.20",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "morgan": "^1.10.0",
@@ -18,10 +22,13 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.5.1",
+    "dotenv": "^16.4.5",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.4"
   }
