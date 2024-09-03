@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 // Crea el cliente para poder interactuar con la base de datos
-const prismaClientSingleton: PrismaClient = () => {
+const prismaClientSingleton = () => {
 	return new PrismaClient();
 };
 
