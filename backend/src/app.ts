@@ -4,7 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import { userRoute, authRoute, suggestionRoute } from "./routes";
+import { userRoute, authRoute, suggestionRoute, groupRoute } from "./routes";
 
 const app = express();
 
@@ -24,5 +24,6 @@ app.use(express.static("public"));
 app.use(userRoute);
 app.use(authRoute);
 app.use(suggestionRoute);
+app.use(groupRoute);
 
 export default app;
