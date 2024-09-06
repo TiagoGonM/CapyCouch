@@ -1,8 +1,10 @@
+
+
 GET http://localhost:3000/api/users
 
 ###
 
-POST http://localhost:3000/api/suggestions
+POST https://shiny-palm-tree-94j47gq9v4pcxwvx-3000.app.github.dev/api/suggestions
 content-type: application/json
 
 {
@@ -10,3 +12,18 @@ content-type: application/json
     "likes": ["Stranger Things", "El señor de los anillos", "Spiderman"],
     "dislikes": ["Hulk", "La La Land", "Hamilton"]
 }
+
+###
+
+POST https://shiny-palm-tree-94j47gq9v4pcxwvx-3000.app.github.dev/api/groups
+content-type: application/json
+{
+  "name": "Los pibes",
+  "minAge": 15,
+  "maxAge": 18,
+  "likes": [],
+  "dislikes": [],
+  "users": []
+}
+
+###
