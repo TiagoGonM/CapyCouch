@@ -1,4 +1,7 @@
 
+@host = {{$processEnv [%]HOST}}
+@port = {{$processEnv [%]PORT}}
+
 
 GET http://localhost:3000/api/users
 
@@ -15,15 +18,16 @@ content-type: application/json
 
 ###
 
-POST https://shiny-palm-tree-94j47gq9v4pcxwvx-3000.app.github.dev/api/groups
+POST http://localhost:3000/api/groups
 content-type: application/json
+
 {
-  "name": "Los pibes",
-  "minAge": 15,
-  "maxAge": 18,
+  "name": "Grupo de amigos",
+  "minAge": {{$randomInt 10 15}},
+  "maxAge": {{$randomInt 20 30}},
   "likes": [],
   "dislikes": [],
-  "users": []
+  "users": ["66c7e700d675415dfd7ce87f", "66c884c54c0d99e1efe8e1e3", "66cce65e68119672c178f8e1"]
 }
 
 ###
