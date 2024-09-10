@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Input } from "../components/ui";
 
 export default function LoginForm() {
@@ -29,6 +29,8 @@ export default function LoginForm() {
         >
           Registrate
         </a>
+
+        <a href="/home" className="block underline m-2 text-center">Ir a inicio (temporal)</a>
       </form>
     </div>
   );
