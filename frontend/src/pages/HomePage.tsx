@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import SuggestionForm from '../components/SuggestionForm';
 import { Media } from '../../../backend/src/interfaces/interfaces';
+import { GroupForm } from '../components/GroupForm';
 
 interface Movie {
   title: string
@@ -46,6 +47,10 @@ export default function HomePage() {
 
         <section>
           <SuggestionForm />
+        </section>
+
+        <section>
+          <GroupForm />
         </section>
 
         <main className="pt-24 px-4 md:px-8">
