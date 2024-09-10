@@ -1,19 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SuggestionForm from '../components/SuggestionForm';
 import { Media } from '../../../backend/src/interfaces/interfaces';
 import { GroupForm } from '../components/GroupForm';
+import { Group } from '../interfaces/interfaces';
 
 interface Movie {
   title: string
 }
 
+const getGroups = async () => {
+  const res = await fetch("https://shiny-palm-tree-94j47gq9v4pcxwvx-3000.app.github.dev/api/groups");
+
+  return await res.json() as Group;
+}
+
 export default function HomePage() {
-  const [groups, setGroups] = useState([
-    "Los Pibes",
-    "aguante marvel",
-    "reinas del drama",
-    "sanguchito"
-  ])
+  // const [groups, setGroups] = useState([
+  //   "Los Pibes",
+  //   "aguante marvel",
+  //   "reinas del drama",
+  //   "sanguchito"
+  // ])
+
+  const [groups, setGroups] = useState<Group[]>();
 
   const [movies, setMovies] = useState<Movie[]>([
     { title: "El Show de Truman" },
@@ -22,13 +31,17 @@ export default function HomePage() {
     { title: "Avengers: Endgame" },
     { title: "Dr. House" }
   ])
-  
+
   const [media, setMedia] = useState<Media[]>();
-  
+
   const handleMedia = (newMedia: Media[]) => {
     setMedia([...(media || []), ...newMedia]);
   }
-  
+
+  useEffect(() => {
+    getGroups();
+  })
+
   return (
     <>
       <div className="min-h-screen bg-[#05080a] text-[#cddbe5]">
@@ -53,13 +66,22 @@ export default function HomePage() {
           <GroupForm />
         </section>
 
+        <section>
+          {groups?.map(({ name, ...group }) => (
+            <>
+              <h1>Nombre: {name}</h1>
+              <p>Resto: {JSON.stringify(group)}</p>
+            </>
+          ))}
+        </section>
+
         <main className="pt-24 px-4 md:px-8">
           <section className="mb-8">
             <h2 className="text-2xl font-bold mb-4 text-[#c4853a]">
               Tus Grupos
             </h2>
-            <ul className="space-y-2">
-              {groups.map((group, index) => (
+            {/* <ul className="space-y-2">
+              {groups?.map((group, index) => (
                 <li
                   key={index}
                   className="bg-[#2b2f31] p-3 rounded-md shadow-md hover:bg-[#2d1f3b] transition-all cursor-pointer"
@@ -67,7 +89,7 @@ export default function HomePage() {
                   {group}
                 </li>
               ))}
-            </ul>
+            </ul> */}
           </section>
 
           <section>
