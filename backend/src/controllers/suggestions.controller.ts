@@ -5,12 +5,13 @@ import { google } from "@ai-sdk/google";
 import { Media, MediaType } from '../interfaces/interfaces';
 
 const makePrompt = async (genres: string, likes: string, dislikes: string) => {
+  const prompt = `Recomiéndame 7 películas y 10 series, basadas en la siguiente información: Me gustan los géneros: ${genres};  me gustan las peliculas o series como: ${likes};  no me gustan las peliculas o series como: ${dislikes}. Formatealo como una lista que tenga, separando cada contenido con comas: <película o serie>,<breve descrpción>,[género],<tipo:pelicula o serie>,[plataformas donde ver].`
   let { text } = await generateText({
     model: google("gemini-1.5-flash"),
-    prompt: `Recomiéndame 7 películas y 10 series, basadas en la siguiente información: Me gustan los géneros: ${genres};  me gustan las peliculas o series como: ${likes};  no me gustan las peliculas o series como: ${dislikes}. Formatealo como una lista que tenga, separando cada contenido con comas: <película o serie>,<breve descrpción>,[género],<tipo:pelicula o serie>,[plataformas donde ver].`,
+    prompt,
   });
 
-  return text;
+  return [text, prompt];
 }
 
 export const createSuggestion: RequestHandler = async (req, res) => {
@@ -20,7 +21,7 @@ export const createSuggestion: RequestHandler = async (req, res) => {
     const moviesList: Media[] = []
     const seriesList: Media[] = []
 
-    let text = await makePrompt(genres, likes, dislikes);
+    let [text, prompt] = await makePrompt(genres, likes, dislikes);
     text = text.replaceAll("*", "");
     const series = text.substring(text.indexOf("## Series:"), text.length);
 
@@ -69,7 +70,7 @@ export const createSuggestion: RequestHandler = async (req, res) => {
       seriesList.push({ title, description, genres: genres.split(", "), type, platforms: platforms.split(", ") });
     }
 
-    res.json({ moviesList, seriesList });
+    res.json({ prompt, moviesList, seriesList });
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Error al intentar realizar el prompt" });
