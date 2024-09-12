@@ -10,6 +10,6 @@ router.get("/api/auth", async (req, res) => {
     res.json("hi");
 });
 
-router.post("/api/users", signIn);
+router.post("/api/auth/login", signIn);
 
 export default router;

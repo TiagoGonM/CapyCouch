@@ -3,15 +3,16 @@ import SuggestionForm from '../components/SuggestionForm';
 import { Media } from '../../../backend/src/interfaces/interfaces';
 import { GroupForm } from '../components/GroupForm';
 import { Group } from '../interfaces/interfaces';
+import { api } from '../api/api';
 
 interface Movie {
   title: string
 }
 
 const getGroups = async () => {
-  const res = await fetch("https://shiny-palm-tree-94j47gq9v4pcxwvx-3000.app.github.dev/api/groups");
+  const { data } = await api.get("/groups");
 
-  return await res.json() as Group;
+  return data as Group;
 }
 
 export default function HomePage() {
