@@ -11,7 +11,7 @@ export default function LoginForm() {
   const { register, handleSubmit } = useForm<FormData>();
   const { startLogin } = useAuthStore();
 
-  const onSubmit = handleSubmit(async ({ email, password }: FormData) => {
+  const onSubmit = handleSubmit(async ({ email, password }) => {
     startLogin({ email, password });
   });
 

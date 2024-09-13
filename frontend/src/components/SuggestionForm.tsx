@@ -1,27 +1,26 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui";
-import { Media } from '../../../backend/src/interfaces/interfaces';
+import { api } from "../api/api";
+
+interface FormData {
+  genres: string;
+  likes: string;
+  dislikes: string;
+}
 
 export const SuggestionForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
 
-  const onSubmit = handleSubmit(async (data) => {
-    const res = await fetch("http://localhost:3000/api/suggestions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+  const onSubmit = handleSubmit(async (formData) => {
+    console.log(formData);
+    const { data } = await api.post("/suggestions", formData);
 
-    const suggestions = await res.json() as Media[];
-    // handleMedia(suggestions);
-    console.log(suggestions);
+    console.log(data);
   });
 
   return (
@@ -48,9 +47,8 @@ export const SuggestionForm = () => {
           {...register("dislikes", { required: true })}
         />
 
-        <Button type="submit" value="Sugerir"/>
+        <Button type="submit" value="Sugerir" />
       </form>
-
     </div>
   );
 };
