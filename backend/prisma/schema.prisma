@@ -65,7 +65,7 @@ model Group {
   author String @ignore
   minAge Int
   maxAge Int
-  image  String?
+  image  Json?
   likes  String[]
   dislikes String[]
   users  User[]

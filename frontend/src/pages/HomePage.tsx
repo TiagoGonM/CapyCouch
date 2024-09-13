@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-import { GroupForm, SuggestionForm } from '../components';
+import { GroupForm, SuggestionForm } from "../components";
 
-import { Media } from '../../../backend/src/interfaces/interfaces';
-import { Group } from '../interfaces/interfaces';
+import { Media } from "../../../backend/src/interfaces/interfaces";
+import { Group } from "../interfaces/interfaces";
 
-import { api } from '../api/api';
+import { api } from "../api/api";
 
-import { onLogout } from '../store';
-import { useAuthStore } from '../hooks/useAuthStore';
-import { useAppDispatch } from '../hooks/hooks';
+import { onLogout } from "../store";
+import { useAuthStore } from "../hooks/useAuthStore";
+import { useAppDispatch } from "../hooks/hooks";
 
 interface Movie {
-  title: string
+  title: string;
 }
 
 const getGroups = async () => {
   const { data } = await api.get("/groups");
 
   return data as Group;
-}
+};
 
 export default function HomePage() {
   // const [groups, setGroups] = useState([
@@ -36,18 +36,18 @@ export default function HomePage() {
     { title: "Son Como Niños 2" },
     { title: "Esperando la Carroza" },
     { title: "Avengers: Endgame" },
-    { title: "Dr. House" }
-  ])
+    { title: "Dr. House" },
+  ]);
 
   const [media, setMedia] = useState<Media[]>();
 
   const handleMedia = (newMedia: Media[]) => {
     setMedia([...(media || []), ...newMedia]);
-  }
+  };
 
   useEffect(() => {
     getGroups();
-  })
+  });
 
   const { user } = useAuthStore();
   const dispatch = useAppDispatch();
@@ -66,7 +66,7 @@ export default function HomePage() {
               dispatch(onLogout());
             }}
             className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md hover:bg-[#000000] hover:text-[#c4853a] transition-all border border-[#c4853a]"
-            >
+          >
             Cerrar sesión
           </button>
         </header>

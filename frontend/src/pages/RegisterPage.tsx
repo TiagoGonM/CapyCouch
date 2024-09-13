@@ -22,7 +22,7 @@ const RegisterPage = () => {
   } = useForm<FormData>();
   
   const { startLogin } = useAuthStore();
-  const onSubmit = handleSubmit(async ({age, ...data}: FormData) => {
+  const onSubmit = handleSubmit(async ({age, ...data}) => {
       if (data.password !== data.confirmPassword)
         return alert("Password and confirm password are not equal");
       try {
