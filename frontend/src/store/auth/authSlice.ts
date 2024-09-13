@@ -2,10 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface InitialState {
   status: "checking" | "authenticated" | "not-authenticated";
-  user: {
-    id: string;
-    username: string;
-  } | {};
+  user: {};
   errorMessage: string | undefined;
 }
 

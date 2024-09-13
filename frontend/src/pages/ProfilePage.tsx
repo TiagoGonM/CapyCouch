@@ -1,6 +1,9 @@
 import React from "react";
+import { useAuthStore } from "../hooks/useAuthStore";
 
 export default function UserPage() {
+  const { user } = useAuthStore();
+
   return (
     <div className="min-h-screen bg-[#05080a]">
       <header className="fixed flex justify-center w-full h-20 bg-[#2d1f3b] items-center shadow-md px-4 md:px-8 border-b-4 border-[#c4853a]">
