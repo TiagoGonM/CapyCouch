@@ -11,6 +11,7 @@ interface LoginData {
 
 export const useAuthStore = () => {
   const { errorMessage, status, user } = useSelector((state: RootState) => state.auth);
+  
   const dispatch = useAppDispatch();
   
   const startLogin = async ({ email, password }: LoginData) => {
