@@ -3,6 +3,7 @@ import SuggestionForm from '../components/SuggestionForm';
 import { Media } from '../../../backend/src/interfaces/interfaces';
 import { GroupForm } from '../components/GroupForm';
 import { Group } from '../interfaces/interfaces';
+import { Link } from 'react-router-dom';
 
 interface Movie {
   title: string
@@ -15,13 +16,6 @@ const getGroups = async () => {
 }
 
 export default function HomePage() {
-  // const [groups, setGroups] = useState([
-  //   "Los Pibes",
-  //   "aguante marvel",
-  //   "reinas del drama",
-  //   "sanguchito"
-  // ])
-
   const [groups, setGroups] = useState<Group[]>();
 
   const [movies, setMovies] = useState<Movie[]>([
@@ -40,7 +34,7 @@ export default function HomePage() {
 
   useEffect(() => {
     getGroups();
-  })
+  }, [])
 
   return (
     <>
@@ -50,12 +44,15 @@ export default function HomePage() {
             CapyCouch
           </div>
           <div className="flex-1"></div>
-          {/* <button
-            onClick={() => logout()}
-            className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md hover:bg-[#000000] hover:text-[#c4853a] transition-all border border-[#c4853a]"
-            >
-            Cerrar sesión
-          </button> */}
+          
+          <a
+           href="/User"
+            className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md border border-[#c4853a] transition-colors duration-200 ease-in-out hover:bg-[#2d1f3b] hover:text-[#c4853a]"
+          >
+            usuario
+            
+          </a>
+          
         </header>
 
         <section>
@@ -68,10 +65,10 @@ export default function HomePage() {
 
         <section>
           {groups?.map(({ name, ...group }) => (
-            <>
+            <React.Fragment key={name}>
               <h1>Nombre: {name}</h1>
               <p>Resto: {JSON.stringify(group)}</p>
-            </>
+            </React.Fragment>
           ))}
         </section>
 
@@ -80,16 +77,6 @@ export default function HomePage() {
             <h2 className="text-2xl font-bold mb-4 text-[#c4853a]">
               Tus Grupos
             </h2>
-            {/* <ul className="space-y-2">
-              {groups?.map((group, index) => (
-                <li
-                  key={index}
-                  className="bg-[#2b2f31] p-3 rounded-md shadow-md hover:bg-[#2d1f3b] transition-all cursor-pointer"
-                >
-                  {group}
-                </li>
-              ))}
-            </ul> */}
           </section>
 
           <section>
