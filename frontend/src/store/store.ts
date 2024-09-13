@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authSlice } from "./";
+import { authSlice, suggestionSlice, groupSlice } from "./";
 
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
+    group: groupSlice.reducer,
+    suggestion: suggestionSlice.reducer,
   },
 });
 
