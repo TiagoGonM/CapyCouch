@@ -6,7 +6,6 @@ export default function LandingPage() {
       <header className="fixed flex justify-center w-full h-20 bg-[#2d1f3b] items-center shadow-md px-4 md:px-8 border-b-4 border-[#c4853a]">
         <img src="src/assets/logo.png" width="170" height="150" alt="CapyCouch logo" className="mr-3" />
         <div className="text-[#cddbe5] font-bold text-xl md:text-2xl">CapyCouch</div>
-        <a href="/home" className="text-center self-center hover:underline flex-1 hover:text-accent">Ir a inicio (temporal)</a>
         <div className="flex-1"></div>
         <a
           href="/auth/login"

@@ -1,38 +1,43 @@
 import React from "react";
 
-import { FieldValues, UseFormHandleSubmit, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Button } from "../components/ui";
+import { api } from "../api/api";
+import { useAuthStore } from "../hooks/useAuthStore";
 
-const onSubmit = (
-  handleSubmit: UseFormHandleSubmit<FieldValues, undefined>
-) => {
-  handleSubmit(async (data: FieldValues) => {
-    if (data.password !== data.confirmPassword)
-      return alert("Password and confirm password are not equal");
+interface FormData {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  age: string;
+}
 
-    console.log(data);
-
-    // const res = await fetch("/api/auth/register", {
-    //   method: "POST",
-    //   body: JSON.stringify(data),
-    //   headers: { "Content-Type": "application/json" },
-    // });
-
-    // const user = await res.json();
-    // console.log(user);
-  });
-};
 
 const RegisterPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>();
+  
+  const { startLogin } = useAuthStore();
+  const onSubmit = handleSubmit(async ({age, ...data}: FormData) => {
+      if (data.password !== data.confirmPassword)
+        return alert("Password and confirm password are not equal");
+      try {
 
+        await api.post("/users", {age: parseInt(age), ...data});
+
+        startLogin({ email: data.email, password: data.password });
+      } catch (error) {
+        console.error(error);
+      }
+  });
+  
   return (
     <div className="flex items-center justify-center h-[calc(100vh-7rem)]">
-      <form onSubmit={() => onSubmit(handleSubmit)} className="space-y-2">
+      <form onSubmit={onSubmit} className="space-y-2">
         <label htmlFor="username" className="block text-foreground">
           Nombre de usuario
         </label>

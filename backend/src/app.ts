@@ -21,9 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
 // Routes
-app.use(userRoute);
-app.use(authRoute);
-app.use(suggestionRoute);
-app.use(groupRoute);
+app.use(userRoute.default);
+app.use(authRoute.default);
+app.use(suggestionRoute.default);
+app.use(groupRoute.default);
 
 export default app;

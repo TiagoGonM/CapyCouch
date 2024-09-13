@@ -1,6 +1,4 @@
-import userRoute from "./users.routes";
-import authRoute from "./auth.routes";
-import suggestionRoute from "./suggestions.routes";
-import groupRoute from "./groups.routes";
-
-export { userRoute, authRoute, suggestionRoute, groupRoute };
+export * as userRoute from "./users.routes";
+export * as authRoute from "./auth.routes";
+export * as suggestionRoute from "./suggestions.routes";
+export * as groupRoute from "./groups.routes";

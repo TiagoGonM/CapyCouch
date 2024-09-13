@@ -1,8 +1,7 @@
 import React from "react";
-import { Button, Input } from "../components/ui";
+import { Button } from "../components/ui";
 import { useAuthStore } from "../hooks/useAuthStore";
-import { FieldValues, useForm } from "react-hook-form";
-
+import { useForm } from "react-hook-form";
 interface FormData {
   email: string;
   password: string;
@@ -47,10 +46,6 @@ export default function LoginForm() {
           className="text-foreground mt-5 text-center underline pl-2"
         >
           Registrate
-        </a>
-
-        <a href="/home" className="block underline m-2 text-center">
-          Ir a inicio (temporal)
         </a>
       </form>
     </div>

@@ -11,3 +11,10 @@ export const api = axios.create({
     "Content-type": "application/json",
   },
 });
+
+api.interceptors.request.use((config) => {
+
+  config.headers["x-token"] = localStorage.getItem("token");
+
+  return config;
+});
