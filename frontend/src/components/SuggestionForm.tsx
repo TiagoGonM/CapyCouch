@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "./ui";
 import { Media } from '../../../backend/src/interfaces/interfaces';
 
-const SuggestionForm = () => {
+export const SuggestionForm = () => {
   const {
     register,
     handleSubmit,
@@ -54,5 +54,3 @@ const SuggestionForm = () => {
     </div>
   );
 };
-
-export default SuggestionForm;

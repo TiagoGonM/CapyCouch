@@ -1,24 +1,42 @@
 import React from "react";
-import { Button, Input } from "../components/ui";
+import { Button } from "../components/ui";
+import { useAuthStore } from "../hooks/useAuthStore";
+import { useForm } from "react-hook-form";
+interface FormData {
+  email: string;
+  password: string;
+}
 
 export default function LoginForm() {
+  const { register, handleSubmit } = useForm<FormData>();
+  const { startLogin } = useAuthStore();
+
+  const onSubmit = handleSubmit(async ({ email, password }: FormData) => {
+    startLogin({ email, password });
+  });
+
   return (
     <div className="flex items-center justify-center h-[calc(100vh-7rem)]">
-      <form className="space-y-2">
-        
+      <form onSubmit={onSubmit} className="space-y-2">
         <label htmlFor="email" className="block text-foreground text-sl">
           Correo electrónico
         </label>
-        <Input type="email" id="email" required></Input>
-
+        <input
+          type="email"
+          className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1"
+          {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+        />
 
         <label htmlFor="password" className="block text-foreground text-sl">
           Contraseña
         </label>
+        <input
+          type="password"
+          className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1"
+          {...register("password", { required: true })}
+        />
 
-        <Input type="password" id="password" required></Input>
-
-        <Button value="Iniciar sesión" type="submit"/>
+        <Button value="Iniciar sesión" type="submit" />
 
         <span className="inline-block text-foreground mt-5 text-center">
           ¿Todavia no tienes cuenta?
@@ -29,8 +47,6 @@ export default function LoginForm() {
         >
           Registrate
         </a>
-
-        <a href="/home" className="block underline m-2 text-center">Ir a inicio (temporal)</a>
       </form>
     </div>
   );

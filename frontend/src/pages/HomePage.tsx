@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import SuggestionForm from '../components/SuggestionForm';
+
+import { GroupForm, SuggestionForm } from '../components';
+
 import { Media } from '../../../backend/src/interfaces/interfaces';
-import { GroupForm } from '../components/GroupForm';
 import { Group } from '../interfaces/interfaces';
 import { Link } from 'react-router-dom';
+
+import { api } from '../api/api';
+
+import { onLogout } from '../store';
+import { useAuthStore } from '../hooks/useAuthStore';
+import { useAppDispatch } from '../hooks/hooks';
 
 interface Movie {
   title: string
 }
 
 const getGroups = async () => {
-  const res = await fetch("https://shiny-palm-tree-94j47gq9v4pcxwvx-3000.app.github.dev/api/groups");
+  const { data } = await api.get("/groups");
 
-  return await res.json() as Group;
+  return data as Group;
 }
 
 export default function HomePage() {
@@ -36,6 +43,9 @@ export default function HomePage() {
     getGroups();
   }, [])
 
+  const { user } = useAuthStore();
+  const dispatch = useAppDispatch();
+
   return (
     <>
       <div className="min-h-screen bg-[#05080a] text-[#cddbe5]">
@@ -53,6 +63,15 @@ export default function HomePage() {
             
           </a>
           
+          <button
+            onClick={() => {
+              localStorage.clear();
+              dispatch(onLogout());
+            }}
+            className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md hover:bg-[#000000] hover:text-[#c4853a] transition-all border border-[#c4853a]"
+            >
+            Cerrar sesión
+          </button>
         </header>
 
         <section>
