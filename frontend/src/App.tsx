@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { HomePage, LandingPage, LoginForm, RegisterForm } from "./pages";
+import { HomePage, LandingPage, LoginForm, RegisterForm, UserPage } from "./pages";
 import { useAuthStore } from "./hooks/useAuthStore";
 
 // Rutas  
@@ -29,6 +29,8 @@ export default function AppRouter() {
         <>
           <Route path="/home" element={<HomePage />} />
           <Route path="/*" element={<Navigate to="/home" />} />
+          <Route path="/user" element={<UserPage />} />
+          <Route path="/*" element={<Navigate to="/user" />} />
         </>
       )}
     </Routes>
