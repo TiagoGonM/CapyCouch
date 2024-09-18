@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function LandingPage() {
   return (
@@ -7,18 +8,18 @@ export default function LandingPage() {
         <img src="src/assets/logo.png" width="170" height="150" alt="CapyCouch logo" className="mr-3" />
         <div className="text-[#cddbe5] font-bold text-xl md:text-2xl">CapyCouch</div>
         <div className="flex-1"></div>
-        <a
-          href="/auth/login"
+        <Link
+          to="/auth/login"
           className="px-4 py-2 mx-2 bg-[#2b2f31] bg-opacity-70 text-[#cddbe5] rounded-md hover:bg-[#0000003b] hover:text-[#c4853a] transition-all border border-[#c4853a]"
         >
           Iniciar sesión
-        </a>
-        <a
-          href="/auth/register"
+        </Link>
+        <Link
+          to="/auth/register"
           className="px-4 py-2 mx-2 bg-[#2b2f31] bg-opacity-70 text-[#cddbe5] rounded-md hover:bg-[#0000003b] hover:text-[#c4853a] transition-all border border-[#c4853a]"
         >
           Registrarse
-        </a>
+        </Link>
       </header>
       <main className="flex flex-col min-h-screen pt-24">
         <div className="flex-grow flex items-center">

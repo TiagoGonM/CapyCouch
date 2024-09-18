@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "../components/ui";
 import { useAuthStore } from "../hooks/useAuthStore";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 interface FormData {
   email: string;
   password: string;
@@ -41,12 +42,12 @@ export default function LoginForm() {
         <span className="inline-block text-foreground mt-5 text-center">
           ¿Todavia no tienes cuenta?
         </span>
-        <a
-          href="/auth/register"
+        <Link
+          to="/auth/register"
           className="text-foreground mt-5 text-center underline pl-2"
         >
           Registrate
-        </a>
+        </Link>
       </form>
     </div>
   );

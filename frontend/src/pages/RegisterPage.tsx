@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "../components/ui";
 import { api } from "../api/api";
 import { useAuthStore } from "../hooks/useAuthStore";
+import { Link } from "react-router-dom";
 
 interface FormData {
   username: string;
@@ -92,9 +93,9 @@ const RegisterPage = () => {
         <span className=" text-foreground mt-5 text-center">
           ¿Ya tienes cuenta?
         </span>
-        <a href="/auth/login" className="underline pl-2">
+        <Link to="/auth/login" className="underline pl-2">
           Inicia sesión
-        </a>
+        </Link>
       </form>
     </div>
   );

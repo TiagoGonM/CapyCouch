@@ -10,6 +10,7 @@ import { api } from "../api/api";
 import { onLogout } from "../store";
 import { useAuthStore } from "../hooks/useAuthStore";
 import { useAppDispatch } from "../hooks/hooks";
+import { Link } from "react-router-dom";
 
 interface Movie {
   title: string;
@@ -54,12 +55,12 @@ export default function HomePage() {
           </div>
           <div className="flex-1"></div>
           
-          <a
-           href="/profile"
+          <Link
+           to="/profile"
             className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md border border-[#c4853a] transition-colors duration-200 ease-in-out hover:bg-[#2d1f3b] hover:text-[#c4853a]"
           >
             Ver perfil
-          </a>
+          </Link>
           
           <button
             onClick={() => {
