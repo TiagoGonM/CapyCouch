@@ -34,8 +34,6 @@ export const signIn: RequestHandler = async (req, res) => {
     }
 
     // Generate JWT
-    console.log("solo falta el token");
-
     const token = await generateJWT(user.id, user.username);
 
     const { id, username } = user;

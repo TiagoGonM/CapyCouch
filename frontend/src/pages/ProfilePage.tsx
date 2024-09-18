@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuthStore } from "../hooks/useAuthStore";
 
-export default function UserPage() {
-  const { user } = useAuthStore();
+export default function ProfilePage() {
+  const { user, getUser } = useAuthStore();
+
+  useEffect(() => {
+    getUser();
+  }, [])
 
   return (
     <div className="min-h-screen bg-[#05080a]">
@@ -17,8 +21,8 @@ export default function UserPage() {
         <section className="w-full bg-[#2b2f31] p-8 md:p-16 border-t-4 border-b-4 border-[#c4853a]">
           <div className="max-w-4xl mx-auto flex justify-between items-center">
             <div>
-              <h2 className="text-4xl font-semibold text-[#c4853a] mb-3">(nombre de usuario)</h2>
-              <p className="text-2xl text-[#cddbe5]">EmailDe@prueba.com</p>
+              <h2 className="text-4xl font-semibold text-[#c4853a] mb-3">{user.username}</h2>
+              <p className="text-2xl text-[#cddbe5]">{user.email}</p>
             </div>
             <button className="px-4 py-2 bg-[#2d1f3b] text-[#cddbe5] border-2 border-[#c4853a] rounded-md hover:bg-black hover:text-[#c4853a] transition-colors duration-200">
               Editar

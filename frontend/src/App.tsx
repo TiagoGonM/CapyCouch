@@ -1,9 +1,15 @@
 import React, { useEffect, useMemo } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { HomePage, LandingPage, LoginForm, RegisterForm, ProfilePage } from "./pages";
+import {
+  HomePage,
+  LandingPage,
+  LoginForm,
+  RegisterForm,
+  ProfilePage,
+} from "./pages";
 import { useAuthStore } from "./hooks/useAuthStore";
 
-// Rutas  
+// Rutas
 
 export default function AppRouter() {
   const { status, checkAuthToken } = useAuthStore();
@@ -24,8 +30,6 @@ export default function AppRouter() {
           <Route path="/auth/login" element={<LoginForm />} />
           <Route path="/auth/register" element={<RegisterForm />} />
           <Route path="/" element={<LandingPage />} />
-          
-          // FIXME: for some reason this affects routes like /profile, not being able to navigate to it
           <Route path="/*" element={<Navigate to="/" />} />
         </>
       ) : (

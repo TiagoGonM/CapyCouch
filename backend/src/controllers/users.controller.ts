@@ -15,7 +15,7 @@ export const getUsers: RequestHandler = async (req, res) => {
 export const getUser: RequestHandler = async (req, res) => {
     const { id } = req.params;
     
-    const user = await prisma.user.findUnique({ where: { id, status: true } }) as User;
+    const {password, ...user} = await prisma.user.findUnique({ where: { id, status: true } }) as User;
     
     res.json(user);
 };

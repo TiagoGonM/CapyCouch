@@ -42,7 +42,7 @@ export default function HomePage() {
 
   useEffect(() => {
     getGroups();
-  });
+  }, []);
 
   const { user } = useAuthStore();
   const dispatch = useAppDispatch();
@@ -67,6 +67,8 @@ export default function HomePage() {
             onClick={() => {
               Cookies.remove("token");
               Cookies.remove("token-init-date");
+              Cookies.remove("user");
+              Cookies.remove("user_id");
               dispatch(onLogout());
             }}
             className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md hover:bg-[#000000] hover:text-[#c4853a] transition-all border border-[#c4853a]"
