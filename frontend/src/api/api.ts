@@ -1,4 +1,6 @@
 import axios from "axios";
+import Cookies from "js-cookie";
+
 
 const baseURL =
   import.meta.env.VITE_ENV === "local"
@@ -14,7 +16,7 @@ export const api = axios.create({
 
 api.interceptors.request.use((config) => {
 
-  config.headers["x-token"] = localStorage.getItem("token");
+  config.headers["x-token"] = Cookies.get("token");
 
   return config;
 });

@@ -1,7 +1,11 @@
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "./hooks";
+import Cookies from "js-cookie";
+
 import { api } from "../api/api";
+
+import { useAppDispatch } from "./hooks";
 import { onChecking, onLogin, onLogout, RootState } from "../store";
+
 
 interface LoginData {
   email: string;
@@ -22,8 +26,8 @@ export const useAuthStore = () => {
       console.log(data);
       dispatch(onLogin({ id: data.id, username: data.username }));
       
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("token-init-date", new Date().getTime().toString());
+      Cookies.set("token", data.token);
+      Cookies.set("token-init-date", new Date().getTime().toString());
     } catch (error) {
       dispatch(onLogout());
       console.error(error);
@@ -31,19 +35,20 @@ export const useAuthStore = () => {
   }
 
   const checkAuthToken = async () => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
   
     if (!token) return dispatch(onLogout());
   
     try {
       const { data } = await api.get("/auth/renew");
   
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("token-init-date", new Date().getTime().toString());
+      Cookies.set("token", data.token);
+      Cookies.set("token-init-date", new Date().getTime().toString());
   
       dispatch(onLogin({ id: data.id, username: data.username }));
     } catch (error) {
-      localStorage.clear();
+      Cookies.remove("token");
+      Cookies.remove("token-init-date");
       dispatch(onLogout());
     }
   }

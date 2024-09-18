@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 import { GroupForm, SuggestionForm } from "../components";
 
@@ -61,10 +62,11 @@ export default function HomePage() {
           >
             Ver perfil
           </Link>
-          
+
           <button
             onClick={() => {
-              localStorage.clear();
+              Cookies.remove("token");
+              Cookies.remove("token-init-date");
               dispatch(onLogout());
             }}
             className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md hover:bg-[#000000] hover:text-[#c4853a] transition-all border border-[#c4853a]"
