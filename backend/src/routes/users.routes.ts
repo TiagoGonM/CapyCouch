@@ -14,7 +14,7 @@ const router = Router();
 
 router.get("/api/users", getUsers);
 
-router.get("api/users/:id", getUser);
+router.get("/api/users/:id", getUser);
 
 router.post("/api/users", createUser);
 
