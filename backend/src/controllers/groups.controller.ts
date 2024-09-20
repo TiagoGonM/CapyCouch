@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import prisma from "../db/prisma";
+import { Group } from "@prisma/client";
 
 export const getGroups: RequestHandler = async (req, res) => {
   const [groups, total] = await Promise.all([
@@ -24,13 +25,16 @@ export const getGroup: RequestHandler = async (req, res) => {
 };
 
 export const createGroup: RequestHandler = async (req, res) => {
-  let { users, minAge, maxAge, name, likes, dislikes, image } = req.body;
+  let { groupName, uid, users, minAge, maxAge, likes, dislikes, image } = req.body;
 
   users = users.split(",");
-
+  
   const group = await prisma.group.create({
     data: {
-      name,
+      ownedBy: {
+        connect: { id: uid },
+      },
+      name: groupName,
       minAge,
       maxAge,
       image,
@@ -65,7 +69,7 @@ export const updateGroup: RequestHandler = async (req, res) => {
   });
 
   return res.json({ group });
-}
+};
 
 export const deleteGroup: RequestHandler = async (req, res) => {
   const { id } = req.params;

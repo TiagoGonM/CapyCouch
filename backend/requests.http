@@ -20,14 +20,15 @@ content-type: application/json
 
 POST http://localhost:3000/api/groups
 content-type: application/json
+x-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NmUzNmFhZTEwMTlkYzRmODgzOGE0YjEiLCJuYW1lIjoidGVzdCIsImlhdCI6MTcyNjc4NzM4NiwiZXhwIjoxNzI2ODAxNzg2fQ.fYxwihmAcbq_WsCyjzDDdqR3iUz1M5qHpmn4wnk_jCk
 
 {
-  "name": "Grupo de amigos",
+  "groupName": "Grupo de amigos",
   "minAge": {{$randomInt 10 15}},
   "maxAge": {{$randomInt 20 30}},
   "likes": [],
   "dislikes": [],
-  "users": ["66c7e700d675415dfd7ce87f", "66c884c54c0d99e1efe8e1e3", "66cce65e68119672c178f8e1"]
+  "users": "66c7e700d675415dfd7ce87f,66c884c54c0d99e1efe8e1e3,66cce65e68119672c178f8e1"
 }
 
 ###
