@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { Button } from "./ui";
 
-import { useGroupStore } from "../hooks/useGroupStore";
+import { useGroupStore } from "../hooks/stores/useGroupStore";
 
 interface FormData {
   groupName: string;

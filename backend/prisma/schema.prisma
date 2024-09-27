@@ -37,6 +37,9 @@ model User {
 
   suggestions Suggestion[]
 
+  likes    String[]
+  dislikes String[]
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   groups        Group[]  @relation(fields: [groupsId], references: [id])
@@ -49,9 +52,9 @@ model User {
 model Suggestion {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   genres   String[]
-  likes    String[]
-  dislikes String[]
   author   User     @relation(fields: [authorId], references: [id])
+  group    Group    @relation(fields: [groupId], references: [id])
+  groupId  String   @db.ObjectId
   authorId String   @db.ObjectId
 
   @@map("suggestions")
@@ -67,7 +70,7 @@ model Media {
   name     String
   producer String
   type     MediaType
-  users     User[]
+  users    User[]
   image    String?
 
   @@map("media")
@@ -85,6 +88,8 @@ model Group {
   users    User[]   @relation(fields: [usersId], references: [id])
   usersId  String[] @db.ObjectId
   ownerId  String   @db.ObjectId
+
+  suggestions Suggestion[]
 
   @@map("groups")
 }

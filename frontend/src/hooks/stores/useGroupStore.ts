@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "./hooks";
-import { RootState } from "../store";
+import { useAppDispatch } from "../hooks";
+import { RootState } from "../../store";
 
-import { api } from "../api/api";
+import { api } from "../../api/api";
 
-import { addGroups } from "../store";
+import { addGroups } from "../../store";
 
 interface FormData {
   groupName: string;

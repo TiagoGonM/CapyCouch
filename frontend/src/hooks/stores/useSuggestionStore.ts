@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "./hooks";
+import { useAppDispatch } from "../hooks";
 
-import { RootState, addSuggestion } from "../store";
+import { RootState, addSuggestion } from "../../store";
 
-import { api } from "../api/api";
+import { api } from "../../api/api";
 
 interface FormData {
   genres: string;

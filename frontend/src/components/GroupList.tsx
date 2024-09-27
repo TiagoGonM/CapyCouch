@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useGroupStore } from "../hooks/useGroupStore";
+import { useGroupStore } from "../hooks/stores/useGroupStore";
 import { Group } from ".";
 
 export const GroupList = () => {
@@ -10,12 +10,12 @@ export const GroupList = () => {
   }, []);
 
   return (
-    <li>
+    <section>
       {groups.map(({ name, image, minAge, maxAge, id }) => (
-        <div className="border p-2">
+        <article className="pb-2">
           <Group key={id} name={name} image={"https://via.placeholder.com/50"} minAge={minAge} maxAge={maxAge} />
-        </div>
+        </article>
       ))}
-    </li>
+    </section>
   );
 };

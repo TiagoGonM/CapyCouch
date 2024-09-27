@@ -7,7 +7,7 @@ import {
   RegisterForm,
   ProfilePage,
 } from "./pages";
-import { useAuthStore } from "./hooks/useAuthStore";
+import { useAuthStore } from "./hooks/stores/useAuthStore";
 
 // Rutas
 

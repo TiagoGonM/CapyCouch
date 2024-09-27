@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Media, MediaType } from "../interfaces/interfaces";
+import { Media } from "../interfaces/interfaces";
 
 interface InitialState {
   suggestions: {

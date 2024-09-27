@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui";
-import { useSuggestionStore } from "../hooks/useSuggestionStore";
+import { useSuggestionStore } from "../hooks/stores/useSuggestionStore";
 
 interface FormData {
   genres: string;
