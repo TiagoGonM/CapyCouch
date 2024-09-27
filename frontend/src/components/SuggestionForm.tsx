@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "./ui";
-import { api } from "../api/api";
+import { useSuggestionStore } from "../hooks/stores/useSuggestionStore";
 
 interface FormData {
   genres: string;
@@ -16,39 +16,37 @@ export const SuggestionForm = () => {
     formState: { errors },
   } = useForm<FormData>();
 
+  const { createSuggestion } = useSuggestionStore();
+
   const onSubmit = handleSubmit(async (formData) => {
     console.log(formData);
-    const { data } = await api.post("/suggestions", formData);
-
-    console.log(data);
+    createSuggestion(formData);
   });
 
   return (
-    <div className="flex items-center justify-center h-[calc(100vh-7rem)]">
-      <form onSubmit={onSubmit} className="">
-        <label htmlFor="genres">Géneros</label>
-        <input
-          type="text"
-          className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
-          {...register("genres", { required: true })}
-        />
+    <form onSubmit={onSubmit}>
+      <label htmlFor="genres">Géneros</label>
+      <input
+        type="text"
+        className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
+        {...register("genres", { required: true })}
+      />
 
-        <label htmlFor="likes">Peliculas/series que le gustan</label>
-        <input
-          type="text"
-          className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
-          {...register("likes", { required: true })}
-        />
+      <label htmlFor="likes">Peliculas/series que le gustan</label>
+      <input
+        type="text"
+        className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
+        {...register("likes", { required: true })}
+      />
 
-        <label htmlFor="dislikes">Peliculas/series que no le gustan</label>
-        <input
-          type="text"
-          className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
-          {...register("dislikes", { required: true })}
-        />
+      <label htmlFor="dislikes">Peliculas/series que no le gustan</label>
+      <input
+        type="text"
+        className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
+        {...register("dislikes", { required: true })}
+      />
 
-        <Button type="submit" value="Sugerir" />
-      </form>
-    </div>
+      <Button type="submit" value="Sugerir" />
+    </form>
   );
 };

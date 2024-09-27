@@ -6,7 +6,7 @@ import { Button } from "../components/ui";
 
 import { api } from "../api/api";
 
-import { useAuthStore } from "../hooks/useAuthStore";
+import { useAuthStore } from "../hooks/stores/useAuthStore";
 
 interface FormData {
   username: string;

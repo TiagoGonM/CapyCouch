@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Button } from "../components/ui";
 
-import { useAuthStore } from "../hooks/useAuthStore";
+import { useAuthStore } from "../hooks/stores/useAuthStore";
 
 
 interface FormData {

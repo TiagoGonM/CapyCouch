@@ -8,7 +8,7 @@ import {
   ProfilePage,
   GroupsPage,
 } from "./pages";
-import { useAuthStore } from "./hooks/useAuthStore";
+import { useAuthStore } from "./hooks/stores/useAuthStore";
 
 // Rutas
 

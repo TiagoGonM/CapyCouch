@@ -1,16 +1,13 @@
-export enum MediaType {
-  "Película",
-  "Serie",
-}
-
 export interface Media {
   title: string;
   description: string;
   genres: string[];
-  type: MediaType;
+  platforms: string[];
+  type: "Película" | "Serie";
 }
 
 export interface Group {
+  id: string;
   name: string;
   minAge: number;
   maxAge: number;

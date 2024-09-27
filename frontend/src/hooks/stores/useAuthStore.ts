@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import Cookies from "js-cookie";
 
-import { api } from "../api/api";
+import { api } from "../../api/api";
 
-import { useAppDispatch } from "./hooks";
-import { onChecking, onLogin, onLogout, onUser, RootState } from "../store";
+import { useAppDispatch } from "../hooks";
+import { onChecking, onLogin, onLogout, onUser, RootState } from "../../store";
 
 interface LoginData {
   email: string;

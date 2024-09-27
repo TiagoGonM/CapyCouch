@@ -20,27 +20,44 @@ enum Role {
 
 // Esquema de una colección de MongoDB
 model User {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId // Id default que usa MongoDB
-  username     String   @unique
-  email        String   @unique
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  username     String  @unique
+  email        String  @unique
   password     String
   age          Int
   image        String?
-  status       Boolean  @default(true) // Cuenta eliminada o no
-  googleSignIn Boolean  @default(false) 
+  status       Boolean @default(true) // Cuenta eliminada o no
+  googleSignIn Boolean @default(false) @ignore
 
-  role         Role     @default(user)
+  role Role @default(user)
 
-  seenMedia    Media    @relation(fields: [mediaId], references: [id]) @ignore
+  seenMedia Media @relation(fields: [mediaId], references: [id]) @ignore
 
-  mediaId      String   @ignore @db.ObjectId
-  
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  Group        Group?   @relation(fields: [groupId], references: [id])
-  groupId      String?  @db.ObjectId
+  mediaId String @ignore @db.ObjectId
+
+  suggestions Suggestion[]
+
+  likes    String[]
+  dislikes String[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  groups        Group[]  @relation(fields: [groupsId], references: [id])
+  createdGroups Group[]  @relation("ownedBy")
+  groupsId      String[] @db.ObjectId
 
   @@map("users")
+}
+
+model Suggestion {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  genres   String[]
+  author   User     @relation(fields: [authorId], references: [id])
+  group    Group    @relation(fields: [groupId], references: [id])
+  groupId  String   @db.ObjectId
+  authorId String   @db.ObjectId
+
+  @@map("suggestions")
 }
 
 enum MediaType {
@@ -53,22 +70,26 @@ model Media {
   name     String
   producer String
   type     MediaType
-  User     User[]
+  users    User[]
   image    String?
 
   @@map("media")
 }
 
 model Group {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name   String
-  author String @ignore
-  minAge Int
-  maxAge Int
-  image  Json?
-  likes  String[]
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  ownedBy  User     @relation("ownedBy", fields: [ownerId], references: [id])
+  minAge   Int
+  maxAge   Int
+  image    Json?
+  likes    String[]
   dislikes String[]
-  users  User[]
+  users    User[]   @relation(fields: [usersId], references: [id])
+  usersId  String[] @db.ObjectId
+  ownerId  String   @db.ObjectId
+
+  suggestions Suggestion[]
 
   @@map("groups")
 }
