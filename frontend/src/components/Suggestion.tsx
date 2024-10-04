@@ -31,7 +31,7 @@ export const Suggestion = ({
         <span className="text-sm pl-3 text-slate-500">{type}</span>
 
         <p className="text-gray-400">{description}</p>
-        <p>Disponible en: {platforms}</p>
+        <p>Disponible en: {platforms.join(", ")}</p>
         <div className="pt-2">
           <Stack direction="row" spacing={1}>
             {genres.map((genre) => (

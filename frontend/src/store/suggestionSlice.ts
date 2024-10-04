@@ -2,27 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Media } from "../interfaces/interfaces";
 
 interface InitialState {
-  suggestions: {
-    movies: Media[];
-    series: Media[];
-  };
+  suggestions: Media[]
 }
 
 export const suggestionSlice = createSlice({
   name: "suggestion",
+  
   initialState: {
-    suggestions: {
-      movies: [],
-      series: [],
-    },
+    suggestions: []
   } as InitialState,
+
   reducers: {
-    addSuggestion: (state, { payload }) => {
-    //   payload.map((media) => {
-    //     if (media.type === MediaType.Película)
-    //       state.suggestions.movies.push(media);
-    //     else state.suggestions.series.push(media);
-    //   });
+    addSuggestion: (state, { payload }: { payload: Media[] }) => {
+      state.suggestions = payload;
     },
   },
 });

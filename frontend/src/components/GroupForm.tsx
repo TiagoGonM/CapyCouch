@@ -50,7 +50,9 @@ export const GroupForm = () => {
 
       <div className="grid grid-cols-2">
         <div>
-          <label htmlFor="minAge" className="pr-3">Edad minima</label>
+          <label htmlFor="minAge" className="pr-3">
+            Edad minima
+          </label>
           <input
             type="number"
             className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-[4rem] p-1 mb-3"
@@ -58,7 +60,9 @@ export const GroupForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="maxAge" className="pr-3">Edad maxima</label>
+          <label htmlFor="maxAge" className="pr-3">
+            Edad maxima
+          </label>
           <input
             type="number"
             className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-[4rem] p-1 mb-3"
@@ -73,6 +77,20 @@ export const GroupForm = () => {
         className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
         {...register("users", { required: true })}
       />
+
+      {/* TODO: user AutoComplete + Chips 
+      https://gregchamberlain.github.io/react-chips/ */}
+      {/* <label htmlFor="users">Integrantes</label>
+      <Autocomplete
+        options={["user1", "user2", "user3"]}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
+          />
+        )}
+        sx={{ width: 300 }}
+      /> */}
 
       <label htmlFor="image">Foto del grupo</label>
       <input

@@ -14,6 +14,7 @@ import { useAppDispatch } from "../hooks/hooks";
 import { Link } from "react-router-dom";
 import { GroupList } from "../components/GroupList";
 import { Suggestion } from "../components/Suggestion";
+import { useUserStore } from "../hooks/stores/useUserStore";
 
 const getGroups = async () => {
   const { data } = await api.get("/groups");
@@ -25,13 +26,18 @@ export default function HomePage() {
   const [groupModalVisible, setGroupModalVisible] = useState(false);
   const [suggestionModalVisible, setSuggestionModalVisible] = useState(false);
 
+  const { getUser } = useAuthStore();
+  const { getSuggestions, suggestions } = useSuggestionStore();
+  const { getUsers } = useUserStore();
+  const dispatch = useAppDispatch();
+  
   useEffect(() => {
+    getUsers();
+    getUser();
     getGroups();
+    getSuggestions();
   }, []);
 
-  const { user } = useAuthStore();
-  const { createSuggestion, suggestions } = useSuggestionStore();
-  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -101,9 +107,10 @@ export default function HomePage() {
               </Modal>
             </div>
 
-            <h1 className="text-accent font-bold text-2xl pb-3">Sugerencias</h1>
+            {/* TODO: Carousel */}
+            <h1 className="text-accent font-bold text-2xl pb-3">Tus sugerencias</h1>
             <section className="flex space-x-3">
-              {suggestions.movies.map((suggestion) => (
+              {suggestions.map((suggestion) => (
                 <Suggestion
                   key={suggestion.title}
                   type={suggestion.type}
@@ -113,30 +120,6 @@ export default function HomePage() {
                   platforms={suggestion.platforms}
                 />
               ))}
-              {suggestions.series.map((suggestion) => (
-                <Suggestion
-                  key={suggestion.title}
-                  type={suggestion.type}
-                  name={suggestion.title}
-                  description={suggestion.description}
-                  genres={suggestion.genres}
-                  platforms={suggestion.platforms}
-                />
-              ))}
-              <Suggestion
-                type="Serie"
-                name="Stranger Things"
-                description="Una serie donde ocurren cosas extrañas"
-                genres={["Terror", "Suspenso"]}
-                platforms={["Netflix"]}
-              />
-              <Suggestion
-                type="Serie"
-                name="Stranger Thingsa"
-                description="Una serie donde ocurren cosas extrañas"
-                genres={["Terror", "Suspenso"]}
-                platforms={["Netflix"]}
-              />
             </section>
           </section>
         </main>

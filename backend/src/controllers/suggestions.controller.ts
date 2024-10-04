@@ -3,9 +3,34 @@ import { RequestHandler } from "express";
 import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 import { Media } from "../interfaces/interfaces";
+import prisma from "../db/prisma";
+import { MediaType } from "@prisma/client";
+
+export const getUserSuggestions: RequestHandler = async (req, res) => {
+  const { uid: id } = req.body;
+
+  const [total, suggestions] = await Promise.all([
+    prisma.userSuggestion.count({ where: { authorId: id } }),
+    prisma.userSuggestion.findMany({ where: { authorId: id } }),
+  ]);
+
+  res.json({ total, suggestions });
+};
+
+export const getGroupSuggestions: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+
+  const [total, suggestions] = await Promise.all([
+    prisma.groupSuggestion.count({ where: { groupId: id } }),
+    prisma.groupSuggestion.findMany({ where: { groupId: id } }),
+  ]);
+
+  res.json({ total, suggestions });
+};
 
 const makePrompt = async (genres: string, likes: string, dislikes: string) => {
-  const prompt = `Recomiéndame 7 películas y 10 series, basadas en la siguiente información: Me gustan los géneros: ${genres};  me gustan las peliculas o series como: ${likes};  no me gustan las peliculas o series como: ${dislikes}. Formatealo como una lista que tenga, separando cada contenido con comas: <película o serie>,<breve descrpción>,[género],<tipo:pelicula o serie>,[plataformas donde ver].`;
+  const prompt = `Recomiéndame 7 películas y 10 series, basadas en la siguiente información: Me gustan los géneros: ${genres};  me gustan las peliculas o series como: ${likes};  no me gustan las peliculas o series como: ${dislikes}. Formatealo como una lista que tenga, separando cada contenido con comas: <película o serie>,<breve descrpción>,[generos],<tipo:pelicula o serie>,[plataformas donde ver]. Ejemplo: 1. El Padrino, Una película de mafiosos, [Drama, Crimen], Película, [Netflix, Amazon Prime].`;
+
   let { text } = await generateText({
     model: google("gemini-1.5-flash"),
     prompt,
@@ -15,7 +40,14 @@ const makePrompt = async (genres: string, likes: string, dislikes: string) => {
 };
 
 export const createSuggestion: RequestHandler = async (req, res) => {
-  const { genres, likes, dislikes }: {genres: string, likes: string, dislikes: string} = req.body;
+  const {
+    genres,
+    likes,
+    dislikes,
+  }: { genres: string; likes: string; dislikes: string } = req.body;
+
+  const { id: groupId } = req.params;
+  const { uid: userId } = req.body;
 
   try {
     const moviesList: Media[] = [];
@@ -80,6 +112,36 @@ export const createSuggestion: RequestHandler = async (req, res) => {
         type,
         platforms: platforms.split(", "),
       });
+    }
+    
+    const list = moviesList.concat(seriesList);
+
+    if (groupId) {
+      list.forEach(async (suggestion) => {
+        const { type, ...rest } = suggestion;
+        await prisma.groupSuggestion.create({
+          data: {
+            type: type === "Serie" ? MediaType.series : MediaType.movie,
+            group: {
+              connect: {id: groupId}
+            },
+            ...rest
+          },
+        })
+      })
+    } else {
+      list.forEach(async (suggestion) => {
+        const { type, ...rest } = suggestion;
+        await prisma.userSuggestion.create({
+          data: {
+            type: type === "Serie" ? MediaType.series : MediaType.movie,
+            author: {
+              connect: {id: userId}
+            },
+            ...rest
+          },
+        })
+      })
     }
 
     res.json({ prompt, moviesList, seriesList });

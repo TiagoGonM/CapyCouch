@@ -13,7 +13,6 @@ interface FormData {
 
 export const useSuggestionStore = () => {
   const { suggestions } = useSelector((state: RootState) => state.suggestion);
-
   const dispatch = useAppDispatch();
 
   const createSuggestion = async (formData: FormData) => {
@@ -22,9 +21,19 @@ export const useSuggestionStore = () => {
     dispatch(addSuggestion(data));
   };
 
+  const getSuggestions = async () => {
+    const {
+      data: { suggestions },
+    } = await api.get("/suggestions");
+
+    console.log(suggestions);
+    dispatch(addSuggestion(suggestions));
+  };
+
   return {
     suggestions,
-    
+
     createSuggestion,
+    getSuggestions,
   };
 };

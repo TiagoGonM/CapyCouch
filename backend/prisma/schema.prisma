@@ -35,7 +35,7 @@ model User {
 
   mediaId String @ignore @db.ObjectId
 
-  suggestions Suggestion[]
+  suggestions UserSuggestion[]
 
   likes    String[]
   dislikes String[]
@@ -49,15 +49,30 @@ model User {
   @@map("users")
 }
 
-model Suggestion {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  genres   String[]
-  author   User     @relation(fields: [authorId], references: [id])
-  group    Group    @relation(fields: [groupId], references: [id])
-  groupId  String   @db.ObjectId
-  authorId String   @db.ObjectId
+model GroupSuggestion {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  genres      String[]
+  type        MediaType
+  platforms   String[]
+  group       Group     @relation(fields: [groupId], references: [id])
+  groupId     String    @db.ObjectId
 
-  @@map("suggestions")
+  @@map("group_suggestions")
+}
+
+model UserSuggestion {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  genres      String[]
+  type        MediaType
+  platforms   String[]
+  author      User      @relation(fields: [authorId], references: [id])
+  authorId    String    @db.ObjectId
+
+  @@map("user_suggestions")
 }
 
 enum MediaType {
@@ -89,7 +104,7 @@ model Group {
   usersId  String[] @db.ObjectId
   ownerId  String   @db.ObjectId
 
-  suggestions Suggestion[]
+  suggestions GroupSuggestion[]
 
   @@map("groups")
 }
