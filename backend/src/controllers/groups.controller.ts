@@ -1,6 +1,5 @@
 import { RequestHandler } from "express";
 import prisma from "../db/prisma";
-import { Group } from "@prisma/client";
 
 export const getGroups: RequestHandler = async (req, res) => {
   const [groups, total] = await Promise.all([
@@ -18,7 +17,10 @@ export const getGroupsByUser: RequestHandler = async (req, res) => {
 
   const [groups, total] = await Promise.all([
     prisma.group.findMany({
-      where: { users: { some: { id } } },
+      where: { OR: [
+        {users: { some: { id } }},
+        {ownedBy: { id }} 
+      ] },
       include: { _count: { select: { users: true } }, users: true },
     }),
     prisma.group.count(),
