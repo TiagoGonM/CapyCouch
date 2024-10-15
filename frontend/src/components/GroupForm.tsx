@@ -95,6 +95,7 @@ export const GroupForm = () => {
         }))}
         isMulti
         isSearchable
+        isClearable={false}
         isLoading={loading}
         closeMenuOnSelect={false}
       />
