@@ -4,8 +4,22 @@ import { User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 export const getUsers: RequestHandler = async (req, res) => {
+  // const { coincidence } = req.query;
+  const { uid } = req.params;
+
   const [users, total] = await Promise.all([
-    prisma.user.findMany(), // SELECT * FROM users
+    // () => {
+    //   const res = !coincidence
+    //     ? prisma.user.findMany({ where: { status: true } })
+    //     : prisma.user.findMany({
+    //         where: { username: { startsWith: coincidence as string } },
+    //       });
+    //   console.log("a " + res);
+    //   return res;
+    // },
+
+    prisma.user.findMany({ where: { AND: [{status: true}, {id: uid}] } }), // SELECT * FROM users
+
     prisma.user.count({ where: { status: true } }), // SELECT COUNT * FROM users WHERE status = true
   ]);
 
@@ -19,8 +33,7 @@ export const getUser: RequestHandler = async (req, res) => {
     where: { id, status: true },
   })) as User;
 
-  if (!user)
-    return res.json({ message: "Usuario no encontrado" });
+  if (!user) return res.json({ message: "Usuario no encontrado" });
 
   const { password, ...rest } = user;
 

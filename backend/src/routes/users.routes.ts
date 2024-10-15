@@ -12,7 +12,7 @@ import { validateJWT } from "../middlewares/validate-jwt";
 
 const router = Router();
 
-router.get("/api/users", getUsers);
+router.get("/api/users", validateJWT, getUsers);
 
 router.get("/api/users/:id", getUser);
 

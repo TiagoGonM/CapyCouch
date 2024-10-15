@@ -14,3 +14,13 @@ export interface Group {
   image: string | null;
   users: string[]
 }
+
+export interface User {
+  id: string;
+  username: string;
+  email: string;
+  age: number;
+  image: string | null;
+  role: "admin" | "user";
+  status: boolean;
+}

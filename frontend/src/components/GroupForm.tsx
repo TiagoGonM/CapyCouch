@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "./ui";
 
-import { useGroupStore } from "../hooks/stores/useGroupStore";
+import { useGroupStore, useUserStore } from "../hooks/stores";
+
+import Select from "react-select";
 
 interface FormData {
   groupName: string;
@@ -22,6 +24,8 @@ export const GroupForm = () => {
 
   const { createGroup } = useGroupStore();
 
+  const { getUsers, getUsersByCoincidence, loading, users } = useUserStore();
+
   const [responseError, setResponseError] = useState(false);
 
   const onSubmit = handleSubmit(async ({ minAge, maxAge, ...formData }) => {
@@ -38,6 +42,10 @@ export const GroupForm = () => {
       console.error(error);
     }
   });
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <form onSubmit={onSubmit}>
@@ -78,19 +86,18 @@ export const GroupForm = () => {
         {...register("users", { required: true })}
       />
 
-      {/* TODO: user AutoComplete + Chips 
-      https://gregchamberlain.github.io/react-chips/ */}
-      {/* <label htmlFor="users">Integrantes</label>
-      <Autocomplete
-        options={["user1", "user2", "user3"]}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
-          />
-        )}
-        sx={{ width: 300 }}
-      /> */}
+      {/* TODO: select */}
+      <Select
+        options={users.map((user) => ({
+          value: user.id,
+          label: user.username,
+          color: "#00000",
+        }))}
+        isMulti
+        isSearchable
+        isLoading={loading}
+        closeMenuOnSelect={false}
+      />
 
       <label htmlFor="image">Foto del grupo</label>
       <input
