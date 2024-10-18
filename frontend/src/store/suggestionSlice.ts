@@ -2,21 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Media } from "../interfaces/interfaces";
 
 interface InitialState {
-  suggestions: Media[]
+  suggestions: Media[];
 }
 
 export const suggestionSlice = createSlice({
   name: "suggestion",
-  
+
   initialState: {
-    suggestions: []
+    suggestions: [],
   } as InitialState,
 
   reducers: {
-    addSuggestion: (state, { payload }: { payload: Media[] }) => {
+    setSuggestions: (state, { payload }: { payload: Media[] }) => {
       state.suggestions = payload;
     },
   },
 });
 
-export const { addSuggestion } = suggestionSlice.actions;
+export const { setSuggestions } = suggestionSlice.actions;

@@ -11,7 +11,7 @@ interface FormData {
   minAge: number;
   maxAge: number;
   image: string | null;
-  users: string;
+  users: string[];
 }
 
 export const useGroupStore = () => {

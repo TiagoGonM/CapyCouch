@@ -11,10 +11,8 @@ export const GroupList = () => {
 
   return (
     <section>
-      {groups.map(({ name, image, minAge, maxAge, id }) => (
-        <article className="pb-2">
-          <Group key={id} name={name} image={"https://via.placeholder.com/50"} minAge={minAge} maxAge={maxAge} />
-        </article>
+      {groups.map(({ name, image, minAge, maxAge, id }, i) => (
+        <Group id={id} key={i.toString()} name={name} image={"https://via.placeholder.com/50"} minAge={minAge} maxAge={maxAge} />
       ))}
     </section>
   );

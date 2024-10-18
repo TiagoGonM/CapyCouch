@@ -6,3 +6,5 @@ export * from './userSlice';
 export * from './suggestionSlice';
 
 export * from './store';
+
+export * from './ctxSuggestionSlice';

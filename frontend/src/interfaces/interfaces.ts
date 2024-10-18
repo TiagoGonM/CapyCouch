@@ -24,3 +24,9 @@ export interface User {
   role: "admin" | "user";
   status: boolean;
 }
+
+export interface UserOption {
+  value: string;
+  label: string;
+  color: string;
+}

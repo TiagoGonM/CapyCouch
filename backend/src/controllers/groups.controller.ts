@@ -17,10 +17,7 @@ export const getGroupsByUser: RequestHandler = async (req, res) => {
 
   const [groups, total] = await Promise.all([
     prisma.group.findMany({
-      where: { OR: [
-        {users: { some: { id } }},
-        {ownedBy: { id }} 
-      ] },
+      where: { OR: [{ users: { some: { id } } }, { ownedBy: { id } }] },
       include: { _count: { select: { users: true } }, users: true },
     }),
     prisma.group.count(),
@@ -44,8 +41,6 @@ export const createGroup: RequestHandler = async (req, res) => {
   let { groupName, uid, users, minAge, maxAge, likes, dislikes, image } =
     req.body;
 
-  users = users.split(",");
-
   const group = await prisma.group.create({
     data: {
       ownedBy: {
@@ -58,7 +53,7 @@ export const createGroup: RequestHandler = async (req, res) => {
       likes,
       dislikes,
       users: {
-        connect: users.map((id: string) => ({ id })),
+        connect: (users as string[]).map((id) => ({ id })),
       },
     },
   });
