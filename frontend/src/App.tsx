@@ -7,6 +7,7 @@ import {
   RegisterForm,
   ProfilePage,
   GroupsPage,
+  GenrePage,
 } from "./pages";
 import { useAuthStore } from "./hooks/stores/useAuthStore";
 
@@ -35,6 +36,7 @@ export default function AppRouter() {
         </>
       ) : (
         <>
+          <Route path="/genre" element={<GenrePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/groups" element={<GroupsPage />} />

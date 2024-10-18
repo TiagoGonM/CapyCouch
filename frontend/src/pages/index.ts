@@ -4,6 +4,7 @@ import LoginForm from "./LoginPage";
 import RegisterForm from './RegisterPage';
 import ProfilePage from './ProfilePage';
 import GroupsPage from './GroupsPage';
+import GenrePage from './GenrePage';
 
 export { 
     LandingPage, 
@@ -11,5 +12,6 @@ export {
     RegisterForm,
     HomePage,
     ProfilePage,
-    GroupsPage
+    GroupsPage,
+    GenrePage,
 };
