@@ -3,7 +3,7 @@ import Chip from "@mui/material/Chip";
 import { Stack } from "@mui/material";
 
 type Props = {
-  type: "Película" | "Serie";
+  type: string;
   name: string;
   genres: string[];
   description: string;
@@ -28,14 +28,14 @@ export const Suggestion = ({
       </section>
       <section>
         <h1 className="font-bold inline-block">{name}</h1>
-        <span className="text-sm pl-3 text-slate-500">{type}</span>
+        <span className="text-sm pl-3 text-slate-500">{type === "movie" ? "película": "serie"}</span>
 
-        <p className="text-gray-400">{description}</p>
+        <p className="text-gray-400">{description.concat(".")}</p>
         <p>Disponible en: {platforms.join(", ")}</p>
         <div className="pt-2">
           <Stack direction="row" spacing={1}>
-            {genres.map((genre) => (
-              <Chip key={name} label={genre} variant="outlined" sx={{color: "white"}} />
+            {genres.map((genre, i) => (
+              <Chip key={i.toString()} label={genre} variant="outlined" sx={{color: "white"}} />
             ))}
           </Stack>
         </div>

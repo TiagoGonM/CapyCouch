@@ -27,13 +27,14 @@ model User {
   age          Int
   image        String?
   status       Boolean @default(true) // Cuenta eliminada o no
-  googleSignIn Boolean @default(false) @ignore
 
   role Role @default(user)
 
+  firstTime Boolean @default(true)
+
   seenMedia Media @relation(fields: [mediaId], references: [id]) @ignore
 
-  mediaId String @ignore @db.ObjectId
+  mediaId String @db.ObjectId @ignore
 
   suggestions UserSuggestion[]
 
@@ -86,7 +87,6 @@ model Media {
   producer String
   type     MediaType
   users    User[]
-  image    String?
 
   @@map("media")
 }

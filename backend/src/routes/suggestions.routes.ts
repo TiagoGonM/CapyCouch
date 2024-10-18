@@ -12,4 +12,8 @@ router.post("/api/suggestions", validateJWT, createSuggestion);
 
 router.post("/api/suggestions/group/:id", validateJWT, createSuggestion);
 
+router.all("/api/suggestions/*", (req, res) => {
+    res.status(200).json({ movies: [], series: [] });
+})
+
 export default router;

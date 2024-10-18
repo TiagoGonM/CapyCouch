@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hooks";
 
-import { RootState, addSuggestion } from "../../store";
+import { RootState, setSuggestions } from "../../store";
 
 import { api } from "../../api/api";
 
@@ -18,7 +18,7 @@ export const useSuggestionStore = () => {
   const createSuggestion = async (formData: FormData) => {
     const { data } = await api.post("/suggestions", formData);
     console.log(data);
-    dispatch(addSuggestion(data));
+    dispatch(setSuggestions(data));
   };
 
   const getSuggestions = async () => {
@@ -27,13 +27,33 @@ export const useSuggestionStore = () => {
     } = await api.get("/suggestions");
 
     console.log(suggestions);
-    dispatch(addSuggestion(suggestions));
+    dispatch(setSuggestions(suggestions));
   };
+
+  const getSuggestionsById = async (id: string) => {
+    try {
+      const {
+        data: { suggestions, ok },
+      } = await api.get(`/suggestions/${id}`);
+      
+      if (!ok) {
+        dispatch(setSuggestions([]));
+        return;
+      }
+  
+      dispatch(setSuggestions(suggestions));
+      return suggestions;
+    } catch (error) {
+      console.error("Error: " + error);
+    }
+
+  }
 
   return {
     suggestions,
 
     createSuggestion,
     getSuggestions,
+    getSuggestionsById
   };
 };

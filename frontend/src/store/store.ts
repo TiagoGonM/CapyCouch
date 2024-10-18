@@ -1,5 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { authSlice, suggestionSlice, groupSlice, userSlice } from "./";
+import {
+  authSlice,
+  suggestionSlice,
+  groupSlice,
+  userSlice,
+  ctxSuggestionSlice,
+} from ".";
 
 export const store = configureStore({
   reducer: {
@@ -7,6 +13,7 @@ export const store = configureStore({
     group: groupSlice.reducer,
     suggestion: suggestionSlice.reducer,
     user: userSlice.reducer,
+    // ctxSuggestion: ctxSuggestionSlice.reducer, // FIXME: used before declaration error
   },
 });
 

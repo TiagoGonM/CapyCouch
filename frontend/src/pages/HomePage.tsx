@@ -1,26 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-import { GroupForm, SuggestionForm } from "../components";
 import Modal from "@mui/material/Modal";
-
-import { Group } from "../interfaces/interfaces";
-
-import { api } from "../api/api";
+import { GroupForm, SuggestionForm, GroupList, Suggestion } from "../components";
 
 import { onLogout } from "../store";
 import { useAuthStore, useSuggestionStore } from "../hooks/stores";
 import { useAppDispatch } from "../hooks/hooks";
-import { Link } from "react-router-dom";
-import { GroupList } from "../components/GroupList";
-import { Suggestion } from "../components/Suggestion";
-import { useUserStore } from "../hooks/stores/useUserStore";
-
-const getGroups = async () => {
-  const { data } = await api.get("/groups");
-
-  return data as Group;
-};
 
 export default function HomePage() {
   const [groupModalVisible, setGroupModalVisible] = useState(false);
@@ -28,16 +15,12 @@ export default function HomePage() {
 
   const { getUser } = useAuthStore();
   const { getSuggestions, suggestions } = useSuggestionStore();
-  const { getUsers } = useUserStore();
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
-    getUsers();
     getUser();
-    getGroups();
     getSuggestions();
   }, []);
-
 
   return (
     <>
@@ -47,7 +30,7 @@ export default function HomePage() {
           <div className="flex-1"></div>
 
           <Link
-           to="/groups"
+            to="/groups"
             className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md border border-[#c4853a] transition-colors duration-200 ease-in-out hover:bg-[#2d1f3b] hover:text-[#c4853a]"
           >
             Grupos y Perfil
@@ -96,6 +79,7 @@ export default function HomePage() {
               >
                 Sugerir
               </button>
+
               <Modal
                 open={suggestionModalVisible}
                 onClose={() => setSuggestionModalVisible(false)}
@@ -108,18 +92,26 @@ export default function HomePage() {
             </div>
 
             {/* TODO: Carousel */}
-            <h1 className="text-accent font-bold text-2xl pb-3">Tus sugerencias</h1>
+            <h1 className="text-accent font-bold text-2xl pb-3">
+              Tus sugerencias
+            </h1>
             <section className="flex space-x-3">
-              {suggestions.map((suggestion) => (
-                <Suggestion
-                  key={suggestion.title}
-                  type={suggestion.type}
-                  name={suggestion.title}
-                  description={suggestion.description}
-                  genres={suggestion.genres}
-                  platforms={suggestion.platforms}
-                />
-              ))}
+              {!suggestions.length ? (
+                <h1 className="text-[#707070] text-center pl-5 pb-3">
+                  No hay sugerencias
+                </h1>
+              ) : (
+                suggestions.map((suggestion) => (
+                  <Suggestion
+                    key={suggestion.title}
+                    type={suggestion.type}
+                    name={suggestion.title}
+                    description={suggestion.description}
+                    genres={suggestion.genres}
+                    platforms={suggestion.platforms}
+                  />
+                ))
+              )}
             </section>
           </section>
         </main>
