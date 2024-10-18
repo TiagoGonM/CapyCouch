@@ -27,7 +27,7 @@ export const Group = ({ name, image, minAge, maxAge, id }: Props) => {
           />
         </aside>
         <section className="pl-3 grid grid-flow-row grid-cols-1 grid-rows-2 shrink-0">
-          <h1 className="text-[#c4853a] font-bold">{name}</h1>
+          <h1 className="text-[#c4853a] font-bold overflow-hidden">{name}</h1>
           <p>
             {minAge}-{maxAge}
           </p>

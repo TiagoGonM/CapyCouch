@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
+import Avatar from "@mui/material/Avatar"
 import Modal from "@mui/material/Modal";
 import {
   GroupForm,
   SuggestionForm,
   GroupList,
   Suggestion,
+  User,
 } from "../components";
 
 import { onLogout } from "../store";
@@ -39,8 +41,8 @@ export default function HomePage() {
   const [groupModalVisible, setGroupModalVisible] = useState(false);
   const [suggestionModalVisible, setSuggestionModalVisible] = useState(false);
 
-  const { getUser } = useAuthStore();
-  const { getSuggestions, suggestions } = useSuggestionStore();
+  const { getUser, user } = useAuthStore();
+  const { getSuggestions, getSuggestionsById, suggestions } = useSuggestionStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export default function HomePage() {
           <div className="flex-1"></div>
 
           <Link
-           to="/genre"
+            to="/genre"
             className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md border border-[#c4853a] transition-colors duration-200 ease-in-out hover:bg-[#2d1f3b] hover:text-[#c4853a]"
           >
             Formulario gustos
@@ -77,6 +79,9 @@ export default function HomePage() {
         </header>
         <main className="flex flex-1">
           <aside className="w-64 bg-gray-800 p-4 space-y-4">
+            <div className="bg-[#202020] p-2 rounded-xl">
+              <User name={user.username || "N/A"} image="" />
+            </div>
             <GroupList />
 
             <section className="space-y-2">
@@ -116,34 +121,33 @@ export default function HomePage() {
                 </div>
               </Modal>
             </div>
+
+            <h1 className="text-accent font-bold text-2xl pb-3">
+              Tus sugerencias
+            </h1>
+            <section className="flex space-x-3">
+              {!suggestions.length ? (
+                <h1 className="text-[#707070] text-center pl-5 pb-3">
+                  No hay sugerencias
+                </h1>
+              ) : (
+                suggestions.map((suggestion) => (
+                    <Suggestion
+                      key={suggestion.description}
+                      type={suggestion.type}
+                      name={suggestion.title}
+                      description={suggestion.description}
+                      genres={suggestion.genres}
+                      platforms={suggestion.platforms}
+                    />
+                ))
+              )}
+              {/* TODO: Carousel */}
+              {/* <Carousel responsive={responsive}>
+              </Carousel> */}
+            </section>
           </section>
 
-          {/* TODO: Carousel */}
-          <h1 className="text-accent font-bold text-2xl pb-3">
-            Tus sugerencias
-          </h1>
-          <section className="flex space-x-3">
-            {!suggestions.length ? (
-              <h1 className="text-[#707070] text-center pl-5 pb-3">
-                No hay sugerencias
-              </h1>
-            ) : (
-              suggestions.map((suggestion) => (
-                <div>
-                  <Suggestion
-                    key={suggestion.description}
-                    type={suggestion.type}
-                    name={suggestion.title}
-                    description={suggestion.description}
-                    genres={suggestion.genres}
-                    platforms={suggestion.platforms}
-                  />
-                </div>
-              ))
-            )}
-            {/* <Carousel responsive={responsive}>
-              </Carousel> */}
-          </section>
         </main>
       </div>
     </>
