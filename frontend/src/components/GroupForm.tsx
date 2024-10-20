@@ -50,6 +50,9 @@ export const GroupForm = () => {
   // useEffect(() => {
   //   getUsers();
   // }, []);
+  // useEffect(() => {
+  //   getUsers();
+  // }, []);
 
   return (
     <form onSubmit={onSubmit} className="space-y-2">
@@ -153,13 +156,6 @@ export const GroupForm = () => {
           }}
         />
       </div>
-      {/* <input
-        type="text"
-        className="border-primary border-2 bg-[#2d2d2d] text-foreground rounded-xl w-full p-1 mb-3"
-        {...register("users", { required: true })}
-      /> */}
-
-      {/* TODO: select */}
 
       {/* <label htmlFor="image">Foto del grupo</label>
       <input
