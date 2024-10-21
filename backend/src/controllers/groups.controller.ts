@@ -38,8 +38,17 @@ export const getGroup: RequestHandler = async (req, res) => {
 };
 
 export const createGroup: RequestHandler = async (req, res) => {
-  let { groupName, uid, users, minAge, maxAge, likes, dislikes, image } =
-    req.body;
+  let {
+    groupName,
+    uid,
+    users,
+    genres,
+    minAge,
+    maxAge,
+    likes,
+    dislikes,
+    image,
+  } = req.body;
 
   const group = await prisma.group.create({
     data: {
@@ -49,6 +58,7 @@ export const createGroup: RequestHandler = async (req, res) => {
       name: groupName,
       minAge,
       maxAge,
+      genres,
       image,
       likes,
       dislikes,

@@ -4,7 +4,6 @@ import {
   suggestionSlice,
   groupSlice,
   userSlice,
-  ctxSuggestionSlice,
 } from ".";
 
 export const store = configureStore({
@@ -13,7 +12,6 @@ export const store = configureStore({
     group: groupSlice.reducer,
     suggestion: suggestionSlice.reducer,
     user: userSlice.reducer,
-    // ctxSuggestion: ctxSuggestionSlice.reducer, // FIXME: used before declaration error
   },
 });
 

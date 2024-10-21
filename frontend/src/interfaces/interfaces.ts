@@ -11,6 +11,9 @@ export interface Group {
   name: string;
   minAge: number;
   maxAge: number;
+  genres: string[];
+  likes?: string[];
+  dislikes?: string[];
   image: string | null;
   users: string[]
 }

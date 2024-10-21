@@ -36,13 +36,15 @@ export const signIn: RequestHandler = async (req, res) => {
     // Generate JWT
     const token = await generateJWT(user.id, user.username);
 
-    const { id, username } = user;
+    const { id, username, firstTime } = user;
 
     res.json({
       ok: true,
       id,
       username,
+      email,
       token,
+      firstTime
     });
   } catch (err) {
     console.log(err);

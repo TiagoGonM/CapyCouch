@@ -6,6 +6,7 @@ interface InitialState {
     id?: string;
     username?: string;
     email?: string;
+    firstTime?: boolean;
   };
   errorMessage: string | undefined;
 }
@@ -15,7 +16,8 @@ export const authSlice = createSlice({
   initialState: {
     status: "not-authenticated",
     user: {},
-    errorMessage: undefined
+    errorMessage: undefined,
+    firstTime: false,
   } as InitialState,
 
   reducers: {

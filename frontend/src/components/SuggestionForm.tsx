@@ -16,11 +16,12 @@ export const SuggestionForm = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const { createSuggestion } = useSuggestionStore();
+  const { createSuggestion, getSuggestionsById, id } = useSuggestionStore();
 
   const onSubmit = handleSubmit(async (formData) => {
     console.log(formData);
     createSuggestion(formData);
+    getSuggestionsById(id); // Rehydrates suggestions
   });
 
   return (

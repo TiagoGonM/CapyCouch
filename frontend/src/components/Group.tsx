@@ -1,8 +1,6 @@
 import React from "react";
-import Cookies from "js-cookie";
 
 import { useSuggestionStore } from "../hooks/stores";
-
 
 interface Props {
   name: string;
@@ -12,12 +10,15 @@ interface Props {
   id: string;
 }
 
-export const Group = ({ name, image, minAge, maxAge }: Props) => {
+export const Group = ({ name, image, minAge, maxAge, id }: Props) => {
   const { getSuggestionsById } = useSuggestionStore();
 
   return (
     <div className="pb-2">
-      <article onClick={() => getSuggestionsById(Cookies.get("user_id") as string) } className="flex w-[15rem] hover:bg-secondary rounded-tl-lg rounded-bl-lg pl-1 hover:bg-opacity-30 transition-all cursor-pointer">
+      <article
+        onClick={() => getSuggestionsById(id)}
+        className="flex bg-gradient-to-r hover:rounded-xl hover:translate-x-5 rounded-tl-lg rounded-bl-lg pl-1 transition-all cursor-pointer"
+      >
         <aside>
           <img
             className="rounded-full"

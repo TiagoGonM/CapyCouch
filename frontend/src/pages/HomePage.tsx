@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-import Avatar from "@mui/material/Avatar"
 import Modal from "@mui/material/Modal";
 import {
   GroupForm,
@@ -17,7 +16,7 @@ import { useAuthStore, useSuggestionStore } from "../hooks/stores";
 import { useAppDispatch } from "../hooks/hooks";
 
 // import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
+// import "react-multi-carousel/lib/styles.css";
 
 const responsive = {
   desktop: {
@@ -42,7 +41,7 @@ export default function HomePage() {
   const [suggestionModalVisible, setSuggestionModalVisible] = useState(false);
 
   const { getUser, user } = useAuthStore();
-  const { getSuggestions, getSuggestionsById, suggestions } = useSuggestionStore();
+  const { getSuggestions, suggestions } = useSuggestionStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -79,9 +78,10 @@ export default function HomePage() {
         </header>
         <main className="flex flex-1">
           <aside className="w-64 bg-gray-800 p-4 space-y-4">
-            <div className="bg-[#202020] p-2 rounded-xl">
+            <div className="bg-[#202020] p-2 rounded-xl cursor-pointer hover:underline text-accent font-bold hover:scale-105 hover:underline-offset-1 transition-all" onClick={getSuggestions}>
               <User name={user.username || "N/A"} image="" />
             </div>
+            <h2 className="font-bold">Tus grupos</h2>
             <GroupList />
 
             <section className="space-y-2">
@@ -148,7 +148,6 @@ export default function HomePage() {
               </Carousel> */}
             </section>
           </section>
-
         </main>
       </div>
     </>
