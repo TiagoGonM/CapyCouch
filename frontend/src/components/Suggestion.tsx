@@ -1,6 +1,7 @@
 import React from "react";
 import Chip from "@mui/material/Chip";
 import { Stack } from "@mui/material";
+import { list } from "../utils/utils"
 
 type Props = {
   type: string;
@@ -17,14 +18,24 @@ export const Suggestion = ({
   description,
   platforms,
 }: Props) => {
+  const idx = list.findIndex((media: { name: string, path: string }) => (media.name == name));
+  console.log(idx);
+
+  const getPath = () => { 
+    const path = list.find(
+      (media: { name: string, path: string }) =>
+        media.name === name)?.path || "https://via.placeholder.com/250x250" 
+    return path;
+  };
+
   return (
     <article className="p-4 w-64 rounded-xl bg-gray-800">
       <img
         className="w-full"
-        src="https://via.placeholder.com/250x250"
-        alt="Media image"
+        src={getPath}
+        alt="<Media image>"
       />
-      
+
       <section>
         <h1 className="font-bold inline-block">{name}</h1>
         <span className="text-sm pl-3 text-slate-500">{type === "movie" ? "película" : "serie"}</span>
