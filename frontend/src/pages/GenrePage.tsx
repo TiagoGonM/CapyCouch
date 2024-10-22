@@ -7,7 +7,6 @@ import { Button } from "../components/ui";
 
 import { api } from "../api/api";
 
-
 interface FormData {
   genres: string[];
   likes: string[];
@@ -27,6 +26,7 @@ const GenrePage = () => {
         genres: formData.genres,
         likes: formData.likes,
         dislikes: formData.dislikes,
+        firstTime: false,
       });
       console.log("Data submitted successfully:", formData);
     } catch (error) {
