@@ -32,7 +32,7 @@ export const Suggestion = ({
     <article className="p-4 w-64 rounded-xl bg-gray-800">
       <img
         className="w-full"
-        src={getPath}
+        src=""
         alt="<Media image>"
       />
 
