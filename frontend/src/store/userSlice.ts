@@ -19,10 +19,10 @@ export const userSlice = createSlice({
       state.users = payload;
     },
 
-    setLoading(state, { payload }) {
+    setUserLoading(state, { payload }) {
       state.loading = payload;
     },
   },
 });
 
-export const { setUsers, setLoading } = userSlice.actions;
+export const { setUsers, setUserLoading } = userSlice.actions;

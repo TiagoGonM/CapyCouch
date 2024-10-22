@@ -1,8 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Group, Suggestion } from "../components";
-import { GroupList } from "../components/GroupList";
-import { User } from "../components/User";
 
 export default function LandingPage() {
   return (

@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 import { useAppDispatch } from '../hooks';
 
-import { RootState, setLoading, setUsers } from "../../store";
+import { RootState, setUserLoading as setLoading, setUsers } from "../../store";
 
 import { api } from "../../api/api";
 

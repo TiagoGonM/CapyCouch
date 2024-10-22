@@ -1,10 +1,9 @@
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hooks";
-import { RootState } from "../../store";
+import { RootState } from "../../store/store";
+import { addGroups, setGroupLoading as setLoading } from "../../store";
 
 import { api } from "../../api/api";
-
-import { addGroups } from "../../store";
 
 interface FormData {
   groupName: string;
@@ -15,28 +14,34 @@ interface FormData {
 }
 
 export const useGroupStore = () => {
-  const { groups } = useSelector((state: RootState) => state.group);
+  const { groups, loading } = useSelector((state: RootState) => state.group);
 
   const dispatch = useAppDispatch();
 
   const createGroup = async (formData: FormData) => {
+    dispatch(setLoading(true));
     console.log({ formData });
     const { data } = await api.post("/groups", formData);
     console.log(data);
     dispatch(addGroups(data));
+    dispatch(setLoading(false));
   };
-
+  
   const getGroups = async () => {
+    
+    dispatch(setLoading(true));
     const {
       data: { groups },
     } = await api.get("/groups");
-
+    
     console.log(groups);
     dispatch(addGroups(groups));
+    dispatch(setLoading(false));
   };
 
   return {
     groups,
+    loading,
 
     createGroup,
     getGroups,

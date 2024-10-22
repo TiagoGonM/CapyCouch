@@ -1,17 +1,7 @@
-import HomePage from './HomePage';
-import LandingPage from "./LandingPage";
-import LoginForm from "./LoginPage";
-import RegisterForm from './RegisterPage';
-import ProfilePage from './ProfilePage';
-import GroupsPage from './GroupsPage';
-import GenrePage from './GenrePage';
-
-export { 
-    LandingPage, 
-    LoginForm,
-    RegisterForm,
-    HomePage,
-    ProfilePage,
-    GroupsPage,
-    GenrePage,
-};
+export * as HomePage from './HomePage';
+export * as LandingPage from "./LandingPage";
+export * as LoginForm from "./LoginPage";
+export * as RegisterForm from './RegisterPage';
+export * as ProfilePage from './ProfilePage';
+export * as GroupsPage from './GroupsPage';
+export * as GenrePage from './GenrePage';

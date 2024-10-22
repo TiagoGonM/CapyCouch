@@ -6,7 +6,7 @@ import { Button } from "./ui";
 import { useGroupStore, useUserStore } from "../hooks/stores";
 
 import AsyncSelect from "react-select/async";
-import { UserOption } from "../interfaces/interfaces";
+import { User, UserOption } from "../interfaces/interfaces";
 
 interface FormData {
   groupName: string;
@@ -22,9 +22,9 @@ export const GroupForm = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const { createGroup } = useGroupStore();
+  const { createGroup, getGroups } = useGroupStore();
 
-  const { getUsers, getUsersByCoincidence, loading, users } = useUserStore();
+  const { getUsersByCoincidence, loading, users } = useUserStore();
 
   const [responseError, setResponseError] = useState(false);
   const [selectedValues, setSelectedValues] = useState<UserOption[]>();
@@ -33,7 +33,8 @@ export const GroupForm = () => {
     setResponseError(false);
 
     try {
-      if (!selectedValues?.length) throw new Error("No hay usuarios seleccionados");
+      if (!selectedValues?.length)
+        throw new Error("No hay usuarios seleccionados");
 
       createGroup({
         minAge: parseInt(minAge),
@@ -41,18 +42,13 @@ export const GroupForm = () => {
         users: selectedValues?.map((user) => user.value) || [],
         ...formData,
       });
+
+      getGroups();
     } catch (error) {
       setResponseError(true);
       console.error(error);
     }
   });
-
-  // useEffect(() => {
-  //   getUsers();
-  // }, []);
-  // useEffect(() => {
-  //   getUsers();
-  // }, []);
 
   return (
     <form onSubmit={onSubmit} className="space-y-2">
@@ -97,7 +93,7 @@ export const GroupForm = () => {
           ) => {
             getUsersByCoincidence(inputValue);
             callback(
-              users.map((user) => ({
+              users.map((user: User) => ({
                 value: user.id,
                 label: user.username,
                 color: "#FFF",
@@ -156,6 +152,9 @@ export const GroupForm = () => {
           }}
         />
       </div>
+      {(!selectedValues?.length && responseError) && (
+        <span className="text-red-600 block">Seleccione por lo menos un usuario</span>
+      )}
 
       {/* <label htmlFor="image">Foto del grupo</label>
       <input
@@ -165,6 +164,7 @@ export const GroupForm = () => {
       /> */}
 
       <Button value="Crear" />
+
 
       {responseError && (
         <span className="text-red-600">
