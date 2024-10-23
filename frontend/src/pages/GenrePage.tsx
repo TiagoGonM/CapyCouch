@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Select, { MultiValue } from "react-select";
+import Select from "react-select";
 
 import Cookies from "js-cookie";
 
@@ -8,6 +8,8 @@ import { Button } from "../components/ui";
 import { genres } from "../utils";
 
 import { api } from "../api/api";
+import { Option } from "../interfaces/interfaces";
+import { style } from "./select.style";
 
 interface FormData {
   genres: string[];
@@ -25,7 +27,7 @@ export default function GenrePage() {
   const onSubmit = handleSubmit(async (formData) => {
     try {
       await api.put(`/user/${Cookies.get("user_id")}`, {
-        genres: formData.genres,
+        genres: selectedValues?.map((genre) => genre.value) || [],
         likes: formData.likes,
         dislikes: formData.dislikes,
         firstTime: false,
@@ -36,7 +38,7 @@ export default function GenrePage() {
     }
   });
 
-  const [selectedValues, setSelectedValues] = useState<MultiValue<string>>();
+  const [selectedValues, setSelectedValues] = useState<Option[]>();
 
   return (
     <form onSubmit={onSubmit}>
@@ -52,13 +54,14 @@ export default function GenrePage() {
       />
       {errors.genres && <p className="text-red-500">{errors.genres.message}</p>} */}
       <Select
-        options={genres}
+        options={genres.map((genre) => ({ value: genre, label: genre, color: "#000" }))} // Convert array to object
         isMulti
         isSearchable
         name="Generos"
         onChange={(selected) => {
-          setSelectedValues(selected);
+          setSelectedValues(selected as Option[]);
         }}
+        styles={style}
       />
 
       <label htmlFor="likes">Películas/series que le gustan</label>
