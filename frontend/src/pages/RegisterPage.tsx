@@ -6,7 +6,7 @@ import { Button } from "../components/ui";
 
 import { api } from "../api/api";
 
-import { useAuthStore } from "../hooks/stores/useAuthStore";
+import { useAuthStore } from "../hooks/stores";
 
 interface FormData {
   username: string;
@@ -17,7 +17,7 @@ interface FormData {
 }
 
 
-const RegisterPage = () => {
+export default function RegisterPage() {
   const {
     register,
     handleSubmit,
@@ -102,5 +102,3 @@ const RegisterPage = () => {
     </div>
   );
 };
-
-export default RegisterPage;

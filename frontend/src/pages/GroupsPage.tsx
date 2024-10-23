@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Input } from '../components/ui'
 import { useAuthStore } from '../hooks/stores'
 
-export default function Component() {
+export default function GroupsPage() {
   const groupGenres = ['Acción', 'Comedia', 'Ciencia Ficción', 'Drama', 'Aventura']
   const [activeTab, setActiveTab] = useState('user')
   const [guardados, setGuardados] = useState<string[]>([])

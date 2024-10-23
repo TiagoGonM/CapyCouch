@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useAuthStore } from "../hooks/stores/useAuthStore";
+import { useAuthStore } from "../hooks/stores";
 
 export default function ProfilePage() {
   const { user, getUser } = useAuthStore();

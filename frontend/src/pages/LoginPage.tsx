@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { Button } from "../components/ui";
 
-import { useAuthStore } from "../hooks/stores/useAuthStore";
+import { useAuthStore } from "../hooks/stores";
 
 
 interface FormData {
@@ -12,7 +12,7 @@ interface FormData {
   password: string;
 }
 
-export default function LoginForm() {
+export default function LoginPage() {
   const { register, handleSubmit } = useForm<FormData>();
   const { startLogin } = useAuthStore();
 

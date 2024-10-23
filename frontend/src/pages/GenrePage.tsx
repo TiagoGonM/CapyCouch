@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import Select, { MultiValue } from "react-select";
 
 import Cookies from "js-cookie";
 
 import { Button } from "../components/ui";
+import { genres } from "../utils";
 
 import { api } from "../api/api";
 
@@ -13,7 +15,7 @@ interface FormData {
   dislikes: string[];
 }
 
-const GenrePage = () => {
+export default function GenrePage() {
   const {
     register,
     handleSubmit,
@@ -34,10 +36,12 @@ const GenrePage = () => {
     }
   });
 
+  const [selectedValues, setSelectedValues] = useState<MultiValue<string>>();
+
   return (
     <form onSubmit={onSubmit}>
       <label htmlFor="genres">Géneros</label>
-      <input
+      {/* <input
         type="text"
         className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
         {...register("genres", {
@@ -46,7 +50,16 @@ const GenrePage = () => {
             genre.split(", ").map((genre: string) => genre.trim()), // Convert string to array
         })}
       />
-      {errors.genres && <p className="text-red-500">{errors.genres.message}</p>}
+      {errors.genres && <p className="text-red-500">{errors.genres.message}</p>} */}
+      <Select
+        options={genres}
+        isMulti
+        isSearchable
+        name="Generos"
+        onChange={(selected) => {
+          setSelectedValues(selected);
+        }}
+      />
 
       <label htmlFor="likes">Películas/series que le gustan</label>
       <input
@@ -78,5 +91,3 @@ const GenrePage = () => {
     </form>
   );
 };
-
-export default GenrePage;

@@ -28,7 +28,7 @@ export interface User {
   status: boolean;
 }
 
-export interface UserOption {
+export interface Option {
   value: string;
   label: string;
   color: string;

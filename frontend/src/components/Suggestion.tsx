@@ -1,7 +1,9 @@
 import React from "react";
+
 import Chip from "@mui/material/Chip";
 import { Stack } from "@mui/material";
-import { list } from "../utils/utils"
+
+import { list } from "../utils/paths"
 
 type Props = {
   type: string;

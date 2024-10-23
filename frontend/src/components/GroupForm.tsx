@@ -6,7 +6,7 @@ import { Button } from "./ui";
 import { useGroupStore, useUserStore } from "../hooks/stores";
 
 import AsyncSelect from "react-select/async";
-import { User, UserOption } from "../interfaces/interfaces";
+import { User, Option } from "../interfaces/interfaces";
 
 interface FormData {
   groupName: string;
@@ -27,7 +27,7 @@ export const GroupForm = () => {
   const { getUsersByCoincidence, loading, users } = useUserStore();
 
   const [responseError, setResponseError] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<UserOption[]>();
+  const [selectedValues, setSelectedValues] = useState<Option[]>();
 
   const onSubmit = handleSubmit(async ({ minAge, maxAge, ...formData }) => {
     setResponseError(false);
@@ -89,7 +89,7 @@ export const GroupForm = () => {
         <AsyncSelect
           loadOptions={(
             inputValue: string,
-            callback: (options: UserOption[]) => void
+            callback: (options: Option[]) => void
           ) => {
             getUsersByCoincidence(inputValue);
             callback(
@@ -104,7 +104,7 @@ export const GroupForm = () => {
           isSearchable
           isLoading={loading}
           onChange={(selected) => {
-            setSelectedValues(selected as UserOption[]);
+            setSelectedValues(selected as Option[]);
           }}
           placeholder="Buscar usuarios"
           noOptionsMessage={() => "No hay resultados"}
