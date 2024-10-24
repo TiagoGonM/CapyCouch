@@ -34,7 +34,7 @@ export const Suggestion = ({
     <article className="p-4 w-64 rounded-xl bg-gray-800">
       <img
         className="w-full"
-        src=""
+        src="https://via.placeholder.com/250x250"
         alt="<Media image>"
       />
 
@@ -45,9 +45,9 @@ export const Suggestion = ({
         <p className="text-gray-400">{description.concat(".")}</p>
         <p>Disponible en: {platforms.join(", ")}</p>
         <div className="pt-2">
-          <Stack direction="row" spacing={1}>
+          <Stack direction="row" spacing={0.5}>
             {genres.map((genre, i) => (
-              <Chip key={i.toString()} label={genre} variant="outlined" sx={{ color: "white" }} />
+              <Chip key={i.toString()} label={genre} variant="outlined" size="small" sx={{ color: "white" }} />
             ))}
           </Stack>
         </div>

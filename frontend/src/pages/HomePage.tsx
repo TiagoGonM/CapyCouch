@@ -5,7 +5,6 @@ import Modal from "@mui/material/Modal";
 import {
   GroupForm,
   GroupList,
-  Suggestion,
   User,
 } from "../components";
 
@@ -15,9 +14,11 @@ import {
   useSuggestionStore,
 } from "../hooks/stores";
 import { useAppDispatch } from "../hooks/hooks";
+import { SuggestionList } from "../components/SuggestionList";
 
 // import Carousel from "react-multi-carousel";
 // import "react-multi-carousel/lib/styles.css";
+import { ContextGroup } from '../components/SuggestionContext';
 
 const responsive = {
   desktop: {
@@ -52,7 +53,7 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen bg-gray-900 text-white">
+      <div className="flex flex-col h-screen max-w-full bg-gray-900 text-white">
         <header className="bg-[#2d1f3b] p-4 flex justify-between items-center">
           <div className="font-bold text-xl md:text-2xl">CapyCouch</div>
           <div className="flex-1"></div>
@@ -99,11 +100,12 @@ export default function HomePage() {
               </Modal>
             </section>
           </aside>
-          <section className="flex-1 bg-gray-900 p-4">
-            <div className="flex justify-end mb-4 bg-gray-800 p-2 max-w-[1280px]">
+          <section className="flex-1 flex-row bg-gray-900 w-full">
+            <div className="flex mb-4 bg-gray-800 p-2">
+              <ContextGroup />
+              <div className="flex-1"></div>
               <button
-                className="bg-green-600 hover:bg-green-700 text-foreground rounded-xl p-3"
-                // onClick={() => setSuggestionModalVisible(true)}
+                className="bg-green-600 hover:bg-green-700 text-foreground rounded-xl p-3 mr-3"
                 onClick={() => {
                   const { genres, likes, dislikes, id } = selfUser;
                   createSuggestion({ genres, likes, dislikes } as {
@@ -116,43 +118,15 @@ export default function HomePage() {
               >
                 Sugerir
               </button>
-
-              {/* <Modal
-                open={suggestionModalVisible}
-                onClose={() => setSuggestionModalVisible(false)}
-                className="flex items-center justify-center"
-              >
-                <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
-                  <SuggestionForm />
-                </div>
-              </Modal> */}
             </div>
 
-            <h1 className="text-accent font-bold text-2xl pb-3">
-              Tus sugerencias
-            </h1>
-            <section className="flex space-x-3">
-              {!suggestions.length ? (
-                <h1 className="text-[#707070] text-center pl-5 pb-3">
-                  No hay sugerencias
-                </h1>
-              ) : (
-                suggestions.map((suggestion) => (
-                  <Suggestion
-                    key={suggestion.description}
-                    type={suggestion.type}
-                    name={suggestion.title}
-                    description={suggestion.description}
-                    genres={suggestion.genres}
-                    platforms={suggestion.platforms}
-                  />
-                ))
-              )}
-
-              {/* TODO: Carousel */}
-              {/* <Carousel responsive={responsive}>
-              </Carousel> */}
+            <section className="ml-2">
+              <h1 className="text-accent font-bold text-2xl pb-3">
+                Tus sugerencias
+              </h1>
+              <SuggestionList />
             </section>
+
           </section>
         </main>
       </div>
