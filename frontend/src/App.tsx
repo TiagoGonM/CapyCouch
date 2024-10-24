@@ -16,8 +16,6 @@ import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import ProfilePage from "./pages/ProfilePage";
-import GroupsPage from "./pages/GroupsPage";
 import GenrePage from "./pages/GenrePage";
 
 import { useAuthStore } from "./hooks/stores";
@@ -50,8 +48,6 @@ export default function AppRouter() {
         <>
           <Route path="/genre" element={<GenrePage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/groups" element={<GroupsPage />} />
           <Route path="/*" element={<Navigate to={isFirstTime ? "/genre" : "/home"} />} />
         </>
       )}
