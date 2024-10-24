@@ -8,7 +8,7 @@ export const SuggestionList = () => {
   const { suggestions } = useSuggestionStore();
 
   return (
-    <div className="slider-container w-[1200px] ml-10">
+    <div className="w-[1200px] ml-10">
       <div className="slider-container">
         {!suggestions.length ? (
           <h1 className="text-[#707070] text-center pl-5 pb-3">

@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 import Modal from "@mui/material/Modal";
-import {
-  GroupForm,
-  GroupList,
-  User,
-} from "../components";
+import Divider from "@mui/material/Divider";
+import { GroupForm, GroupList, User } from "../components";
 
 import { onLogout } from "../store";
 import {
   useAuthStore,
+  useGroupStore,
   useSuggestionStore,
 } from "../hooks/stores";
 import { useAppDispatch } from "../hooks/hooks";
@@ -18,7 +16,7 @@ import { SuggestionList } from "../components/SuggestionList";
 
 // import Carousel from "react-multi-carousel";
 // import "react-multi-carousel/lib/styles.css";
-import { ContextGroup } from '../components/SuggestionContext';
+import { SuggestionContext } from "../components/SuggestionContext";
 
 const responsive = {
   desktop: {
@@ -42,14 +40,23 @@ export default function HomePage() {
   const [groupModalVisible, setGroupModalVisible] = useState(false);
 
   const { getUser, user: selfUser } = useAuthStore();
-  const { getSuggestions, suggestions, createSuggestion, getSuggestionsById } =
-    useSuggestionStore();
+  const { groups, getGroups } = useGroupStore();
+  const {
+    getSuggestions,
+    createSuggestion,
+    getSuggestionsById,
+    id,
+    type,
+  } = useSuggestionStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     getUser();
     getSuggestions();
+    getGroups();
   }, []);
+
+  const groupRelated = groups.find((group) => group.id === id);
 
   return (
     <>
@@ -80,8 +87,9 @@ export default function HomePage() {
               <User name={selfUser.username || "N/A"} image="" />
             </div>
             <h2 className="font-bold">Tus grupos</h2>
-            <GroupList className="max-h-[450px] overflow-y-scroll" />
+            <GroupList className="max-h-[450px] overflow-y-scroll overflow-x-hidden" />
 
+            <Divider orientation="horizontal" sx={{ background: "#505050" }} />
             <section className="space-y-2">
               <button
                 className="bg-green-600 hover:bg-green-700 text-foreground rounded-xl p-3 w-full"
@@ -102,7 +110,13 @@ export default function HomePage() {
           </aside>
           <section className="flex-1 flex-row bg-gray-900 w-full">
             <div className="flex mb-4 bg-gray-800 p-2">
-              <ContextGroup />
+              <SuggestionContext
+                name={type === "group" ? groupRelated?.name as string : "Tú"}
+                genres={
+                  (type === "group" ? groupRelated?.genres : selfUser?.genres) as string[]
+                }
+                image={type === "group" ? groupRelated?.image as string : ""}
+              />
               <div className="flex-1"></div>
               <button
                 className="bg-green-600 hover:bg-green-700 text-foreground rounded-xl p-3 mr-3"
@@ -126,7 +140,6 @@ export default function HomePage() {
               </h1>
               <SuggestionList />
             </section>
-
           </section>
         </main>
       </div>

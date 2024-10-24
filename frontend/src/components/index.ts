@@ -6,3 +6,4 @@ export * from "./GroupList";
 export * from "./User";
 export * from "./UserList";
 export * from "./CollapsedUserList";
+export * from "./CollapsableText";
