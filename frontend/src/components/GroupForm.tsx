@@ -6,7 +6,7 @@ import { Button } from "./ui";
 import { useAuthStore, useGroupStore, useUserStore } from "../hooks/stores";
 
 import AsyncSelect from "react-select/async";
-import { User, Option } from "../interfaces/interfaces";
+import { User } from "../interfaces/interfaces";
 import { style } from "../pages/select.style";
 
 interface FormData {
@@ -14,6 +14,13 @@ interface FormData {
   minAge: string;
   maxAge: string;
   image: string | null;
+}
+
+interface GroupOption {
+  value: string;
+  label: string;
+  color: string;
+  age: number;
 }
 
 export const GroupForm = () => {
@@ -29,7 +36,7 @@ export const GroupForm = () => {
   const { user, getUser } = useAuthStore();
 
   const [responseError, setResponseError] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState<Option[]>();
+  const [selectedUsers, setSelectedUsers] = useState<GroupOption[]>();
 
   const onSubmit = handleSubmit(async ({ minAge, maxAge, ...formData }) => {
     setResponseError(false);
@@ -124,7 +131,7 @@ export const GroupForm = () => {
         <AsyncSelect
           loadOptions={(
             inputValue: string,
-            callback: (options: Option[]) => void
+            callback: (options: GroupOption[]) => void
           ) => {
             getUsersByCoincidence(inputValue);
             callback(
@@ -140,7 +147,7 @@ export const GroupForm = () => {
           isSearchable
           isLoading={loading}
           onChange={(selected) => {
-            setSelectedUsers(selected as Option[]);
+            setSelectedUsers(selected as GroupOption[]);
           }}
           placeholder="Buscar usuarios"
           noOptionsMessage={() => "No hay resultados"}

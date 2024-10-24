@@ -1,5 +1,4 @@
 export * from "./GroupForm";
-export * from "./SuggestionForm";
 export * from "./Group";
 export * from "./Suggestion";
 export * from "./Tag";
