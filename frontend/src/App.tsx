@@ -27,6 +27,7 @@ import { useAuthStore } from "./hooks/stores";
 export default function AppRouter() {
   const { status, checkAuthToken, user: {firstTime} } = useAuthStore();
   const isAuthenticated = useMemo(() => status === "authenticated", [status]);
+  const isFirstTime = useMemo(() => firstTime, [status]);
 
   useEffect(() => {
     checkAuthToken();
@@ -48,11 +49,10 @@ export default function AppRouter() {
       ) : (
         <>
           <Route path="/genre" element={<GenrePage />} />
-          {firstTime && (<Route path="/*" element={<Navigate to="/genre" />} />)}
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/groups" element={<GroupsPage />} />
-          <Route path="/*" element={<Navigate to="/home" />} />
+          <Route path="/*" element={<Navigate to={isFirstTime ? "/genre" : "/home"} />} />
         </>
       )}
     </Routes>

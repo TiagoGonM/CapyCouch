@@ -28,19 +28,19 @@ export const GroupForm = () => {
   const { getUsersByCoincidence, loading, users } = useUserStore();
 
   const [responseError, setResponseError] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<Option[]>();
+  const [selectedUsers, setSelectedUsers] = useState<Option[]>();
 
   const onSubmit = handleSubmit(async ({ minAge, maxAge, ...formData }) => {
     setResponseError(false);
 
     try {
-      if (!selectedValues?.length)
+      if (!selectedUsers?.length)
         throw new Error("No hay usuarios seleccionados");
 
       createGroup({
         minAge: parseInt(minAge),
         maxAge: parseInt(maxAge),
-        users: selectedValues?.map((user) => user.value) || [],
+        users: selectedUsers?.map((user) => user.value) || [],
         ...formData,
       });
 
@@ -105,7 +105,7 @@ export const GroupForm = () => {
           isSearchable
           isLoading={loading}
           onChange={(selected) => {
-            setSelectedValues(selected as Option[]);
+            setSelectedUsers(selected as Option[]);
           }}
           placeholder="Buscar usuarios"
           noOptionsMessage={() => "No hay resultados"}
@@ -114,7 +114,7 @@ export const GroupForm = () => {
           styles={style}
         />
       </div>
-      {(!selectedValues?.length && responseError) && (
+      {(!selectedUsers?.length && responseError) && (
         <span className="text-red-600 block">Seleccione por lo menos un usuario</span>
       )}
 

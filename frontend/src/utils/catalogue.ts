@@ -1,4 +1,4 @@
-export const movies = [
+export const catalogue = [
     "500 Days of Summer",
     "Deadpool",
     "Mi villano favorito",

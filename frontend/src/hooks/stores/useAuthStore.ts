@@ -36,7 +36,7 @@ export const useAuthStore = () => {
         onLogin({
           id: data.id,
           username: data.username,
-          firstTime: true,
+          firstTime: data.firstTime,
         })
       );
     } catch (error) {
