@@ -3,7 +3,7 @@ import { useGroupStore } from "../hooks/stores/useGroupStore";
 import { Group as IGroup } from "../interfaces/interfaces";
 import { Group } from ".";
 
-export const GroupList = () => {
+export const GroupList = ({className}: {className?: string}) => {
   const { getGroups, groups, loading } = useGroupStore();
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export const GroupList = () => {
   }, []);
 
   return (
-    <section>
+    <section className={className}>
       {loading ? (
         <h3>Cargando...</h3>
       ) : (

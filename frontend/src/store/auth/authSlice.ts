@@ -1,23 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface InitialState {
+interface InitState {
   status: "checking" | "authenticated" | "not-authenticated";
   user: {
     id?: string;
     username?: string;
     email?: string;
     firstTime?: boolean;
+    genres?: string[];
+    likes?: string[];
+    dislikes?: string[];
+    age?: number;
   };
-  errorMessage: string | undefined;
+  errorMessage?: string;
 }
 
 export const authSlice = createSlice({
   name: "auth",
+
   initialState: {
     status: "not-authenticated",
     user: {},
     errorMessage: undefined,
-  } as InitialState,
+  } as InitState,
 
   reducers: {
     onChecking: (state) => {
@@ -41,7 +46,7 @@ export const authSlice = createSlice({
       state.status = "authenticated";
       state.user = payload;
       state.errorMessage = undefined;
-    }
+    },
   },
 });
 

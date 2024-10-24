@@ -8,19 +8,21 @@ import { RootState, setSuggestions, setMeta } from "../../store";
 import { api } from "../../api/api";
 
 interface FormData {
-  genres: string;
-  likes: string;
-  dislikes: string;
+  genres: string[];
+  likes: string[];
+  dislikes: string[];
 }
 
 export const useSuggestionStore = () => {
-  const { suggestions, id, type } = useSelector((state: RootState) => state.suggestion);
+  const { suggestions, id, type } = useSelector(
+    (state: RootState) => state.suggestion
+  );
   const dispatch = useAppDispatch();
 
   const createSuggestion = async (formData: FormData) => {
     if (type === "group") createGroupSuggestion(formData);
     else createUserSuggestion(formData);
-  }
+  };
 
   const createUserSuggestion = async (formData: FormData) => {
     const { data } = await api.post("/suggestions", formData);
@@ -32,7 +34,7 @@ export const useSuggestionStore = () => {
     const { data } = await api.post(`/suggestions/group/${id}`, formData);
     console.log(data);
     dispatch(setSuggestions(data));
-  }
+  };
 
   const getSuggestions = async () => {
     const {
@@ -45,19 +47,18 @@ export const useSuggestionStore = () => {
   };
 
   const getSuggestionsById = async (id: string) => {
-    
     try {
       const {
         data: { prompt: _, suggestions },
       } = await api.get(`/suggestions/group/${id}`);
-      
+
       dispatch(setMeta({ type: "group", id }));
-        
-        dispatch(setSuggestions(suggestions));
-      } catch (error) {
-        console.error("Error: " + error);
-      }
-  }
+
+      dispatch(setSuggestions(suggestions));
+    } catch (error) {
+      console.error("Error: " + error);
+    }
+  };
 
   return {
     suggestions,
@@ -67,6 +68,6 @@ export const useSuggestionStore = () => {
     createSuggestion,
 
     getSuggestions,
-    getSuggestionsById
+    getSuggestionsById,
   };
 };

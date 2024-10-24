@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { Button } from "./ui";
 
-import { useGroupStore, useUserStore } from "../hooks/stores";
+import { useAuthStore, useGroupStore, useUserStore } from "../hooks/stores";
 
 import AsyncSelect from "react-select/async";
 import { User, Option } from "../interfaces/interfaces";
@@ -26,6 +26,7 @@ export const GroupForm = () => {
   const { createGroup, getGroups } = useGroupStore();
 
   const { getUsersByCoincidence, loading, users } = useUserStore();
+  const { user, getUser } = useAuthStore();
 
   const [responseError, setResponseError] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<Option[]>();
@@ -37,9 +38,17 @@ export const GroupForm = () => {
       if (!selectedUsers?.length)
         throw new Error("No hay usuarios seleccionados");
 
+      const { genres, likes, dislikes } = mixPreferences();
+
+      const agesList: number[] = selectedUsers?.map((user) => user.age as number);
+      agesList.push(user.age as number);
+
       createGroup({
-        minAge: parseInt(minAge),
-        maxAge: parseInt(maxAge),
+        minAge: agesList?.reduce((acc, age) => Math.min(acc, age)),
+        maxAge: agesList?.reduce((acc, age) => Math.max(acc, age)),
+        genres,
+        likes,
+        dislikes,
         users: selectedUsers?.map((user) => user.value) || [],
         ...formData,
       });
@@ -50,6 +59,31 @@ export const GroupForm = () => {
       console.error(error);
     }
   });
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const mixPreferences = () => {
+    let genres: string[] = [];
+    let likes: string[] = [];
+    let dislikes: string[] = [];
+
+    selectedUsers?.map(({ value: id }) => {
+      const user = users.find((user: User) => user.id === id) as User;
+      genres.concat(user?.genres as string[]);
+      likes.concat(user?.likes as string[]);
+      dislikes.concat(user?.dislikes as string[]);
+      console.log({genres, likes, dislikes});
+    });
+
+    // Remove duplicates
+    genres = Array.from(new Set(genres));
+    likes = Array.from(new Set(likes));
+    dislikes = Array.from(new Set(dislikes));
+
+    return { genres, likes, dislikes };
+  };
 
   return (
     <form onSubmit={onSubmit} className="space-y-2">
@@ -98,6 +132,7 @@ export const GroupForm = () => {
                 value: user.id,
                 label: user.username,
                 color: "#FFF",
+                age: user.age,
               }))
             );
           }}
@@ -114,8 +149,10 @@ export const GroupForm = () => {
           styles={style}
         />
       </div>
-      {(!selectedUsers?.length && responseError) && (
-        <span className="text-red-600 block">Seleccione por lo menos un usuario</span>
+      {!selectedUsers?.length && responseError && (
+        <span className="text-red-600 block">
+          Seleccione por lo menos un usuario
+        </span>
       )}
 
       {/* <label htmlFor="image">Foto del grupo</label>
@@ -126,7 +163,6 @@ export const GroupForm = () => {
       /> */}
 
       <Button value="Crear" />
-
 
       {responseError && (
         <span className="text-red-600">

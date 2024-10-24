@@ -12,8 +12,8 @@ export interface Group {
   minAge: number;
   maxAge: number;
   genres: string[];
-  likes?: string[];
-  dislikes?: string[];
+  likes: string[];
+  dislikes: string[];
   image: string | null;
   users: string[]
 }
@@ -26,10 +26,14 @@ export interface User {
   image: string | null;
   role: "admin" | "user";
   status: boolean;
+  genres: string[];
+  likes: string[];
+  dislikes: string[];
 }
 
 export interface Option {
   value: string;
   label: string;
   color: string;
+  age: number;
 }

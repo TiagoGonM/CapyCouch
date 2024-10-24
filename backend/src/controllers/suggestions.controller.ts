@@ -29,7 +29,7 @@ export const getGroupSuggestions: RequestHandler = async (req, res) => {
   res.json({ total, suggestions });
 };
 
-const makePrompt = async (genres: string, likes: string, dislikes: string) => {
+const makePrompt = async (genres: string[], likes: string[], dislikes: string[]) => {
   const prompt = `Recomiéndame 7 PELÍCULAS y 10 SERIES, basadas en la siguiente información: Me gustan los géneros: ${genres}; me gustan las peliculas o series como: ${likes}; no me gustan las peliculas o series como: ${dislikes}. Formatealo como un JSON con los campos: title, genres, description, type (siendo type entre "series" y "movie"), platforms (plataformas de streaming donde se puede ver).`;
 
   let { text } = await generateText({
@@ -45,7 +45,7 @@ export const createSuggestion: RequestHandler = async (req, res) => {
     genres,
     likes,
     dislikes,
-  }: { genres: string; likes: string; dislikes: string } = req.body;
+  }: { genres: string[]; likes: string[]; dislikes: string[] } = req.body;
 
   const { id: groupId } = req.params;
   const { uid: userId } = req.body;

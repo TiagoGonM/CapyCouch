@@ -14,7 +14,7 @@ export const Group = ({ name, image, minAge, maxAge, id }: Props) => {
   const { getSuggestionsById } = useSuggestionStore();
 
   return (
-    <div className="pb-2">
+    <div className={`pb-2`}>
       <article
         onClick={() => getSuggestionsById(id)}
         className="flex bg-gradient-to-r hover:rounded-xl hover:translate-x-5 rounded-tl-lg rounded-bl-lg pl-1 transition-all cursor-pointer"
@@ -29,7 +29,7 @@ export const Group = ({ name, image, minAge, maxAge, id }: Props) => {
           />
         </aside>
         <section className="pl-3 grid grid-flow-row grid-cols-1 grid-rows-2 shrink-0">
-          <h1 className="text-[#c4853a] font-bold overflow-hidden">{name}</h1>
+          <h1 className="text-[#c4853a] font-bold overflow-clip">{name}</h1>
           <p>
             {minAge}-{maxAge}
           </p>

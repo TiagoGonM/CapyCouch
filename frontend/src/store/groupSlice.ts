@@ -1,21 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Group } from "../interfaces/interfaces";
 
-interface InitialState {
+interface InitState {
   groups: Group[];
   loading: boolean;
 }
 
 export const groupSlice = createSlice({
   name: "group",
+  
   initialState: {
     groups: [],
     loading: true,
-  } as InitialState,
+  } as InitState,
+
   reducers: {
     addGroups: (state, { payload }) => {
       state.groups = payload;
     },
+
     setGroupLoading: (state, { payload }) => {
       state.loading = payload;
     }

@@ -20,8 +20,8 @@ export const Suggestion = ({
   description,
   platforms,
 }: Props) => {
-  const idx = list.findIndex((media: { name: string, path: string }) => (media.name == name));
-  console.log(idx);
+  const idx = list.findIndex((media: { name: string, path: string }) => (media.name === name));
+  // console.log(idx);
 
   const getPath = () => { 
     const path = list.find(

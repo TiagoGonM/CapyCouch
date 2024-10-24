@@ -39,8 +39,8 @@ export const getGroup: RequestHandler = async (req, res) => {
 
 export const createGroup: RequestHandler = async (req, res) => {
   let {
-    groupName,
-    uid,
+    groupName: name,
+    uid: id,
     users,
     genres,
     minAge,
@@ -53,9 +53,9 @@ export const createGroup: RequestHandler = async (req, res) => {
   const group = await prisma.group.create({
     data: {
       ownedBy: {
-        connect: { id: uid },
+        connect: { id },
       },
-      name: groupName,
+      name,
       minAge,
       maxAge,
       genres,
@@ -73,7 +73,7 @@ export const createGroup: RequestHandler = async (req, res) => {
 
 export const updateGroup: RequestHandler = async (req, res) => {
   const { id } = req.params;
-  const { users, minAge, maxAge, name, likes, dislikes, image } = req.body;
+  const { users, minAge, maxAge, name, genres, likes, dislikes, image } = req.body;
 
   const group = await prisma.group.update({
     where: { id },
@@ -82,6 +82,7 @@ export const updateGroup: RequestHandler = async (req, res) => {
       minAge,
       maxAge,
       image,
+      genres,
       likes,
       dislikes,
       users: {

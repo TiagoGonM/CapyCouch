@@ -36,7 +36,7 @@ export const signIn: RequestHandler = async (req, res) => {
     // Generate JWT
     const token = await generateJWT(user.id, user.username);
 
-    const { id, username, firstTime } = user;
+    const { id, username, firstTime, age } = user;
 
     res.json({
       ok: true,
@@ -44,7 +44,8 @@ export const signIn: RequestHandler = async (req, res) => {
       username,
       email,
       token,
-      firstTime
+      firstTime,
+      age,
     });
   } catch (err) {
     console.log(err);
@@ -56,7 +57,7 @@ export const signIn: RequestHandler = async (req, res) => {
 };
 
 export const revalidateToken: RequestHandler = async (req, res) => {
-  const { uid, username }: {uid: string, username: string} = req.body;
+  const { uid, username }: { uid: string; username: string } = req.body;
 
   const token = await generateJWT(uid, username);
 
@@ -64,4 +65,4 @@ export const revalidateToken: RequestHandler = async (req, res) => {
     ok: true,
     token,
   });
-}
+};

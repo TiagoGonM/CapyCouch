@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import Modal from "@mui/material/Modal";
 import {
   GroupForm,
-  SuggestionForm,
   GroupList,
   Suggestion,
   User,
 } from "../components";
 
 import { onLogout } from "../store";
-import { useAuthStore, useSuggestionStore } from "../hooks/stores";
+import {
+  useAuthStore,
+  useSuggestionStore,
+} from "../hooks/stores";
 import { useAppDispatch } from "../hooks/hooks";
 
 // import Carousel from "react-multi-carousel";
@@ -38,10 +39,10 @@ const responsive = {
 
 export default function HomePage() {
   const [groupModalVisible, setGroupModalVisible] = useState(false);
-  const [suggestionModalVisible, setSuggestionModalVisible] = useState(false);
 
-  const { getUser, user } = useAuthStore();
-  const { getSuggestions, suggestions } = useSuggestionStore();
+  const { getUser, user: selfUser } = useAuthStore();
+  const { getSuggestions, suggestions, createSuggestion, getSuggestionsById } =
+    useSuggestionStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -55,13 +56,6 @@ export default function HomePage() {
         <header className="bg-[#2d1f3b] p-4 flex justify-between items-center">
           <div className="font-bold text-xl md:text-2xl">CapyCouch</div>
           <div className="flex-1"></div>
-
-          <Link
-            to="/genre"
-            className="px-4 py-2 mx-2 bg-[#2b2f31] text-[#cddbe5] rounded-md border border-[#c4853a] transition-colors duration-200 ease-in-out hover:bg-[#2d1f3b] hover:text-[#c4853a]"
-          >
-            Formulario gustos
-          </Link>
 
           <button
             onClick={() => {
@@ -78,11 +72,14 @@ export default function HomePage() {
         </header>
         <main className="flex flex-1">
           <aside className="w-64 bg-gray-800 p-4 space-y-4">
-            <div className="bg-[#202020] p-2 rounded-xl cursor-pointer hover:underline text-accent font-bold hover:scale-105 hover:underline-offset-1 transition-all" onClick={getSuggestions}>
-              <User name={user.username || "N/A"} image="" />
+            <div
+              className="bg-[#202020] p-2 rounded-xl cursor-pointer hover:underline text-accent font-bold hover:scale-105 hover:underline-offset-1 transition-all"
+              onClick={getSuggestions}
+            >
+              <User name={selfUser.username || "N/A"} image="" />
             </div>
             <h2 className="font-bold">Tus grupos</h2>
-            <GroupList />
+            <GroupList className="max-h-[450px] overflow-y-scroll" />
 
             <section className="space-y-2">
               <button
@@ -96,22 +93,31 @@ export default function HomePage() {
                 onClose={() => setGroupModalVisible(false)}
                 className="flex items-center justify-center"
               >
-                <div className="bg-gray-800 rounded-xl p-5 w-[50%] ">
+                <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
                   <GroupForm />
                 </div>
               </Modal>
             </section>
           </aside>
           <section className="flex-1 bg-gray-900 p-4">
-            <div className="flex justify-end mb-4 bg-gray-800 p-2">
+            <div className="flex justify-end mb-4 bg-gray-800 p-2 max-w-[1280px]">
               <button
                 className="bg-green-600 hover:bg-green-700 text-foreground rounded-xl p-3"
-                onClick={() => setSuggestionModalVisible(true)}
+                // onClick={() => setSuggestionModalVisible(true)}
+                onClick={() => {
+                  const { genres, likes, dislikes, id } = selfUser;
+                  createSuggestion({ genres, likes, dislikes } as {
+                    genres: string[];
+                    likes: string[];
+                    dislikes: string[];
+                  });
+                  getSuggestionsById(id as string);
+                }}
               >
                 Sugerir
               </button>
 
-              <Modal
+              {/* <Modal
                 open={suggestionModalVisible}
                 onClose={() => setSuggestionModalVisible(false)}
                 className="flex items-center justify-center"
@@ -119,7 +125,7 @@ export default function HomePage() {
                 <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
                   <SuggestionForm />
                 </div>
-              </Modal>
+              </Modal> */}
             </div>
 
             <h1 className="text-accent font-bold text-2xl pb-3">
@@ -132,17 +138,17 @@ export default function HomePage() {
                 </h1>
               ) : (
                 suggestions.map((suggestion) => (
-                    <Suggestion
-                      key={suggestion.description}
-                      type={suggestion.type}
-                      name={suggestion.title}
-                      description={suggestion.description}
-                      genres={suggestion.genres}
-                      platforms={suggestion.platforms}
-                    />
+                  <Suggestion
+                    key={suggestion.description}
+                    type={suggestion.type}
+                    name={suggestion.title}
+                    description={suggestion.description}
+                    genres={suggestion.genres}
+                    platforms={suggestion.platforms}
+                  />
                 ))
               )}
-              
+
               {/* TODO: Carousel */}
               {/* <Carousel responsive={responsive}>
               </Carousel> */}

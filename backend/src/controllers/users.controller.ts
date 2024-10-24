@@ -9,12 +9,19 @@ export const getUsers: RequestHandler = async (req, res) => {
 
   const checkCoincidence = () => {
     const res = !coincidence
-        ? prisma.user.findMany({ where: { AND: [{status: true}, {id: uid}] } })
-        : prisma.user.findMany({
-            where: { username: { startsWith: coincidence.toString(), mode: "insensitive" } },
-          });
+      ? prisma.user.findMany({
+          where: { AND: [{ status: true }, { id: uid }] },
+        })
+      : prisma.user.findMany({
+          where: {
+            username: {
+              startsWith: coincidence.toString(),
+              mode: "insensitive",
+            },
+          },
+        });
     return res;
-  }
+  };
 
   const [users, total] = await Promise.all([
     checkCoincidence(), // SELECT * FROM users WHERE status
