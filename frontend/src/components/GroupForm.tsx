@@ -103,29 +103,6 @@ export const GroupForm = () => {
         />
       </div>
 
-      <div className="grid grid-cols-2">
-        <div>
-          <label htmlFor="minAge" className="pr-3">
-            Edad minima
-          </label>
-          <input
-            type="number"
-            className="border-primary border-2 bg-[#2d2d2d] text-foreground rounded-xl w-[4rem] p-1 mb-3"
-            {...register("minAge", { required: true })}
-          />
-        </div>
-        <div>
-          <label htmlFor="maxAge" className="pr-3">
-            Edad maxima
-          </label>
-          <input
-            type="number"
-            className="border-primary border-2 bg-[#2d2d2d] text-foreground rounded-xl w-[4rem] p-1 mb-3"
-            {...register("maxAge", { required: true })}
-          />
-        </div>
-      </div>
-
       <div>
         <label htmlFor="users">Integrantes</label>
         <AsyncSelect
