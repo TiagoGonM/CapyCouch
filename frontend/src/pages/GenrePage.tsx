@@ -44,74 +44,80 @@ export default function GenrePage() {
   const [selectedDislikes, setSelectedDislikes] = useState<Option[]>();
 
   return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor="genres">Géneros</label>
-      {/* <input
-        type="text"
-        className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
-        {...register("genres", {
-          required: "Este campo es obligatorio",
-          setValueAs: (genre) =>
-            genre.split(", ").map((genre: string) => genre.trim()), // Convert string to array
-        })}
-      />
-      {errors.genres && <p className="text-red-500">{errors.genres.message}</p>} */}
-      <Select
-        options={genres.map((genre) => ({
-          value: genre,
-          label: genre,
-          color: "#000",
-        }))}
-        isMulti
-        isSearchable
-        closeMenuOnSelect={false}
-        name="Generos"
-        onChange={(selected) => {
-          setSelectedGenres(selected as Option[]);
-        }}
-        styles={style}
-      />
+    <div className="flex items-center justify-center min-h-screen bg-background">
+    <div className="w-[400px] p-6 bg-background rounded-lg shadow-lg">
+      <form onSubmit={onSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="genres" className="block text-sm font-medium text-foreground mb-1">
+            Géneros
+          </label>
+          <Select
+            options={genres.map((genre) => ({
+              value: genre,
+              label: genre,
+              color: "#000",
+            }))}
+            isMulti
+            isSearchable
+            closeMenuOnSelect={false}
+            name="Generos"
+            onChange={(selected) => {
+              setSelectedGenres(selected as Option[]);
+            }}
+            styles={style}
+          />
+        </div>
 
-      <label htmlFor="likes">Películas/series que le gustan</label>
-      <Select
-        options={catalogue.map((media) => ({
-          value: media,
-          label: media,
-          color: "#000",
-        }))}
-        isMulti
-        isSearchable
-        closeMenuOnSelect={false}
-        name="Películas o series que le gustan"
-        onChange={(selected) => {
-          setSelectedLikes(selected as Option[]);
-        }}
-        styles={style}
-      />
+        <div>
+          <label htmlFor="likes" className="block text-sm font-medium text-foreground mb-1">
+            Películas/series que le gustan
+          </label>
+          <Select
+            options={catalogue.map((media) => ({
+              value: media,
+              label: media,
+              color: "#000",
+            }))}
+            isMulti
+            isSearchable
+            closeMenuOnSelect={false}
+            name="Películas o series que le gustan"
+            onChange={(selected) => {
+              setSelectedLikes(selected as Option[]);
+            }}
+            styles={style}
+          />
+        </div>
 
-      <label htmlFor="dislikes">Películas/series que no le gustan</label>
-      <Select
-        options={catalogue
-          .filter((media) => !selectedLikes?.find((el) => media === el.value))
-          .map((media) => ({
-            value: media,
-            label: media,
-            color: "#000",
-          }))}
-        isMulti
-        isSearchable
-        closeMenuOnSelect={false}
-        name="Películas o series que no le gustan"
-        onChange={(selected) => {
-          setSelectedDislikes(selected as Option[]);
-        }}
-        styles={style}
-      />
-      {errors.dislikes && (
-        <p className="text-red-500">{errors.dislikes.message}</p>
-      )}
+        <div>
+          <label htmlFor="dislikes" className="block text-sm font-medium text-foreground mb-1">
+            Películas/series que no le gustan
+          </label>
+          <Select
+            options={catalogue
+              .filter((media) => !selectedLikes?.find((el) => media === el.value))
+              .map((media) => ({
+                value: media,
+                label: media,
+                color: "#000",
+              }))}
+            isMulti
+            isSearchable
+            closeMenuOnSelect={false}
+            name="Películas o series que no le gustan"
+            onChange={(selected) => {
+              setSelectedDislikes(selected as Option[]);
+            }}
+            styles={style}
+          />
+          {errors.dislikes && (
+            <p className="text-red-500 text-sm mt-1">{errors.dislikes.message}</p>
+          )}
+        </div>
 
-      <Button type="submit" value="actualizar" />
-    </form>
+        <Button type="submit" value="actualizar" />
+      </form>
+    </div>
+  </div>
   );
 }
