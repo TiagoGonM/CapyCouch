@@ -29,7 +29,7 @@ export const Suggestion = ({
     <article className="p-4 w-[18rem] min-h-[500px] max-h-[500px] rounded-xl bg-gray-800">
       <img
         className="w-full"
-        src="https://via.placeholder.com/250x250"
+        src={mediaPaths[name] || "https://via.placeholder.com/250x250"}
         alt="<Media image>"
       />
 
