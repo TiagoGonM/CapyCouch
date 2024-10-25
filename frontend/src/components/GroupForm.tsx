@@ -6,8 +6,8 @@ import { Button } from "./ui";
 import { useAuthStore, useGroupStore, useUserStore } from "../hooks/stores";
 
 import AsyncSelect from "react-select/async";
-import { User } from "../interfaces/interfaces";
 import { style } from "../pages/select.style";
+import { User } from "../interfaces/interfaces";
 
 interface FormData {
   groupName: string;
@@ -21,6 +21,9 @@ interface GroupOption {
   label: string;
   color: string;
   age: number;
+  genres: string[];
+  likes: string[];
+  dislikes: string[];
 }
 
 export const GroupForm = () => {
@@ -33,7 +36,7 @@ export const GroupForm = () => {
   const { createGroup, getGroups } = useGroupStore();
 
   const { getUsersByCoincidence, loading, users } = useUserStore();
-  const { user, getUser } = useAuthStore();
+  const { user: selfUser, getUser } = useAuthStore();
 
   const [responseError, setResponseError] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<GroupOption[]>();
@@ -44,11 +47,14 @@ export const GroupForm = () => {
     try {
       if (!selectedUsers?.length)
         throw new Error("No hay usuarios seleccionados");
+      
+      console.log({selectedUsers});
+      
 
       const { genres, likes, dislikes } = mixPreferences();
 
       const agesList: number[] = selectedUsers?.map((user) => user.age as number);
-      agesList.push(user.age as number);
+      agesList.push(selfUser.age as number);
 
       createGroup({
         minAge: agesList?.reduce((acc, age) => Math.min(acc, age)),
@@ -59,8 +65,6 @@ export const GroupForm = () => {
         users: selectedUsers?.map((user) => user.value) || [],
         ...formData,
       });
-
-      getGroups();
     } catch (error) {
       setResponseError(true);
       console.error(error);
@@ -76,11 +80,14 @@ export const GroupForm = () => {
     let likes: string[] = [];
     let dislikes: string[] = [];
 
-    selectedUsers?.map(({ value: id }) => {
-      const user = users.find((user: User) => user.id === id) as User;
-      genres.concat(user?.genres as string[]);
-      likes.concat(user?.likes as string[]);
-      dislikes.concat(user?.dislikes as string[]);
+    genres = genres.concat(selfUser?.genres as string[]);
+    likes = likes.concat(selfUser?.likes as string[]);
+    dislikes = dislikes.concat(selfUser?.dislikes as string[]);
+
+    selectedUsers?.map((user) => {
+      genres = genres.concat(user?.genres as string[]);
+      likes = likes.concat(user?.likes as string[]);
+      dislikes = dislikes.concat(user?.dislikes as string[]);
       console.log({genres, likes, dislikes});
     });
 
@@ -116,8 +123,11 @@ export const GroupForm = () => {
                 value: user.id,
                 label: user.username,
                 color: "#FFF",
+                genres: user.genres,
                 age: user.age,
-              }))
+                likes: user.likes,
+                dislikes: user.dislikes,
+              }))      
             );
           }}
           isMulti

@@ -58,7 +58,7 @@ export default function HomePage() {
   }, []);
 
   const isGroupType = useMemo(() => type === "group", [type]);
-  const groupRelated = groups.find((group) => group.id === id);
+  const groupRelated = groups?.find((group) => group.id === id);
 
   return (
     <>
