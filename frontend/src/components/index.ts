@@ -9,7 +9,6 @@ export * from "./SuggestionList";
 
 export * from "./User";
 export * from "./UserList";
-export * from "./CollapsedUserList";
 export * from "./UserInfo";
 
 export * from "./CollapsableText";

@@ -120,6 +120,7 @@ export default function HomePage() {
                     : selfUser?.genres) as string[]
                 }
                 image={isGroupType ? (groupRelated?.image as string) : ""}
+                isGroup={isGroupType}
               />
               <div className="flex-1"></div>
 

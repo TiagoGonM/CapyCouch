@@ -20,7 +20,7 @@ export const GroupList = ({className}: {className?: string}) => {
             id={id}
             key={i.toString()}
             name={name}
-            image={"https://via.placeholder.com/160x160"}
+            image={image || "https://via.placeholder.com/160x160"}
             minAge={minAge}
             maxAge={maxAge}
           />

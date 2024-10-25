@@ -21,15 +21,11 @@ export const Suggestion = ({
   description,
   platforms,
 }: Props) => {
-  // console.log(idx);
-
-
-
   return (
     <article className="p-4 w-[18rem] min-h-[500px] max-h-[500px] rounded-xl bg-gray-800">
       <img
         className="w-full max-h-[300px] object-cover"
-        src={mediaPaths[name] || "https://via.placeholder.com/250x250"}
+        src={mediaPaths[name] || "https://via.placeholder.com/250x300"}
         width={250}
         height={300}
         alt="<Media image>"
@@ -40,7 +36,9 @@ export const Suggestion = ({
         <span className="text-sm pl-3 text-slate-500">{type === "movie" ? "película" : "serie"}</span>
 
         <CollapsableText text={description} words={10} className="text-slate-500" />
+
         <p>Disponible en: {platforms.join(", ")}</p>
+        
         <div className="pt-2 flex">
           <Stack direction="row" spacing={0.5} sx={{flexWrap: "wrap", justifySelf: "flex-end"}}>
             {genres.map((genre, i) => (

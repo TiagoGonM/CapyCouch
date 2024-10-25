@@ -7,9 +7,10 @@ type Props = {
   name: string;
   genres?: string[];
   image?: string;
+  isGroup: boolean;
 };
 
-export const SuggestionContext = ({ name, genres, image }: Props) => {
+export const SuggestionContext = ({ name, genres, image, isGroup }: Props) => {
   return (
     <article className="flex">
       <aside>
@@ -18,7 +19,7 @@ export const SuggestionContext = ({ name, genres, image }: Props) => {
           width={50}
           height={50}
           src={image || "https://via.placeholder.com/50x50"}
-          alt="group"
+          alt={isGroup ? "group" : "name"}
         />
       </aside>
       <section className="pl-3 grid grid-flow-row grid-cols-1 grid-rows-2 shrink-0">

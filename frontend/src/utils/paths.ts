@@ -19,7 +19,7 @@ export const mediaPaths = {
     "Narcos": "src\\assets\\series\\narcos.jpg",
     "Okupas": "src\\assets\\series\\okupas.jpg",
     "Peaky Blinders": "src\\assets\\series\\peaky-blinders.jpg",
-    "Rick & Morty": "src\\assets\\series\\rick-y-morty.webp",
+    "Rick and Morty": "src\\assets\\series\\rick-y-morty.jpg",
     "Sex Education": "src\\assets\\series\\sex-education.jpg",
     "Sherlock": "src\\assets\\series\\sherlock.jpg", 
     "Stranger Things": "src\\assets\\series\\stranger-things.jpg",

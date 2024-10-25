@@ -8,8 +8,8 @@ export const User = ({ name, image }: { name: string; image: string | null }) =>
           className="rounded-full"
           width={40}
           height={40}
-          src={image || "https://via.placeholder.com/40"}
-          alt="group"
+          src={image || "https://via.placeholder.com/40x40"}
+          alt="user"
         />
       </aside>
       <section className="pl-3 flex flex-col justify-center items-center">
