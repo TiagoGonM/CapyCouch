@@ -46,9 +46,9 @@ export const Suggestion = ({
         <CollapsableText text={description} words={10} className="text-slate-500" />
         <p>Disponible en: {platforms.join(", ")}</p>
         <div className="pt-2 flex">
-          <Stack direction="row" spacing={0.5}>
+          <Stack direction="row" spacing={0.5} sx={{flexWrap: "wrap", justifySelf: "flex-end"}}>
             {genres.map((genre, i) => (
-              <Chip key={i.toString()} label={genre} variant="outlined" size="small" sx={{ color: "white", justifySelf: "flex-end" }} />
+              <Chip key={i.toString()} label={genre} variant="outlined" size="small" sx={{ color: "white" }} />
             ))}
           </Stack>
         </div>
