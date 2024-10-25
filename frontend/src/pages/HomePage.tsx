@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Cookies from "js-cookie";
 
 import Modal from "@mui/material/Modal";
 import Divider from "@mui/material/Divider";
-import { GroupForm, GroupList, User } from "../components";
 
 import { onLogout } from "../store";
 import {
@@ -14,9 +13,15 @@ import {
 import { useAppDispatch } from "../hooks/hooks";
 import { SuggestionList } from "../components/SuggestionList";
 
-// import Carousel from "react-multi-carousel";
-// import "react-multi-carousel/lib/styles.css";
-import { SuggestionContext } from "../components/SuggestionContext";
+import {
+  SuggestionContext,
+  GroupInfo,
+  UserInfo,
+  GroupForm,
+  GroupList,
+  User,
+} from "../components";
+import { Group } from "../interfaces/interfaces";
 
 const responsive = {
   desktop: {
@@ -38,16 +43,12 @@ const responsive = {
 
 export default function HomePage() {
   const [groupModalVisible, setGroupModalVisible] = useState(false);
+  const [previewInfo, setPreviewInfo] = useState(false);
 
   const { getUser, user: selfUser } = useAuthStore();
   const { groups, getGroups } = useGroupStore();
-  const {
-    getSuggestions,
-    createSuggestion,
-    getSuggestionsById,
-    id,
-    type,
-  } = useSuggestionStore();
+  const { getSuggestions, createSuggestion, getSuggestionsById, id, type } =
+    useSuggestionStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -56,6 +57,7 @@ export default function HomePage() {
     getGroups();
   }, []);
 
+  const isGroupType = useMemo(() => type === "group", [type]);
   const groupRelated = groups.find((group) => group.id === id);
 
   return (
@@ -111,13 +113,36 @@ export default function HomePage() {
           <section className="flex-1 flex-row bg-gray-900 w-full">
             <div className="flex mb-4 bg-gray-800 p-2">
               <SuggestionContext
-                name={type === "group" ? groupRelated?.name as string : "Tú"}
+                name={isGroupType ? (groupRelated?.name as string) : "Tú"}
                 genres={
-                  (type === "group" ? groupRelated?.genres : selfUser?.genres) as string[]
+                  (isGroupType
+                    ? groupRelated?.genres
+                    : selfUser?.genres) as string[]
                 }
-                image={type === "group" ? groupRelated?.image as string : ""}
+                image={isGroupType ? (groupRelated?.image as string) : ""}
               />
               <div className="flex-1"></div>
+
+              <button
+                className="px-4 py-2 mr-3 bg-[#2b2f31] rounded-md transition-all border"
+                onClick={() => setPreviewInfo(true)}
+              >
+                Acerca de
+              </button>
+              <Modal
+                open={previewInfo}
+                onClose={() => setPreviewInfo(false)}
+                className="flex items-center justify-center"
+              >
+                <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
+                  {isGroupType ? (
+                    <GroupInfo group={groupRelated as Group} />
+                  ) : (
+                    <UserInfo user={selfUser} />
+                  )}
+                </div>
+              </Modal>
+
               <button
                 className="bg-green-600 hover:bg-green-700 text-foreground rounded-xl p-3 mr-3"
                 onClick={() => {

@@ -1,7 +1,13 @@
-import React, { useEffect } from 'react'
+import React from "react";
+import { User } from ".";
+import { User as IUser } from "../interfaces/interfaces";
 
-export const UserList = () => {
+export const UserList = ({ members, className }: { members: IUser[], className?: string }) => {
   return (
-    <div>UserList</div>
-  )
-}
+    <div className={className}>
+      {members.map((user) => (
+        <User key={user.id} image={user.image} name={user.username} />
+      ))}
+    </div>
+  );
+};

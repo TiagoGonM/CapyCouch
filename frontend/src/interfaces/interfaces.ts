@@ -15,7 +15,7 @@ export interface Group {
   likes: string[];
   dislikes: string[];
   image: string | null;
-  users: string[]
+  users: User[];
 }
 
 export interface User {

@@ -31,8 +31,6 @@ export const Suggestion = ({
     return path;
   };
 
-  console.log(description);
-
   return (
     <article className="p-4 w-[18rem] min-h-[500px] max-h-[500px] rounded-xl bg-gray-800">
       <img
