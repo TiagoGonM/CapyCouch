@@ -21,7 +21,7 @@ import {
   GroupList,
   User,
 } from "../components";
-import { Group } from "../interfaces/interfaces";
+import { Group, User as IUser } from "../interfaces/interfaces";
 
 const responsive = {
   desktop: {
@@ -138,7 +138,7 @@ export default function HomePage() {
                   {isGroupType ? (
                     <GroupInfo group={groupRelated as Group} />
                   ) : (
-                    <UserInfo user={selfUser} />
+                    <UserInfo user={selfUser as IUser} />
                   )}
                 </div>
               </Modal>

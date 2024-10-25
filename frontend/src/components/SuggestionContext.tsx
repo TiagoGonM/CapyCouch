@@ -17,7 +17,7 @@ export const SuggestionContext = ({ name, genres, image }: Props) => {
           className="rounded-full"
           width={50}
           height={50}
-          src={image || "https://via.placeholder.com/50"}
+          src={image || "https://via.placeholder.com/50x50"}
           alt="group"
         />
       </aside>

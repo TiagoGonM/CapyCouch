@@ -6,7 +6,7 @@ export const UserList = ({ members, className }: { members: IUser[], className?:
   return (
     <div className={className}>
       {members.map((user) => (
-        <User key={user.id} image={user.image} name={user.username} />
+        <User key={user.id} image="" name={user.username} />
       ))}
     </div>
   );

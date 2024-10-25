@@ -1,10 +1,14 @@
 import React from "react";
 import { Group } from "../interfaces/interfaces";
 import { UserList } from ".";
-import { useSuggestionStore } from "../hooks/stores";
+import { useAuthStore, useSuggestionStore } from "../hooks/stores";
 
 export const GroupInfo = ({ group }: { group: Group }) => {
   const { suggestions } = useSuggestionStore();
+
+  const { user: selfUser } = useAuthStore();
+
+  const isOwner = selfUser.id === group.ownerId;
 
   return (
     <div className="grid grid-cols-2">
@@ -12,13 +16,14 @@ export const GroupInfo = ({ group }: { group: Group }) => {
         <section className="flex flex-row">
           <aside>
             <img
-              src={group.image || "https://via.placeholder.com/40x40"}
+              src={group.image || "https://via.placeholder.com/160x160"}
               alt={group.name}
-              className="w-40 h-40 object-cover rounded-full mx-auto"
+              className="w-40 h-40 rounded-full mx-auto"
             />
           </aside>
           <div className="ml-3">
             <h1 className="text-xl text-accent">{group.name}</h1>
+            <p className="text-green-400">{isOwner && "Propietario"}</p>
             <h2 className="font-bold inline-block">Total de sugerencias:</h2>
             <span> {suggestions.length}</span>
             <section>

@@ -16,6 +16,7 @@ export interface Group {
   dislikes: string[];
   image: string | null;
   users: User[];
+  ownerId: string;
 }
 
 export interface User {
@@ -23,12 +24,12 @@ export interface User {
   username: string;
   email: string;
   age: number;
-  image: string | null;
-  role: "admin" | "user";
-  status: boolean;
+  // image: string | null;
+  // role: "admin" | "user";
   genres: string[];
   likes: string[];
   dislikes: string[];
+  firstTime: boolean;
 }
 
 export interface Option {
