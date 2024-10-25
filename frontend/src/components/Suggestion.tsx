@@ -28,8 +28,10 @@ export const Suggestion = ({
   return (
     <article className="p-4 w-[18rem] min-h-[500px] max-h-[500px] rounded-xl bg-gray-800">
       <img
-        className="w-full"
+        className="w-full max-h-[300px] object-cover"
         src={mediaPaths[name] || "https://via.placeholder.com/250x250"}
+        width={250}
+        height={300}
         alt="<Media image>"
       />
 
