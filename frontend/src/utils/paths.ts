@@ -32,7 +32,7 @@ export const mediaPaths = {
     "Alien": "src\\assets\\movies\\alien.webp",
     "Blade Runner 2049": "src\\assets\\movies\\blade-runner-2049.webp",
     "Bohemian Rhapsody": "src\\assets\\movies\\bohemian-rhapsody.jpg",
-    "Dark": "src\\assets\\movies\\dark.jpg",
+    "Dark": "src\\assets\\series\\dark.jpg",
     "Dead Poets Society": "src\\assets\\movies\\dead-poets-society.jpg",
     "Donnie Darko": "src\\assets\\movies\\donnie-darko.jpg",
     "El Padrino": "src\\assets\\movies\\el-padrino.webp",
@@ -50,5 +50,4 @@ export const mediaPaths = {
     "The Conjuring": "src\\assets\\movies\\the-conjuring.jpeg",
     "The Witch": "src\\assets\\movies\\the-witch.jpg",
     "El Zodiaco": "src\\assets\\movies\\zodiac.jpg",
-
 }
