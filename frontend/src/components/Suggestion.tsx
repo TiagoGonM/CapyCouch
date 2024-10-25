@@ -3,7 +3,7 @@ import React from "react";
 import Chip from "@mui/material/Chip";
 import { Stack } from "@mui/material";
 
-import { list } from "../utils/paths"
+import { mediaPaths } from "../utils/paths"
 import { CollapsableText } from "./CollapsableText";
 
 type Props = {
@@ -21,15 +21,9 @@ export const Suggestion = ({
   description,
   platforms,
 }: Props) => {
-  const idx = list.findIndex((media: { name: string, path: string }) => (media.name === name));
   // console.log(idx);
 
-  const getPath = () => { 
-    const path = list.find(
-      (media: { name: string, path: string }) =>
-        media.name === name)?.path || "https://via.placeholder.com/250x250" 
-    return path;
-  };
+
 
   return (
     <article className="p-4 w-[18rem] min-h-[500px] max-h-[500px] rounded-xl bg-gray-800">
