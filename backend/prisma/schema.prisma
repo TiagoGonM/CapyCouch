@@ -37,6 +37,8 @@ model User {
   mediaId String @db.ObjectId @ignore
 
   suggestions UserSuggestion[]
+  suggestionsu Suggestion[]
+  reviews Review[]
 
   likes    String[]
   dislikes String[]
@@ -49,6 +51,26 @@ model User {
   groupsId      String[] @db.ObjectId
 
   @@map("users")
+}
+
+model Group {
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  ownedBy  User     @relation("ownedBy", fields: [ownerId], references: [id])
+  minAge   Int
+  maxAge   Int
+  genres   String[]
+  image    Json?
+  likes    String[]
+  dislikes String[]
+  users    User[]   @relation(fields: [usersId], references: [id])
+  usersId  String[] @db.ObjectId
+  ownerId  String   @db.ObjectId
+
+  suggestions GroupSuggestion[]
+  suggestionsu Suggestion[]
+
+  @@map("groups")
 }
 
 model GroupSuggestion {
@@ -71,10 +93,39 @@ model UserSuggestion {
   genres      String[]
   type        MediaType
   platforms   String[]
-  author      User      @relation(fields: [authorId], references: [id])
+  author      User?      @relation(fields: [authorId], references: [id])
   authorId    String    @db.ObjectId
 
   @@map("user_suggestions")
+}
+
+model Suggestion {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  genres      String[]
+  type        MediaType
+  platforms   String[]
+  author User? @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+
+  reviews Review[]
+
+  groupAuthor Group? @relation(fields: [groupAuthorId], references: [id])
+  groupAuthorId String @db.ObjectId
+
+  @@map("suggestions")
+}
+
+model Review {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  suggestion Suggestion @relation(fields: [suggestionId], references: [id])
+  suggestionId String @db.ObjectId
+
+  user User? @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
+  @@map("reviews")
 }
 
 enum MediaType {
@@ -92,21 +143,3 @@ model Media {
   @@map("media")
 }
 
-model Group {
-  id       String   @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  ownedBy  User     @relation("ownedBy", fields: [ownerId], references: [id])
-  minAge   Int
-  maxAge   Int
-  genres   String[]
-  image    Json?
-  likes    String[]
-  dislikes String[]
-  users    User[]   @relation(fields: [usersId], references: [id])
-  usersId  String[] @db.ObjectId
-  ownerId  String   @db.ObjectId
-
-  suggestions GroupSuggestion[]
-
-  @@map("groups")
-}
