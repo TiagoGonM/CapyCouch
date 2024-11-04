@@ -6,7 +6,7 @@ import { Button } from "./ui";
 import { useAuthStore, useGroupStore, useUserStore } from "../hooks/stores";
 
 import AsyncSelect from "react-select/async";
-import { style } from "../pages/select.style";
+import { style } from "../styles/select.style";
 import { User } from "../interfaces/interfaces";
 
 interface FormData {
