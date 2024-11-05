@@ -1,6 +1,6 @@
 # Films App
 
-A project powered by AI made with Next.js which helps when picking a film to watch with friends/family.
+A project powered by Gemini AI made with Express.js and React which helps when picking a film to watch with friends/family.
 
 ## Start
 
@@ -17,4 +17,9 @@ Para iniciar el servidor backend, se debe entrar a /backend y si se quiere inici
 
 ```
 npm run dev
+```
+
+Para que la página se vea mejor, lo mas probable es que tengas que ejecutar tambien el compilador de Tailwind. Ya estando en /frontend, pones esto:
+```
+npm run tw
 ```
