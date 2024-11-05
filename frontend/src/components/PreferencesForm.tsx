@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+
 import Select from "react-select";
 
 import Cookies from "js-cookie";
