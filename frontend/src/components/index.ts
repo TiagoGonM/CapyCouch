@@ -13,3 +13,7 @@ export * from "./UserInfo";
 
 export * from "./CollapsableText";
 
+export * from "./PreferencesForm";
+export * from "./EditGroup";
+
+

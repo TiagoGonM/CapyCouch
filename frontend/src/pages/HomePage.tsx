@@ -20,6 +20,7 @@ import {
   GroupForm,
   GroupList,
   User,
+  EditGroup,
 } from "../components";
 import { Group, User as IUser } from "../interfaces/interfaces";
 
@@ -44,6 +45,7 @@ const responsive = {
 export default function HomePage() {
   const [groupModalVisible, setGroupModalVisible] = useState(false);
   const [previewInfo, setPreviewInfo] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   const { getUser, user: selfUser } = useAuthStore();
   const { groups, getGroups } = useGroupStore();
@@ -123,6 +125,14 @@ export default function HomePage() {
                 isGroup={isGroupType}
               />
               <div className="flex-1"></div>
+
+              <button onClick={() => setShowEditForm(true)}>Editar</button>
+
+              <Modal open={showEditForm} onClose={() => setShowEditForm(false)}>
+                <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
+                  {isGroupType && <EditGroup group={groupRelated as Group} />}
+                </div>
+              </Modal>
 
               <button
                 className="px-4 py-2 mr-3 bg-[#2b2f31] rounded-md transition-all border"
