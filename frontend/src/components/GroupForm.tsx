@@ -7,23 +7,13 @@ import { useAuthStore, useGroupStore, useUserStore } from "../hooks/stores";
 
 import AsyncSelect from "react-select/async";
 import { style } from "../styles/select.style";
-import { User } from "../interfaces/interfaces";
+import { User, GroupOption } from "../interfaces/interfaces";
 
 interface FormData {
   groupName: string;
   minAge: string;
   maxAge: string;
   image: string | null;
-}
-
-interface GroupOption {
-  value: string;
-  label: string;
-  color: string;
-  age: number;
-  genres: string[];
-  likes: string[];
-  dislikes: string[];
 }
 
 export const GroupForm = () => {
@@ -33,7 +23,7 @@ export const GroupForm = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const { createGroup, getGroups } = useGroupStore();
+  const { createGroup } = useGroupStore();
 
   const { getUsersByCoincidence, loading, users } = useUserStore();
   const { user: selfUser, getUser } = useAuthStore();

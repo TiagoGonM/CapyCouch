@@ -37,3 +37,13 @@ export interface Option {
   label: string;
   color: string;
 }
+
+export interface GroupOption {
+  value: string;
+  label: string;
+  color: string;
+  age: number;
+  genres: string[];
+  likes: string[];
+  dislikes: string[];
+}

@@ -126,7 +126,12 @@ export default function HomePage() {
               />
               <div className="flex-1"></div>
 
-              <button onClick={() => setShowEditForm(true)}>Editar</button>
+              <button
+                className="px-4 py-2 mr-3 bg-[#2b2f31] rounded-md transition-all border"
+                onClick={() => setShowEditForm(true)}
+              >
+                Editar
+              </button>
 
               <Modal open={showEditForm} onClose={() => setShowEditForm(false)}>
                 <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
