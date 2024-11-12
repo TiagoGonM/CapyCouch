@@ -14,6 +14,7 @@ export * from "./UserInfo";
 export * from "./CollapsableText";
 
 export * from "./PreferencesForm";
-export * from "./EditGroup";
 
+export * from "./EditGroup";
+export * from "./EditUser";
 

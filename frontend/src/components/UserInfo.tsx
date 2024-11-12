@@ -21,7 +21,7 @@ export const UserInfo = ({ user }: { user: User }) => {
           </ul>
         </section>
         
-        <div className="flex space-x-3">
+        <div className="flex flex-wrap space-x-3">
           <section>
             <h1 className="font-bold">Gustos</h1>
             <ul className="list-disc ml-5">

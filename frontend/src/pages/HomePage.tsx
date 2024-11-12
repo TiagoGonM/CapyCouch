@@ -15,12 +15,15 @@ import { SuggestionList } from "../components/SuggestionList";
 
 import {
   SuggestionContext,
-  GroupInfo,
-  UserInfo,
+  
   GroupForm,
   GroupList,
-  User,
+  GroupInfo,
   EditGroup,
+  
+  User,
+  UserInfo,
+  EditUser
 } from "../components";
 import { Group, User as IUser } from "../interfaces/interfaces";
 
@@ -135,7 +138,7 @@ export default function HomePage() {
 
               <Modal open={showEditForm} onClose={() => setShowEditForm(false)}>
                 <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
-                  {isGroupType && <EditGroup group={groupRelated as Group} />}
+                  {isGroupType ? <EditGroup group={groupRelated as Group} /> : <EditUser />}
                 </div>
               </Modal>
 
@@ -177,7 +180,7 @@ export default function HomePage() {
 
             <section className="ml-2">
               <h1 className="text-accent font-bold text-2xl pb-3">
-                Tus sugerencias
+                {isGroupType ? "Sugerencias de grupo" : "Tus sugerencias"}
               </h1>
               <SuggestionList />
             </section>

@@ -24,7 +24,7 @@ export const CollapsableText = ({ text, words, className }: Props) => {
           onClick={() => setReadMore(!readMore)}
           className="cursor-pointer underline text-blue-400"
         >
-          {readMore ? "Read less" : "Read more"}
+          {readMore ? "Leer menos" : "Leer más"}
         </span>
       )}
     </>

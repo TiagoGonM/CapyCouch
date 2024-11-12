@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Group } from "../interfaces/interfaces";
 import { UserList } from ".";
 import { useAuthStore, useSuggestionStore } from "../hooks/stores";
-import { ConfirmModal } from "./confirmModal";
 
 export const GroupInfo = ({ group }: { group: Group }) => {
   const [confirmState, setConfirmState] = useState(false);
@@ -54,19 +53,18 @@ export const GroupInfo = ({ group }: { group: Group }) => {
           </ul>
         </section>
 
-        {isOwner && (
-          <button 
+        {/* {isOwner && (
+          <button
+            type="submit"
             className="p-3 bg-red-500 rounded-xl border-2 border-red-500 hover:bg-red-800 hover:bg-opacity-70"
-            onClick={
-              () => setShowConfirmModal(true)
-            }
-            >
+
+          >
             Eliminar grupo
           </button>
-        )}
+        )} */}
       </div>
 
-      <ConfirmModal confirm={(v: boolean) => {setConfirmState(v)}}/>
+      {/* <ConfirmModal confirm={(v: boolean) => {setConfirmState(v)}}/> */}
 
       <div className="space-y-2">
         <section>

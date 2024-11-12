@@ -22,12 +22,12 @@ export const Suggestion = ({
   platforms,
 }: Props) => {
   return (
-    <article className="p-4 w-[18rem] min-h-[500px] max-h-[500px] rounded-xl bg-gray-800">
+    <article className="p-4 w-[18rem] min-h-[500px] max-h-[700px] rounded-xl bg-gray-800">
       <img
-        className="w-full max-h-[300px] object-cover"
-        src={mediaPaths[name] || "https://via.placeholder.com/250x300"}
+        className="w-full max-h-[400px] object-cover"
+        src={mediaPaths[name] || "https://via.placeholder.com/250x400"}
         width={250}
-        height={300}
+        height={400}
         alt="<Media image>"
       />
 
@@ -40,7 +40,7 @@ export const Suggestion = ({
         <p>Disponible en: {platforms.join(", ")}</p>
         
         <div className="pt-2 flex">
-          <Stack direction="row" spacing={0.5} sx={{flexWrap: "wrap", justifySelf: "flex-end"}}>
+          <Stack direction="row" gap={0.5} sx={{flexWrap: "wrap", justifySelf: "flex-end"}}>
             {genres.map((genre, i) => (
               <Chip key={i.toString()} label={genre} variant="outlined" size="small" sx={{ color: "white" }} />
             ))}

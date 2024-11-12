@@ -1,30 +1,26 @@
 import React, { useState } from "react";
 
 import Select from "react-select";
-
-import Cookies from "js-cookie";
-
-import { Button } from "../components/ui";
 import { genres } from "../utils";
 
-import { api } from "../api/api";
 import { Option } from "../interfaces/interfaces";
 import { style } from "../styles/select.style";
 import { catalogue } from "../utils";
 
 type Props = {
-  handleSubmit: (
-    selectedGenres: Option[],
-    selectedLikes: Option[] | undefined,
-    selectedDislikes: Option[] | undefined
-  ) => void;
+  handleSelectedGenres: (selectedGenres: Option[]) => void;
+  handleSelectedLikes: (selectedLikes: Option[]) => void;
+  handleSelectedDislikes: (selectedDislikes: Option[]) => void;
   defaultGenresValues?: string[];
   defaultLikesValues?: string[];
   defaultDislikesValues?: string[];
 };
 
 export const PreferencesForm = ({
-  handleSubmit,
+  handleSelectedGenres,
+  handleSelectedLikes,
+  handleSelectedDislikes,
+
   defaultGenresValues,
   defaultLikesValues,
   defaultDislikesValues,
@@ -34,16 +30,8 @@ export const PreferencesForm = ({
   const [selectedDislikes, setSelectedDislikes] = useState<Option[]>();
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  const onSubmit = () => {
-    if (!selectedGenres?.length) {
-      setErrorMessage("empty-genres");
-    }
-
-    handleSubmit(selectedGenres as Option[], selectedLikes, selectedDislikes);
-  };
-
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <>
       <div>
         <label
           htmlFor="genres"
@@ -67,7 +55,7 @@ export const PreferencesForm = ({
           closeMenuOnSelect={false}
           name="genres"
           onChange={(selected) => {
-            setSelectedGenres(selected as Option[]);
+            handleSelectedGenres(selected as Option[]);
           }}
           styles={style}
         />
@@ -96,7 +84,7 @@ export const PreferencesForm = ({
           closeMenuOnSelect={false}
           name="likes"
           onChange={(selected) => {
-            setSelectedLikes(selected as Option[]);
+            handleSelectedLikes(selected as Option[]);
           }}
           styles={style}
         />
@@ -127,13 +115,11 @@ export const PreferencesForm = ({
           closeMenuOnSelect={false}
           name="dislikes"
           onChange={(selected) => {
-            setSelectedDislikes(selected as Option[]);
+            handleSelectedDislikes(selected as Option[]);
           }}
           styles={style}
         />
       </div>
-
-      <Button type="submit" value="Guardar" />
-    </form>
+    </>
   );
 };
