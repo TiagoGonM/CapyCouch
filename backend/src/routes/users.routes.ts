@@ -18,8 +18,8 @@ router.get("/api/users/:id", getUser);
 
 router.post("/api/users", createUser);
 
-router.put("/api/user/:id", updateUserById);
+router.put("/api/users/:id", updateUserById);
 
-router.delete("/api/user/:id", validateJWT, deleteUser);
+router.delete("/api/users/:id", validateJWT, deleteUser);
 
 export default router;

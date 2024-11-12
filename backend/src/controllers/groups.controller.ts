@@ -71,6 +71,7 @@ export const createGroup: RequestHandler = async (req, res) => {
   return res.json({ group });
 };
 
+// FIXME: Fix these for editing users
 export const updateGroup: RequestHandler = async (req, res) => {
   const { id } = req.params;
   const { users, minAge, maxAge, name, genres, likes, dislikes, image } = req.body;
@@ -86,7 +87,7 @@ export const updateGroup: RequestHandler = async (req, res) => {
       likes,
       dislikes,
       users: {
-        update: users,
+        connect: (users as string[])?.map((id) => ({ id })),
       },
     },
   });
