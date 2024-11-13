@@ -9,7 +9,6 @@ import {
   User,
 } from "../interfaces/interfaces";
 import {
-  useAuthStore,
   useSuggestionStore,
   useUserStore,
 } from "../hooks/stores";
@@ -47,7 +46,7 @@ export const EditGroup = ({ group }: { group: Group }) => {
         <input
           type="text"
           onChange={(v) => setGroupName(v.currentTarget.value)}
-          className="bg-[#2d2d2d] pl-2 border-2 border-solid border-[#b5bec5] rounded-lg"
+          className="bg-[#2d2d2d] p-1 pl-2 border-2 border-solid border-[#b5bec5] rounded-lg"
           defaultValue={group.name}
         />
       </div>

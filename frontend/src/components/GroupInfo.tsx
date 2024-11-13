@@ -1,18 +1,39 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 import { Group } from "../interfaces/interfaces";
 import { UserList } from ".";
-import { useAuthStore, useSuggestionStore } from "../hooks/stores";
+import {
+  useAuthStore,
+  useGroupStore,
+  useSuggestionStore,
+} from "../hooks/stores";
+import { api } from "../api/api";
 
 export const GroupInfo = ({ group }: { group: Group }) => {
   const [confirmState, setConfirmState] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-  const { suggestions } = useSuggestionStore();
+  const { suggestions, getSuggestions } = useSuggestionStore();
+
+  const { getGroups } = useGroupStore();
 
   const { user: selfUser } = useAuthStore();
 
   const isOwner = selfUser.id === group.ownerId;
+
+  const handleGroupDelete = async () => {
+    try {
+      await api.delete(`/groups/${group.id}`);
+      toast.success("Grupo eliminado con éxito");
+    } catch (error) {
+      toast.error("Error al eliminar el grupo");
+      console.log(error);
+    } finally {
+      getGroups();
+      getSuggestions();
+    }
+  };
 
   return (
     <div className="grid grid-cols-2">
@@ -53,15 +74,14 @@ export const GroupInfo = ({ group }: { group: Group }) => {
           </ul>
         </section>
 
-        {/* {isOwner && (
+        {isOwner && (
           <button
-            type="submit"
             className="p-3 bg-red-500 rounded-xl border-2 border-red-500 hover:bg-red-800 hover:bg-opacity-70"
-
+            onClick={handleGroupDelete}
           >
             Eliminar grupo
           </button>
-        )} */}
+        )}
       </div>
 
       {/* <ConfirmModal confirm={(v: boolean) => {setConfirmState(v)}}/> */}

@@ -4,6 +4,9 @@ import Cookies from "js-cookie";
 import Modal from "@mui/material/Modal";
 import Divider from "@mui/material/Divider";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+
 import { onLogout } from "../store";
 import {
   useAuthStore,
@@ -15,15 +18,13 @@ import { SuggestionList } from "../components/SuggestionList";
 
 import {
   SuggestionContext,
-  
   GroupForm,
   GroupList,
   GroupInfo,
   EditGroup,
-  
   User,
   UserInfo,
-  EditUser
+  EditUser,
 } from "../components";
 import { Group, User as IUser } from "../interfaces/interfaces";
 
@@ -67,6 +68,7 @@ export default function HomePage() {
 
   return (
     <>
+      <ToastContainer position="bottom-center" theme="dark" />
       <div className="flex flex-col h-screen max-w-full bg-gray-900 text-white">
         <header className="bg-[#2d1f3b] p-4 flex justify-between items-center">
           <div className="font-bold text-xl md:text-2xl">CapyCouch</div>
@@ -138,7 +140,11 @@ export default function HomePage() {
 
               <Modal open={showEditForm} onClose={() => setShowEditForm(false)}>
                 <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
-                  {isGroupType ? <EditGroup group={groupRelated as Group} /> : <EditUser />}
+                  {isGroupType ? (
+                    <EditGroup group={groupRelated as Group} />
+                  ) : (
+                    <EditUser />
+                  )}
                 </div>
               </Modal>
 
@@ -162,6 +168,7 @@ export default function HomePage() {
                 </div>
               </Modal>
 
+              {/* FIXME: Parece que no funciona realmente bien para grupos, aparte de hacer alguna que otra cosa rara */}
               <button
                 className="bg-green-600 hover:bg-green-700 text-foreground rounded-xl p-3 mr-3"
                 onClick={() => {

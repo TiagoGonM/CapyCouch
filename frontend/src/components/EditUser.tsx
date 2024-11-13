@@ -34,7 +34,7 @@ export const EditUser = () => {
         </label>
         <input
           type="number"
-          className="bg-[#2d2d2d] pl-2 border-2 border-solid border-[#b5bec5] rounded-lg"
+          className="bg-[#2d2d2d] p-1 pl-2 border-2 border-solid border-[#b5bec5] rounded-lg max-w-14"
           defaultValue={user.age}
           onChange={(v) => setUserAge(v.currentTarget.valueAsNumber)}
         />
