@@ -14,7 +14,7 @@ interface FormData {
 
 export default function LoginPage() {
   const { register, handleSubmit } = useForm<FormData>();
-  const { startLogin } = useAuthStore();
+  const { startLogin, errorMessage } = useAuthStore();
 
   const onSubmit = handleSubmit(async ({ email, password }) => {
     startLogin({ email, password });
@@ -43,6 +43,7 @@ export default function LoginPage() {
 
         <Button value="Iniciar sesión" type="submit" />
 
+        <span className="block text-center text-red-400">{errorMessage}</span>
         <span className="inline-block text-foreground mt-5 text-center">
           ¿Todavia no tienes cuenta?
         </span>

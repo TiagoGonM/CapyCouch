@@ -4,7 +4,15 @@ import Cookies from "js-cookie";
 import { api } from "../../api/api";
 
 import { useAppDispatch } from "../hooks";
-import { onChecking, onLogin, onLogout, onUser, RootState } from "../../store";
+import {
+  onChecking,
+  onError,
+  onLogin,
+  onLogout,
+  onUser,
+  RootState,
+} from "../../store";
+import { AxiosError } from "axios";
 
 interface LoginData {
   email: string;
@@ -44,11 +52,21 @@ export const useAuthStore = () => {
         })
       );
     } catch (error) {
+      const err = error as AxiosError
+      
       Cookies.remove("token");
       Cookies.remove("token-init-date");
       Cookies.remove("user");
       Cookies.remove("user_id");
-
+      
+      if (err.status == 400) {
+        dispatch(onError("Credenciales inválidas"));
+      } if (err.status == 500) {
+        dispatch(onError("Ocurrió un error inesperado"));
+      } else {
+        dispatch(onError("Ocurrió un error inesperado"));
+      }
+      
       dispatch(onLogout());
       console.error(error);
     }
@@ -85,15 +103,7 @@ export const useAuthStore = () => {
     try {
       const id = Cookies.get("user_id");
       const {
-        data: {
-          email,
-          username,
-          firstTime,
-          age,
-          likes,
-          dislikes,
-          genres,
-        },
+        data: { email, username, firstTime, age, likes, dislikes, genres },
       } = await api.get(`/users/${id}`);
 
       dispatch(
