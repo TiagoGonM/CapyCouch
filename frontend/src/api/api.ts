@@ -12,6 +12,7 @@ export const api = axios.create({
   headers: {
     "Content-type": "application/json",
   },
+  timeoutErrorMessage: "Error de conexión",
 });
 
 api.interceptors.request.use((config) => {
