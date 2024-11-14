@@ -10,7 +10,13 @@ import {
 } from "../hooks/stores";
 import { api } from "../api/api";
 
-export const GroupInfo = ({ group }: { group: Group }) => {
+type Props = {
+  group: Group;
+  handleAfterDelete: () => void;
+}
+
+
+export const GroupInfo = ({ group, handleAfterDelete }: Props) => {
   const [confirmState, setConfirmState] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -25,13 +31,13 @@ export const GroupInfo = ({ group }: { group: Group }) => {
   const handleGroupDelete = async () => {
     try {
       await api.delete(`/groups/${group.id}`);
-      toast.success("Grupo eliminado con éxito");
-    } catch (error) {
-      toast.error("Error al eliminar el grupo");
-      console.log(error);
-    } finally {
+      toast.success("Grupo eliminado");
+      handleAfterDelete();
       getGroups();
       getSuggestions();
+    } catch (error) {
+      toast.error("Error al intentar eliminar el grupo");
+      console.log(error);
     }
   };
 

@@ -1,5 +1,3 @@
-// TODO: implementacion del hook para los usuarios
-
 import { useSelector } from "react-redux";
 import { useAppDispatch } from '../hooks';
 
