@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
-import { Button } from "./ui";
+import Button from "@mui/material/Button";
 
 import { useAuthStore, useGroupStore, useUserStore } from "../hooks/stores";
 
 import AsyncSelect from "react-select/async";
 import { style } from "../styles/select.style";
 import { User, GroupOption } from "../interfaces/interfaces";
+import { toast } from "react-toastify";
 
 interface FormData {
   groupName: string;
@@ -16,7 +16,11 @@ interface FormData {
   image: string | null;
 }
 
-export const GroupForm = () => {
+export const GroupForm = ({
+  handleAfterCreate,
+}: {
+  handleAfterCreate: () => void;
+}) => {
   const {
     register,
     handleSubmit,
@@ -28,22 +32,23 @@ export const GroupForm = () => {
   const { getUsersByCoincidence, loading, users } = useUserStore();
   const { user: selfUser, getUser } = useAuthStore();
 
-  const [responseError, setResponseError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [selectedUsers, setSelectedUsers] = useState<GroupOption[]>();
 
   const onSubmit = handleSubmit(async ({ minAge, maxAge, ...formData }) => {
-    setResponseError(false);
+    setErrorMessage("");
 
     try {
       if (!selectedUsers?.length)
-        throw new Error("No hay usuarios seleccionados");
-      
-      console.log({selectedUsers});
-      
+        return setErrorMessage("Seleccione por lo menos un usuario");
+
+      console.log({ selectedUsers });
 
       const { genres, likes, dislikes } = mixPreferences();
 
-      const agesList: number[] = selectedUsers?.map((user) => user.age as number);
+      const agesList: number[] = selectedUsers?.map(
+        (user) => user.age as number
+      );
       agesList.push(selfUser.age as number);
 
       createGroup({
@@ -55,8 +60,9 @@ export const GroupForm = () => {
         users: selectedUsers?.map((user) => user.value) || [],
         ...formData,
       });
+      handleAfterCreate();
     } catch (error) {
-      setResponseError(true);
+      toast.error("Hubo un error al intentar crear el grupo");
       console.error(error);
     }
   });
@@ -78,7 +84,7 @@ export const GroupForm = () => {
       genres = genres.concat(user?.genres as string[]);
       likes = likes.concat(user?.likes as string[]);
       dislikes = dislikes.concat(user?.dislikes as string[]);
-      console.log({genres, likes, dislikes});
+      console.log({ genres, likes, dislikes });
     });
 
     // Remove duplicates
@@ -95,7 +101,7 @@ export const GroupForm = () => {
         <label htmlFor="groupName">Nombre del grupo</label>
         <input
           type="text"
-          className="border-2 border-primary bg-[#2d2d2d] text-foreground rounded-xl w-full p-1 mb-3"
+          className="border-2 border-primary bg-[#2d2d2d] text-foreground rounded-lg w-full p-1 pl-2 mb-3"
           {...register("groupName", { required: true })}
         />
       </div>
@@ -107,17 +113,21 @@ export const GroupForm = () => {
             inputValue: string,
             callback: (options: GroupOption[]) => void
           ) => {
+            console.log({ inputValue });
+
             getUsersByCoincidence(inputValue);
             callback(
-              users.map((user: User) => ({
-                value: user.id,
-                label: user.username,
-                color: "#FFF",
-                genres: user.genres,
-                age: user.age,
-                likes: user.likes,
-                dislikes: user.dislikes,
-              }))      
+              users
+                .filter((user) => selfUser.id != user.id) // Evitar la elección del usuario actual
+                .map((user) => ({
+                  value: user.id,
+                  label: user.username,
+                  color: "#FFF",
+                  genres: user.genres,
+                  age: user.age,
+                  likes: user.likes,
+                  dislikes: user.dislikes,
+                }))
             );
           }}
           isMulti
@@ -126,33 +136,24 @@ export const GroupForm = () => {
           onChange={(selected) => {
             setSelectedUsers(selected as GroupOption[]);
           }}
-          placeholder="Buscar usuarios"
+          placeholder="Empieza a escribir para buscar usuarios"
           noOptionsMessage={() => "No hay resultados"}
           closeMenuOnSelect={false}
           isClearable={false}
           styles={style}
         />
       </div>
-      {!selectedUsers?.length && responseError && (
-        <span className="text-red-600 block">
-          Seleccione por lo menos un usuario
-        </span>
-      )}
 
-      {/* <label htmlFor="image">Foto del grupo</label>
-      <input
-        type="file"
-        className="border-primary border-2 bg-secondary text-foreground bg-opacity-30 rounded-xl w-full p-1 mb-3"
-        {...register("image", { required: false })}
-      /> */}
+      <Button
+        type="submit"
+        variant="contained"
+        className="w-full"
+        disabled={!selectedUsers?.length}
+      >
+        Crear
+      </Button>
 
-      <Button value="Crear" />
-
-      {responseError && (
-        <span className="text-red-600">
-          Hubo un error al intentar crear el grupo
-        </span>
-      )}
+      <span className="text-red-600">{errorMessage}</span>
     </form>
   );
 };

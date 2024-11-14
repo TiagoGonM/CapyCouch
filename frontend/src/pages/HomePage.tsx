@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import Modal from "@mui/material/Modal";
 import Divider from "@mui/material/Divider";
 
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 import { onLogout } from "../store";
@@ -52,9 +52,15 @@ export default function HomePage() {
   const [showEditForm, setShowEditForm] = useState(false);
 
   const { getUser, user: selfUser } = useAuthStore();
-  const { groups, getGroups } = useGroupStore();
-  const { getSuggestions, createSuggestion, getSuggestionsById, id, type } =
-    useSuggestionStore();
+  const { groups, getGroups, loading } = useGroupStore();
+  const {
+    getSuggestions,
+    createSuggestion,
+    getSuggestionsById,
+    id,
+    type,
+    errorMessage,
+  } = useSuggestionStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -64,7 +70,8 @@ export default function HomePage() {
   }, []);
 
   const isGroupType = useMemo(() => type === "group", [type]);
-  const groupRelated = groups?.find((group) => group.id === id);
+  const groupRelated =
+    isGroupType && !loading ? groups.find((group) => group.id === id) : null;
 
   return (
     <>
@@ -112,7 +119,12 @@ export default function HomePage() {
                 className="flex items-center justify-center"
               >
                 <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
-                  <GroupForm />
+                  <GroupForm
+                    handleAfterCreate={() => {
+                      setGroupModalVisible(false);
+                      toast.success("Grupo creado");
+                    }}
+                  />
                 </div>
               </Modal>
             </section>
@@ -123,7 +135,7 @@ export default function HomePage() {
                 name={isGroupType ? (groupRelated?.name as string) : "Tú"}
                 genres={
                   (isGroupType
-                    ? groupRelated?.genres
+                    ? groupRelated?.genres || []
                     : selfUser?.genres) as string[]
                 }
                 image={isGroupType ? (groupRelated?.image as string) : ""}
@@ -161,7 +173,10 @@ export default function HomePage() {
               >
                 <div className="bg-gray-800 rounded-xl p-5 w-[50%]">
                   {isGroupType ? (
-                    <GroupInfo group={groupRelated as Group} />
+                    <GroupInfo
+                      group={groupRelated as Group}
+                      handleAfterDelete={() => setPreviewInfo(false)}
+                    />
                   ) : (
                     <UserInfo user={selfUser as IUser} />
                   )}
@@ -171,13 +186,29 @@ export default function HomePage() {
               {/* FIXME: Parece que no funciona realmente bien para grupos, aparte de hacer alguna que otra cosa rara */}
               <button
                 className="bg-green-600 hover:bg-green-700 text-foreground rounded-xl p-3 mr-3"
-                onClick={() => {
-                  const { genres, likes, dislikes, id } = selfUser;
-                  createSuggestion({ genres, likes, dislikes } as {
-                    genres: string[];
-                    likes: string[];
-                    dislikes: string[];
-                  });
+                onClick={async () => {
+                  const { genres, likes, dislikes } = isGroupType
+                    ? {
+                        genres: groupRelated?.genres,
+                        likes: groupRelated?.likes,
+                        dislikes: groupRelated?.dislikes,
+                      }
+                    : {
+                        genres: selfUser?.genres,
+                        likes: selfUser?.likes,
+                        dislikes: selfUser?.dislikes,
+                      };
+                  try {
+                    createSuggestion({ genres, likes, dislikes } as {
+                      genres: string[];
+                      likes: string[];
+                      dislikes: string[];
+                    });
+                    !loading && toast.success("Sugerencia creada");
+                  } catch (error) {
+                    toast.error(errorMessage);
+                  }
+
                   getSuggestionsById(id as string);
                 }}
               >

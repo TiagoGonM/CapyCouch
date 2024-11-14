@@ -4,18 +4,14 @@ import { Group as IGroup } from "../interfaces/interfaces";
 import { Group } from ".";
 
 export const GroupList = ({className}: {className?: string}) => {
-  const { getGroups, groups, loading } = useGroupStore();
-
-  useEffect(() => {
-    getGroups();
-  }, []);
+  const { groups, loading } = useGroupStore();
 
   return (
     <section className={className}>
       {loading ? (
         <h3>Cargando...</h3>
       ) : (
-        groups.map(({ name, image, minAge, maxAge, id }: IGroup, i: number) => (
+        groups.length && groups?.map(({ name, image, minAge, maxAge, id }: IGroup, i: number) => (
           <Group
             id={id}
             key={i.toString()}

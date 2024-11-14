@@ -23,10 +23,10 @@ export const useGroupStore = () => {
 
   const createGroup = async (formData: FormData) => {
     dispatch(setLoading(true));
-    console.log({ formData });
     const { data } = await api.post("/groups", formData);
-    console.log(data);
-    dispatch(addGroups(data));
+    
+    console.log({ data });
+    getGroups();
     dispatch(setLoading(false));
   };
   
@@ -37,7 +37,7 @@ export const useGroupStore = () => {
       data: { groups },
     } = await api.get("/groups");
     
-    console.log(groups);
+    console.log({ groups });
     dispatch(addGroups(groups));
     dispatch(setLoading(false));
   };

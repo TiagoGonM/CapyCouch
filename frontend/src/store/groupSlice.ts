@@ -19,10 +19,10 @@ export const groupSlice = createSlice({
       state.groups = payload;
     },
 
-    setGroupLoading: (state, { payload }) => {
+    setLoading: (state, { payload }) => {
       state.loading = payload;
     }
   },
 });
 
-export const { addGroups, setGroupLoading } = groupSlice.actions;
+export const { addGroups, setLoading: setGroupLoading } = groupSlice.actions;

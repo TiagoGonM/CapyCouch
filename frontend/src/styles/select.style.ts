@@ -1,4 +1,4 @@
-import { CSSObjectWithLabel, GroupBase, StylesConfig } from "react-select";
+import { GroupBase, StylesConfig } from "react-select";
 
 import { Option } from "../interfaces/interfaces";
 
@@ -41,6 +41,10 @@ export const style: StylesConfig<Option, true, GroupBase<Option>> = {
     borderRadius: "0rem 1rem 1rem 0rem",
   }),
   noOptionsMessage: (styles) => ({
+    ...styles,
+    backgroundColor: "#2d2d2d",
+  }),
+  menu: (styles) => ({
     ...styles,
     backgroundColor: "#2d2d2d",
   }),
