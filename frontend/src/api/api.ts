@@ -1,7 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-
 const baseURL =
   import.meta.env.VITE_ENV === "local"
     ? "http://localhost:3000/api"
@@ -13,10 +12,10 @@ export const api = axios.create({
     "Content-type": "application/json",
   },
   timeoutErrorMessage: "Error de conexión",
+  timeout: 50000,
 });
 
 api.interceptors.request.use((config) => {
-
   config.headers["x-token"] = Cookies.get("token");
 
   return config;

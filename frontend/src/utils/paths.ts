@@ -38,7 +38,7 @@ export const mediaPaths = {
     "The Nice Guys": "src\\assets\\movies\\the-nice-guy.jpg",
     "The Secret World of Arrietty": "src\\assets\\movies\\the-secret-world-of-arriety.jpg",
     "The Witch": "src\\assets\\movies\\the-witch.jpg",
-    "Your Name.": "src\\assets\\movies\your-name.jpg",
+    "Your Name.": "src\\assets\\movies\\your-name.jpg",
     "El Zodiaco": "src\\assets\\movies\\zodiac.jpg",
     
     

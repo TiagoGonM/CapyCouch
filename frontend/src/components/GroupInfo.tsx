@@ -13,8 +13,7 @@ import { api } from "../api/api";
 type Props = {
   group: Group;
   handleAfterDelete: () => void;
-}
-
+};
 
 export const GroupInfo = ({ group, handleAfterDelete }: Props) => {
   const [confirmState, setConfirmState] = useState(false);
@@ -30,9 +29,13 @@ export const GroupInfo = ({ group, handleAfterDelete }: Props) => {
 
   const handleGroupDelete = async () => {
     try {
-      await api.delete(`/groups/${group.id}`);
-      toast.success("Grupo eliminado");
+      // FIXME: Borra las sugerencias, pero para borrar el grupo hay que volver a hacer la petición
+      if (suggestions.length > 0) api.delete(`/suggestions/group/${group.id}`);
+
+      api.delete(`/groups/${group.id}`), toast.success("Grupo eliminado");
+
       handleAfterDelete();
+
       getGroups();
       getSuggestions();
     } catch (error) {

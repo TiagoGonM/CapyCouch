@@ -19,9 +19,9 @@ import RegisterPage from "./pages/RegisterPage";
 import GenrePage from "./pages/GenrePage";
 
 import { useAuthStore } from "./hooks/stores";
+import { ToastContainer } from "react-toastify";
 
 // Rutas
-
 export default function AppRouter() {
   const { status, checkAuthToken, user: {firstTime} } = useAuthStore();
   const isAuthenticated = useMemo(() => status === "authenticated", [status]);
@@ -36,6 +36,8 @@ export default function AppRouter() {
   }
 
   return (
+    <>
+    <ToastContainer position="bottom-center" theme="dark" />
     <Routes>
       {!isAuthenticated ? (
         <>
@@ -52,5 +54,6 @@ export default function AppRouter() {
         </>
       )}
     </Routes>
+    </>
   );
 }

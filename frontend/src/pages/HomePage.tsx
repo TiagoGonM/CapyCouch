@@ -75,7 +75,6 @@ export default function HomePage() {
 
   return (
     <>
-      <ToastContainer position="bottom-center" theme="dark" />
       <div className="flex flex-col h-screen max-w-full bg-gray-900 text-white">
         <header className="bg-[#2d1f3b] p-4 flex justify-between items-center">
           <div className="font-bold text-xl md:text-2xl">CapyCouch</div>
