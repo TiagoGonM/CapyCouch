@@ -3,7 +3,7 @@ import React from "react";
 import Chip from "@mui/material/Chip";
 import { Stack } from "@mui/material";
 
-import { mediaPaths } from "../utils/paths"
+import { mediaPaths } from "../utils/paths";
 import { CollapsableText } from "./CollapsableText";
 
 type Props = {
