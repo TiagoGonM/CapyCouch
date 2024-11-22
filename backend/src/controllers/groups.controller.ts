@@ -71,10 +71,10 @@ export const createGroup: RequestHandler = async (req, res) => {
   return res.json({ group });
 };
 
-// FIXME: Fix these for editing users
 export const updateGroup: RequestHandler = async (req, res) => {
   const { id } = req.params;
-  const { users, minAge, maxAge, name, genres, likes, dislikes, image } = req.body;
+  const { users, minAge, maxAge, name, genres, likes, dislikes, image } =
+    req.body;
 
   const group = await prisma.group.update({
     where: { id },
@@ -98,7 +98,11 @@ export const updateGroup: RequestHandler = async (req, res) => {
 export const deleteGroup: RequestHandler = async (req, res) => {
   const { id } = req.params;
 
-  const user = await prisma.group.delete({ where: { id } });
-
-  res.json(user);
+  try {
+    const user = await prisma.group.delete({ where: { id } });
+    res.json(user);
+  } catch (error) {
+    console.error({ error });
+    res.status(500).json({ msg: "Ocurrió un error inesperado" });
+  }
 };

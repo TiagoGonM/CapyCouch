@@ -29,8 +29,14 @@ export const getGroupSuggestions: RequestHandler = async (req, res) => {
   res.json({ total, suggestions });
 };
 
-const makePrompt = async (genres: string[], likes: string[], dislikes: string[]) => {
-  const prompt = `Recomiéndame 7 PELÍCULAS y 10 SERIES, basadas en la siguiente información: Me gustan los géneros: ${genres}; me gustan las peliculas o series como: ${likes}; no me gustan las peliculas o series como: ${dislikes}. Formatealo como un JSON con los campos: title, genres, description, type (siendo type entre "series" y "movie"), platforms (plataformas de streaming donde se puede ver).`;
+const makePrompt = async (
+  genres: string[],
+  likes: string[],
+  dislikes: string[],
+  moviesLimit: number,
+  seriesLimit: number
+) => {
+  const prompt = `Recomiéndame ${moviesLimit} PELÍCULAS y ${seriesLimit} SERIES, basadas en la siguiente información: Me gustan los géneros: ${genres}; me gustan las películas o series como: ${likes}; no me gustan las películas o series como: ${dislikes}. Formatéalo como un JSON BIEN HECHO con los campos: title, genres, description, type (siendo type entre "series" y "movie"), platforms (plataformas de streaming donde se puede ver). Reemplaza cualquier doble comilla (") que pueda tener el título o la descripción por comillas simples ('). No recomiendes las películas o series que ya haya visto, es decir, las que me gustan y las que no me gustan.`;
 
   let { text } = await generateText({
     model: google("gemini-1.5-flash"),
@@ -41,6 +47,8 @@ const makePrompt = async (genres: string[], likes: string[], dislikes: string[])
 };
 
 export const createSuggestion: RequestHandler = async (req, res) => {
+  let { series, movies } = req.query;
+
   const {
     genres,
     likes,
@@ -53,7 +61,8 @@ export const createSuggestion: RequestHandler = async (req, res) => {
   try {
     const list: Media[] = [];
 
-    let [suggestions, prompt] = await makePrompt(genres, likes, dislikes);
+    let [suggestions, prompt] = await makePrompt(genres, likes, dislikes, 5, 5);
+
     suggestions = JSON.parse(suggestions.substring(7, suggestions.length - 3));
     for (let suggestion of suggestions as any) {
       list.push({
@@ -89,10 +98,37 @@ export const createSuggestion: RequestHandler = async (req, res) => {
       });
     });
 
-    res.json({ prompt, suggestions });
+    return res.json({ prompt, suggestions });
   } catch (e) {
     console.error(e);
-    res.status(500).json({ error: "Error al intentar realizar el prompt" });
-    return;
+    return res
+      .status(500)
+      .json({ error: "Error al intentar realizar el prompt" });
+  }
+};
+
+export const deleteSuggestionsByGroup: RequestHandler = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await prisma.groupSuggestion.deleteMany({ where: { groupId: id } });
+  } catch (e) {
+    console.error(e);
+    return res
+      .status(500)
+      .json({ error: "Error al intentar eliminar las sugerencias del grupo" });
+  }
+};
+
+export const deleteSuggestionsByUser: RequestHandler = async (req, res) => {
+  const { uid } = req.body;
+
+  try {
+    await prisma.userSuggestion.deleteMany({ where: { authorId: uid } });
+  } catch (e) {
+    console.error(e);
+    return res
+      .status(500)
+      .json({ error: "Error al intentar eliminar las sugerencias del grupo" });
   }
 };

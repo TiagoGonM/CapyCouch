@@ -14,14 +14,14 @@ export const signIn: RequestHandler = async (req, res) => {
 
     if (!user) {
       return res.status(400).json({
-        msg: "Usuario / Contraseña no son correctos - email",
+        msg: "Credenciales inválidas",
       });
     }
 
     // Verify if user still active (status: true)
     if (!user.status) {
       return res.status(400).json({
-        msg: "Usuario / Contraseña no son correctos - status: false",
+        msg: "Credenciales inválidas",
       });
     }
 
@@ -29,7 +29,7 @@ export const signIn: RequestHandler = async (req, res) => {
     const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword) {
       return res.status(400).json({
-        msg: "Usuario / Contraseña no son correctos - password",
+        msg: "Credenciales inválidas",
       });
     }
 
