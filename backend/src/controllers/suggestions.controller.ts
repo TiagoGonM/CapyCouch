@@ -33,10 +33,10 @@ const makePrompt = async (
   genres: string[],
   likes: string[],
   dislikes: string[],
-  moviesLimit: number,
-  seriesLimit: number
+  moviesLimit: number = 5,
+  seriesLimit: number = 5
 ) => {
-  const prompt = `Recomiéndame ${moviesLimit} PELÍCULAS y ${seriesLimit} SERIES, basadas en la siguiente información: Me gustan los géneros: ${genres}; me gustan las películas o series como: ${likes}; no me gustan las películas o series como: ${dislikes}. Formatéalo como un JSON BIEN HECHO con los campos: title, genres, description, type (siendo type entre "series" y "movie"), platforms (plataformas de streaming donde se puede ver). Reemplaza cualquier doble comilla (") que pueda tener el título o la descripción por comillas simples ('). No recomiendes las películas o series que ya haya visto, es decir, las que me gustan y las que no me gustan.`;
+  const prompt = `Recomiéndame ${moviesLimit} PELÍCULAS y ${seriesLimit} SERIES, basadas en la siguiente información: Me gustan los géneros: ${genres}; me gustan las películas o series como: ${likes}; no me gustan las películas o series como: ${dislikes}. Esto quiere decir que no me deberías de recomendar las películas o series que ya me gustan o las que no. También la sugerencia debe estar relacionada con los generos que me gustan. Formatéalo como un JSON BIEN HECHO con los campos: title, genres, description, type (siendo type entre "series" y "movie"), platforms (plataformas de streaming donde se puede ver). Reemplaza cualquier doble comilla (") que pueda tener el título o la descripción por comillas simples ('). Cualquier caracter non-whitespace reemplazalo por un espacio.`;
 
   let { text } = await generateText({
     model: google("gemini-1.5-flash"),
@@ -61,7 +61,13 @@ export const createSuggestion: RequestHandler = async (req, res) => {
   try {
     const list: Media[] = [];
 
-    let [suggestions, prompt] = await makePrompt(genres, likes, dislikes, 5, 5);
+    let [suggestions, prompt] = await makePrompt(
+      genres,
+      likes,
+      dislikes,
+      parseInt(series as string),
+      parseInt(movies as string)
+    );
 
     suggestions = JSON.parse(suggestions.substring(7, suggestions.length - 3));
     for (let suggestion of suggestions as any) {
