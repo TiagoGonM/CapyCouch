@@ -19,7 +19,7 @@ export const catalogue = [
     "Interestelar",
     "Zodiac",
     "Oppenheimer",
-
+    "Gilmore Girls",
     "Atypical",
     "Breaking Bad",
     "Dark",
