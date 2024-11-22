@@ -4,8 +4,7 @@ import Cookies from "js-cookie";
 import Modal from "@mui/material/Modal";
 import Divider from "@mui/material/Divider";
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
+import { toast } from "react-toastify";
 
 import { onLogout } from "../store";
 import {
@@ -14,9 +13,9 @@ import {
   useSuggestionStore,
 } from "../hooks/stores";
 import { useAppDispatch } from "../hooks/hooks";
-import { SuggestionList } from "../components/SuggestionList";
 
 import {
+  SuggestionList,
   SuggestionContext,
   GroupForm,
   GroupList,
@@ -60,6 +59,7 @@ export default function HomePage() {
     id,
     type,
     errorMessage,
+    loading: suggestionLoading,
   } = useSuggestionStore();
   const dispatch = useAppDispatch();
 
@@ -154,7 +154,7 @@ export default function HomePage() {
                   {isGroupType ? (
                     <EditGroup group={groupRelated as Group} />
                   ) : (
-                    <EditUser />
+                    <EditUser user={selfUser as IUser} />
                   )}
                 </div>
               </Modal>

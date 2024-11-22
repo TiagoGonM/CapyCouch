@@ -28,7 +28,7 @@ export const Suggestion = ({
         src={mediaPaths[name] || "https://via.placeholder.com/250x400"}
         width={250}
         height={400}
-        alt="<Media image>"
+        alt={name}
       />
 
       <section>

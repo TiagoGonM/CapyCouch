@@ -3,7 +3,7 @@ import React, { useState } from "react";
 type Props = {
   text: string;
   words: number;
-  className: string;
+  className?: string;
 };
 
 export const CollapsableText = ({ text, words, className }: Props) => {
@@ -14,7 +14,7 @@ export const CollapsableText = ({ text, words, className }: Props) => {
 
   return (
     <>
-      <p className={`${className}`}>
+      <p className={className}>
         {wordCount > words && !readMore
           ? splitWords.slice(0, words).join(" ")
           : text}

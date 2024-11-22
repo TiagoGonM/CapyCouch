@@ -21,6 +21,8 @@ import GenrePage from "./pages/GenrePage";
 import { useAuthStore } from "./hooks/stores";
 import { ToastContainer } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.min.css";
+
 // Rutas
 export default function AppRouter() {
   const { status, checkAuthToken, user: {firstTime} } = useAuthStore();
