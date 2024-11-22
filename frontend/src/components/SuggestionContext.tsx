@@ -19,7 +19,7 @@ export const SuggestionContext = ({ name, genres, image, isGroup }: Props) => {
           width={50}
           height={50}
           src={image || "https://via.placeholder.com/50x50"}
-          alt={isGroup ? "group" : "name"}
+          alt={isGroup ? "group" : "user"}
         />
       </aside>
       <section className="pl-3 grid grid-flow-row grid-cols-1 grid-rows-2 shrink-0">

@@ -217,7 +217,7 @@ export default function HomePage() {
                     toast.error(errorMessage);
                   }
 
-                  getSuggestionsById(id as string);
+                  isGroupType ? getSuggestionsById(id as string) : getSuggestions();
                 }}
               >
                 Sugerir

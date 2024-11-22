@@ -49,7 +49,6 @@ export const authSlice = createSlice({
     },
 
     onError: (state, { payload }) => {
-      state.status = "not-authenticated";
       state.errorMessage = payload;
     }
 }});

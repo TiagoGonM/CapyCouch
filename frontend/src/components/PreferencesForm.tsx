@@ -25,10 +25,7 @@ export const PreferencesForm = ({
   defaultLikesValues,
   defaultDislikesValues,
 }: Props) => {
-  const [selectedGenres, setSelectedGenres] = useState<Option[]>();
   const [selectedLikes, setSelectedLikes] = useState<Option[]>();
-  const [selectedDislikes, setSelectedDislikes] = useState<Option[]>();
-  const [errorMessage, setErrorMessage] = useState<string>();
 
   return (
     <>

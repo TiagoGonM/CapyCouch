@@ -28,8 +28,8 @@ export const useSuggestionStore = () => {
 
   const createSuggestion = async (formData: FormData) => {
     dispatch(setSuggestionLoading(true));
-    if (type === "group") createGroupSuggestion(formData);
-    else createUserSuggestion(formData);
+    if (type === "group") await createGroupSuggestion(formData);
+    else await createUserSuggestion(formData);
     dispatch(setSuggestionLoading(false));
   };
 
@@ -37,7 +37,7 @@ export const useSuggestionStore = () => {
     try {
       const { data } = await api.post("/suggestions", formData);
       console.log(data);
-      dispatch(setSuggestions(data));
+      dispatch(setSuggestions(data.suggestions));
     } catch (error) {
       setErrorMessage("Error al intentar crear la sugerencia");
       console.error("Error: " + error);
@@ -48,7 +48,7 @@ export const useSuggestionStore = () => {
     try {
       const { data } = await api.post(`/suggestions/group/${id}`, formData);
       console.log(data);
-      dispatch(setSuggestions(data));
+      dispatch(setSuggestions(data.suggestions));
     } catch (error) {
       setErrorMessage("Error al intentar crear la sugerencia");
       console.error("Error: " + error);

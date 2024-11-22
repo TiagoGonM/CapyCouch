@@ -59,9 +59,9 @@ export const useAuthStore = () => {
       Cookies.remove("user");
       Cookies.remove("user_id");
       
-      if (err.status == 400) {
+      if (err.status === 400) {
         dispatch(onError("Credenciales inválidas"));
-      } if (err.status == 500) {
+      } else if (err.status === 500) {
         dispatch(onError("Ocurrió un error inesperado"));
       } else {
         dispatch(onError("Ocurrió un error inesperado"));
