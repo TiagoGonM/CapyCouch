@@ -92,9 +92,7 @@ export const GroupInfo = ({ group, handleAfterDelete }: Props) => {
           </button>
         )}
       </div>
-
-      {/* <ConfirmModal confirm={(v: boolean) => {setConfirmState(v)}}/> */}
-
+      
       <div className="space-y-2">
         <section>
           <h1 className="font-bold">Likes</h1>

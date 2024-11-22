@@ -3,7 +3,7 @@ import React from "react";
 export const User = ({ name, image }: { name: string; image: string | null }) => {
   return (
     <article className="flex w-[15rem]">
-      <aside className="">
+      <aside>
         <img
           className="rounded-full"
           width={40}

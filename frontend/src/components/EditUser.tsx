@@ -1,23 +1,18 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 
 import { PreferencesForm } from "./PreferencesForm";
-import { Option } from "../interfaces/interfaces";
-
-import { useAuthStore } from "../hooks/stores";
+import { Option, User } from "../interfaces/interfaces";
 
 import MButton from "@mui/material/Button";
 import { api } from "../api/api";
 
-export const EditUser = () => {
-  const { user } = useAuthStore();
-
+export const EditUser = ({ user }: { user: User }) => {
   const [selectedGenres, setSelectedGenres] = useState<Option[]>();
   const [selectedLikes, setSelectedLikes] = useState<Option[]>();
   const [selectedDislikes, setSelectedDislikes] = useState<Option[]>();
   const [userAge, setUserAge] = useState<number>();
 
-  const handleSubmit = async () => {
+  const onSubmit = async () => {
     await api.put(`/users/${user.id}`, {
       genres: selectedGenres?.map((genre) => genre.value),
       likes: selectedLikes?.map((like) => like.value),
@@ -27,7 +22,7 @@ export const EditUser = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-2">
+    <form onSubmit={onSubmit} className="space-y-2">
       <div>
         <label className="block text-sm font-medium text-foreground mb-1">
           Edad
