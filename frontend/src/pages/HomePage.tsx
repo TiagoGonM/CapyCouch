@@ -59,6 +59,7 @@ export default function HomePage() {
     id,
     type,
     errorMessage,
+    suggestions,
     loading: suggestionLoading,
   } = useSuggestionStore();
   const dispatch = useAppDispatch();
@@ -186,7 +187,7 @@ export default function HomePage() {
               <button
                 className="bg-green-600 hover:bg-green-700 text-foreground rounded-xl p-3 mr-3"
                 onClick={async () => {
-                  const { genres, likes, dislikes } = isGroupType
+                  let { genres, likes, dislikes } = isGroupType
                     ? {
                         genres: groupRelated?.genres,
                         likes: groupRelated?.likes,
@@ -198,10 +199,18 @@ export default function HomePage() {
                         dislikes: selfUser?.dislikes,
                       };
                   try {
-                    createSuggestion({ genres, likes, dislikes } as {
-                      genres: string[];
-                      likes: string[];
-                      dislikes: string[];
+                    genres = genres as string[];
+                    likes = likes as string[];
+                    dislikes = dislikes as string[];
+                    const suggestionTitles = suggestions.map(
+                      (suggestion) => suggestion.title
+                    );
+
+                    createSuggestion({
+                      genres,
+                      likes,
+                      dislikes,
+                      existingSuggestions: suggestionTitles,
                     });
                     !loading && toast.success("Sugerencia creada");
                   } catch (error) {

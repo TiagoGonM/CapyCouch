@@ -34,9 +34,10 @@ const makePrompt = async (
   likes: string[],
   dislikes: string[],
   moviesLimit: number = 5,
-  seriesLimit: number = 5
+  seriesLimit: number = 5,
+  existingSuggestions: string[]
 ) => {
-  const prompt = `Recomiéndame ${moviesLimit} PELÍCULAS y ${seriesLimit} SERIES, basadas en la siguiente información: Me gustan los géneros: ${genres}; me gustan las películas o series como: ${likes}; no me gustan las películas o series como: ${dislikes}. Esto quiere decir que no me deberías de recomendar las películas o series que ya me gustan o las que no. También la sugerencia debe estar relacionada con los generos que me gustan. Formatéalo como un JSON BIEN HECHO con los campos: title, genres, description, type (siendo type entre "series" y "movie"), platforms (plataformas de streaming donde se puede ver). Reemplaza cualquier doble comilla (") que pueda tener el título o la descripción por comillas simples ('). Cualquier caracter non-whitespace reemplazalo por un espacio.`;
+  const prompt = `Recomiéndame ${moviesLimit} PELÍCULAS y ${seriesLimit} SERIES, basadas en la siguiente información: Me gustan los géneros: ${genres}; me gustan las películas o series como: ${likes}; no me gustan las películas o series como: ${dislikes}; mis sugerencias actuales son: ${existingSuggestions}. Esto quiere decir que no me deberías de recomendar las películas o series que ya me gustan o las que no, tampoco la sugerencias, las cuales son las que ya recomendaste. También la sugerencia debe estar relacionada con los generos que me gustan. Formatéalo como un JSON BIEN HECHO con los campos: title, genres, description, type (siendo type entre "series" y "movie"), platforms (plataformas de streaming donde se puede ver). Reemplaza cualquier doble comilla (") que pueda tener el título o la descripción por comillas simples ('). Cualquier caracter non-whitespace en el JSON eliminalo.`;
 
   let { text } = await generateText({
     model: google("gemini-1.5-flash"),
@@ -53,7 +54,13 @@ export const createSuggestion: RequestHandler = async (req, res) => {
     genres,
     likes,
     dislikes,
-  }: { genres: string[]; likes: string[]; dislikes: string[] } = req.body;
+    existingSuggestions,
+  }: {
+    genres: string[];
+    likes: string[];
+    dislikes: string[];
+    existingSuggestions: string[];
+  } = req.body;
 
   const { id: groupId } = req.params;
   const { uid: userId } = req.body;
@@ -66,7 +73,8 @@ export const createSuggestion: RequestHandler = async (req, res) => {
       likes,
       dislikes,
       parseInt(series as string),
-      parseInt(movies as string)
+      parseInt(movies as string),
+      existingSuggestions
     );
 
     suggestions = JSON.parse(suggestions.substring(7, suggestions.length - 3));

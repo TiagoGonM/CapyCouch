@@ -17,6 +17,7 @@ interface FormData {
   genres: string[];
   likes: string[];
   dislikes: string[];
+  existingSuggestions: string[];
 }
 
 export const useSuggestionStore = () => {
