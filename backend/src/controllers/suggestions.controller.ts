@@ -1,8 +1,8 @@
 import { RequestHandler } from "express";
 
 import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
 import { google } from "@ai-sdk/google";
-
 import { Media } from "../interfaces/interfaces";
 import { MediaType } from "@prisma/client";
 import prisma from "../db/prisma";
@@ -37,14 +37,23 @@ const makePrompt = async (
   seriesLimit: number = 5,
   existingSuggestions: string[]
 ) => {
-  const prompt = `Recomiéndame ${moviesLimit} PELÍCULAS y ${seriesLimit} SERIES, basadas en la siguiente información: Me gustan los géneros: ${genres}; me gustan las películas o series como: ${likes}; no me gustan las películas o series como: ${dislikes}; mis sugerencias actuales son: ${existingSuggestions}. Esto quiere decir que no me deberías de recomendar las películas o series que ya me gustan o las que no, tampoco la sugerencias, las cuales son las que ya recomendaste. También la sugerencia debe estar relacionada con los generos que me gustan. Formatéalo como un JSON BIEN HECHO con los campos: title, genres, description, type (siendo type entre "series" y "movie"), platforms (plataformas de streaming donde se puede ver). Reemplaza cualquier doble comilla (") que pueda tener el título o la descripción por comillas simples ('). Cualquier caracter non-whitespace en el JSON eliminalo.`;
+  const prompt = `Recomiéndame ${moviesLimit} PELÍCULAS y ${seriesLimit} SERIES, basadas en la siguiente información: Me gustan los géneros: ${genres}; me gustan las películas o series como: ${likes}; no me gustan las películas o series como: ${dislikes}; mis sugerencias actuales son: ${existingSuggestions}. Esto quiere decir que no me deberías de recomendar las películas o series que ya me gustan o las que no, tampoco la sugerencias, las cuales son las que ya recomendaste. También la sugerencia debe estar relacionada con los generos que me gustan. Formatéalo como un JSON BIEN HECHO con los campos: title, genres (devolvelos en español si es posible), description, type (siendo type entre "series" y "movie"), platforms (plataformas de streaming donde se puede ver). Además, comproba que el JSON esté bien hecho, para eso, podrías simular pasarlo por un parseador de JSON y mete todo en una lista sin un nombre clave. ¡Buena suerte!`;
+  let text;
 
-  let { text } = await generateText({
-    model: google("gemini-1.5-flash"),
-    prompt,
-  });
+  try {
+    text = await generateText({
+      model: google("gemini-1.5-flash"),
+      prompt,
+    });
+  } catch (e) {
+    console.error(e);
+    text = await generateText({
+      model: openai("gpt-3.5-turbo-1106"),
+      prompt,
+    });
+  }
 
-  return [text, prompt];
+  return [text.text, prompt];
 };
 
 export const createSuggestion: RequestHandler = async (req, res) => {
@@ -77,7 +86,7 @@ export const createSuggestion: RequestHandler = async (req, res) => {
       existingSuggestions
     );
 
-    suggestions = JSON.parse(suggestions.substring(7, suggestions.length - 3));
+    suggestions = JSON.parse(suggestions.split("```json")[1].split("```")[0]);
     for (let suggestion of suggestions as any) {
       list.push({
         title: suggestion.title,

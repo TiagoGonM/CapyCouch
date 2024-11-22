@@ -16,7 +16,9 @@ export const SuggestionList = () => {
           </h1>
         ) : (
           <Carousel slidesToShow={4} slidesToScroll={4}>
-            {suggestions.map((suggestion) => (
+            {suggestions.map((suggestion, i) => (
+              <>
+              <p>{i}</p>
               <Suggestion
                 key={suggestion.description}
                 type={suggestion.type}
@@ -25,6 +27,7 @@ export const SuggestionList = () => {
                 genres={suggestion.genres}
                 platforms={suggestion.platforms}
               />
+              </>
             ))}
           </Carousel>
         )}
