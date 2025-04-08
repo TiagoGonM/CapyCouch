@@ -4,8 +4,6 @@ A project powered by Gemini AI made with Express.js and React which helps when p
 
 ## Start
 
-Miembros de grupo: Tiago Gonzalez, Nicolás Barcia, Faustino Barbuto, Lautaro Caba y Lourdes Gauna
-
 El proyecto esta dividido por frontend y backend.
 
 - Frontend: React, Tailwind CSS, TypeScript y Vite
