@@ -1,6 +1,6 @@
 # Films App
 
-A project powered by Gemini AI made with Express.js and React which helps when picking a film to watch with friends/family.
+A project powered by Gemini AI made with Express.js and React which helps when picking a film to watch with your group of friends or your family.
 
 ## Start
 
